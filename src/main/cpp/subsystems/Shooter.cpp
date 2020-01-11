@@ -11,6 +11,8 @@ void Shooter::On(){
 void Shooter::Off(){
     left.Set(0);
     //right.Set(0);
+}
+
 Shooter& Shooter::GetInstance()
 {
     static Shooter instance;  // Guaranteed to be destroyed.
