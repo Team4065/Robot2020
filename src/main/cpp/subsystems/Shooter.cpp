@@ -1,17 +1,17 @@
 #include "subsystems/Shooter.h"
 
-// This method will be called once per scheduler run
+Shooter::Shooter()
+{
+    left_.RestoreFactoryDefaults();
+    right_.RestoreFactoryDefaults();
+
+    left_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+    right_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+
+
+}
+
 void Shooter::Periodic() {}
-
-void Shooter::On(){
-    left.Set(0.1);
-    //right.Set(0); keep off until final testing to prevent the motor from fighting
-}
-
-void Shooter::Off(){
-    left.Set(0);
-    //right.Set(0);
-}
 
 Shooter& Shooter::GetInstance()
 {
