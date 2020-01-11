@@ -1,31 +1,33 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2017-2019 FIRST. All Rights Reserved.                        */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 #pragma once
 
-#include <frc2/command/SubsystemBase.h>
+#include <frc/TimedRobot.h>
+#include <frc2/command/Command.h>
 
-#include "rev/CANSparkMax.h"
+#include "RobotContainer.h"
 
-class Drivetrain : public frc2::SubsystemBase
-{
-public:
+class Robot : public frc::TimedRobot {
+ public:
+  void RobotInit() override;
+  void RobotPeriodic() override;
+  void DisabledInit() override;
+  void DisabledPeriodic() override;
+  void AutonomousInit() override;
+  void AutonomousPeriodic() override;
+  void TeleopInit() override;
+  void TeleopPeriodic() override;
+  void TestPeriodic() override;
 
-  enum WantedState {
-    
-  }
+ private:
+  // Have it null by default so that if testing teleop it
+  // doesn't have undefined behavior and potentially crash.
+  frc2::Command* m_autonomousCommand = nullptr;
 
-  static Drivetrain& GetInstance();
-  Drivetrain(Drivetrain const&)      = delete;
-  void operator=(Drivetrain const&)  = delete;
-  void Periodic();
-
-private:
-  
-  rev::CANSparkMax left_front_master_ { constants::drivetrain::kLeftFrontMotorPort, rev::CANSparkMax::MotorType::kBrushless };
-  rev::CANSparkMax left_middle_ { constants::drivetrain::kLeftMiddleMotorPort, rev::CANSparkMax::MotorType::kBrushless };
-  rev::CANSparkMax left_rear_ { constants::drivetrain::kLeftRearMotorPort, rev::CANSparkMax::MotorType::kBrushless };
-
-  rev::CANSparkMax right_front_master_ { constants::drivetrain::kRightFrontMotorPort, rev::CANSparkMax::MotorType::kBrushless };
-  rev::CANSparkMax right_middle_ { constants::drivetrain::kRightMiddleMotorPort, rev::CANSparkMax::MotorType::kBrushless };
-  rev::CANSparkMax right_rear_ { constants::drivetrain::kRightRearMotorPort, rev::CANSparkMax::MotorType::kBrushless };
-
-  Drivetrain(){}
+  RobotContainer m_container;
 };
