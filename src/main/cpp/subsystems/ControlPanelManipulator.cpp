@@ -5,20 +5,13 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "subsystems/ControlPanelManipulator.h"
 
-#include <frc2/command/SubsystemBase.h>
+ControlPanelManipulator& ControlPanelManipulator::GetInstance()
+{
+    static ControlPanelManipulator instance;
+    return instance;
+}
 
-class ExampleSubsystem : public frc2::SubsystemBase {
- public:
-  ExampleSubsystem();
-
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
-  void Periodic() override;
-
- private:
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
-};
+// This method will be called once per scheduler run
+void ControlPanelManipulator::Periodic() {}
