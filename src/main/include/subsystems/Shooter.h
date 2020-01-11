@@ -1,6 +1,9 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include "Constants.h"
+
+#include "rev/CANSparkMax.h"
 
 class Shooter : public frc2::SubsystemBase
 {
@@ -18,7 +21,13 @@ public:
    */
   void Periodic();
 
+  void On();
+  void Off();
+
  private:
+
+  rev::CANSparkMax left {constants::shooter::kLeftMotorPort, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANSparkMax right {constants::shooter::kRightMotorPort, rev::CANSparkMax::MotorType::kBrushless};
 
   Shooter() {}
   // Components (e.g. motor controllers and sensors) should generally be
