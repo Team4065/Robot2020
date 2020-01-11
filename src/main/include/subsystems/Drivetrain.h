@@ -3,6 +3,7 @@
 #include <frc2/command/SubsystemBase.h>
 
 #include "rev/CANSparkMax.h"
+#include "ctre/Phoenix.h"
 
 class Drivetrain : public frc2::SubsystemBase
 {
@@ -19,7 +20,8 @@ public:
 
 private:
   
-  rev::CANSparkMax left_front_master_ { constants::drivetrain::kLeftFrontMotorPort, rev::CANSparkMax::MotorType::kBrushless };
+  TalonSRX left_front_master_ {constants::drivetrain::kLeftFrontMotorPort};
+
   rev::CANSparkMax left_middle_ { constants::drivetrain::kLeftMiddleMotorPort, rev::CANSparkMax::MotorType::kBrushless };
   rev::CANSparkMax left_rear_ { constants::drivetrain::kLeftRearMotorPort, rev::CANSparkMax::MotorType::kBrushless };
 
