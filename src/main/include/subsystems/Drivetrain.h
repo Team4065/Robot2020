@@ -9,7 +9,7 @@ class Drivetrain : public frc2::SubsystemBase
 public:
 
   enum WantedState {
-
+    
   }
 
   static Drivetrain& GetInstance();

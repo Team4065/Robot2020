@@ -9,7 +9,11 @@ class Shooter : public frc2::SubsystemBase
 {
 public:
   
-
+  enum state {
+    SPINNING_UP,
+    SHOOTING,
+    IDLE
+  }
 
   static Shooter& GetInstance();
 
@@ -23,6 +27,8 @@ public:
 
   void On();
   void Off();
+
+  void Shoot()
 
  private:
 
