@@ -8,6 +8,9 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include "subsystems/Drivetrain.h"
+#include "commands/TankDrive.h"
+#include <frc/XboxController.h>
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -22,6 +25,7 @@ class RobotContainer {
 
  private:
 
+  frc::XboxController controller {0};
 
   void ConfigureButtonBindings();
 };

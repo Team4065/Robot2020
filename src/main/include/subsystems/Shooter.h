@@ -13,7 +13,7 @@ public:
     SPINNING_UP,
     SHOOTING,
     IDLE
-  }
+  };
 
   static Shooter& GetInstance();
 
@@ -28,7 +28,7 @@ public:
   void On();
   void Off();
 
-  void Shoot()
+  void Shoot();
 
  private:
 
