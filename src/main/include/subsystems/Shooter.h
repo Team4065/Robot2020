@@ -2,16 +2,13 @@
 
 #include <frc2/command/SubsystemBase.h>
 
-class Shooter : public frc2::SubsystemBase {
- public:
+class Shooter : public frc2::SubsystemBase
+{
+public:
   
 
-  static Shooter& GetInstance()
-  {
-    static Shooter    instance;  // Guaranteed to be destroyed.
-                                    // Instantiated on first use.
-    return instance;
-  }
+
+  static Shooter& GetInstance();
 
   Shooter(Shooter const&)      = delete;
   void operator=(Shooter const&)  = delete;

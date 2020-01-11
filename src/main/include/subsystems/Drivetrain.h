@@ -2,26 +2,23 @@
 
 #include <frc2/command/SubsystemBase.h>
 
-class Drivetrain : public frc2::SubsystemBase {
- public:
+#include "rev/CANSparkMax.h"
 
-  static Drivetrain& GetInstance()
-  {
-    static Drivetrain    instance;  // Guaranteed to be destroyed.
-                                    // Instantiated on first use.
-    return instance;
+class Drivetrain : public frc2::SubsystemBase
+{
+public:
+
+  enum WantedState {
+
   }
 
+  static Drivetrain& GetInstance();
   Drivetrain(Drivetrain const&)      = delete;
   void operator=(Drivetrain const&)  = delete;
-
-
   void Periodic();
 
- private:
+private:
   
 
   Drivetrain(){}
-  // Components (e.g. motor controllers and sensors) should generally be
-  // declared private and exposed only through public methods.
 };
