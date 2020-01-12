@@ -17,6 +17,8 @@ Shooter::Shooter()
     left_pid_.SetI(0.0); // Disable
     left_pid_.SetD(constants::shooter::kD);
     left_pid_.SetFF(constants::shooter::kFF);
+
+
 }
 
 void Shooter::ShootWithDistanceEstimation(units::foot_t distanceToTarget)

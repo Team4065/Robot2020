@@ -1,6 +1,8 @@
 #pragma once
 
 #include <cmath>
+#include <iostream>
+
 #include <frc2/command/SubsystemBase.h>
 #include <units/units.h>
 
