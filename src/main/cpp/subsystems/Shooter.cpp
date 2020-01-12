@@ -8,6 +8,8 @@ Shooter::Shooter()
     left_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
     right_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
+    left_.Follow(right_, true);
+
     left_.SetSmartCurrentLimit(constants::shooter::kMaxCurrentDraw.to<unsigned int>()); 
     right_.SetSmartCurrentLimit(constants::shooter::kMaxCurrentDraw.to<unsigned int>()); 
 
@@ -34,9 +36,10 @@ Shooter::State Shooter::GetState() const
     return state_;
 }
 
-// units::radians_per_second_t Shooter::GetVelocity() const
-// {
-// }
+units::radians_per_second_t Shooter::GetVelocity() const
+{
+    return units::radians_per_second_t(0.0);
+}
 
 units::radians_per_second_t Shooter::GetDesiredVelocity() const
 {

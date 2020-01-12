@@ -11,7 +11,7 @@
 /* TODO:
  * - Run numerical analysis on final shooter to get distance -> velocity.
  * - Finish implementation of GetVelocity; needs to get motor data and
- *   convert it to radians_per_second_t.
+ *   convert it to radians_per_second_t; currently has a placeholder.
  * 
  * IMPORTANT:
  * We MUST abide by the state machine and always ensure that the necessary
