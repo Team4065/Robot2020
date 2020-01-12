@@ -4,6 +4,10 @@
 
 namespace constants
 {
+    using Velocity     = units::compound_unit<units::length::feet, units::inverse<units::seconds>>;
+    using Acceleration = units::compound_unit<Velocity,            units::inverse<units::seconds>>;
+    using kv_unit      = units::compound_unit<units::volts,        units::inverse<Velocity>>;
+    using ka_unit      = units::compound_unit<units::volts,        units::inverse<Acceleration>>;
     namespace shooter
     {
         constexpr int kLeftMotorPort = 1;
@@ -25,7 +29,10 @@ namespace constants
         constexpr int kRightRearMotorPort = 8; // Inaccurate!
         constexpr units::current::ampere_t kMaxCurrentDraw { 30.0 };
         constexpr units::inch_t kWheelDiameter { 6.0 };
-        constexpr units::inch_t kWheelBase { 28.0 }; // Maybe correct
+        constexpr units::inch_t kWheelBase { 28.0 }; // Maybe 
+        constexpr units::volt_t kS { 0.0 }; // Inaccurate!
+        constexpr units::unit_t<kv_unit> kV { 0.0 }; // Inaccurate!
+        constexpr units::unit_t<ka_unit> kA { 0.0 }; // Inaccurate!
     }
     namespace intake
     {
@@ -41,6 +48,6 @@ namespace constants
     }
     namespace control_panel_manipulator
     {
-        
+
     }
 }
