@@ -12,7 +12,6 @@ Shooter::Shooter()
 
     left_.SetSmartCurrentLimit(constants::shooter::kMaxCurrentDraw.to<unsigned int>()); 
     right_.SetSmartCurrentLimit(constants::shooter::kMaxCurrentDraw.to<unsigned int>()); 
-
     left_pid_.SetP(constants::shooter::kP);
     left_pid_.SetI(0.0); // Disable
     left_pid_.SetD(constants::shooter::kD);
