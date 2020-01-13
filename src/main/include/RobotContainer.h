@@ -8,6 +8,10 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include "subsystems/Drivetrain.h"
+#include "subsystems/Intake.h"
+#include "subsystems/Shooter.h"
+#include "subsystems/ControlPanelManipulator.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -21,7 +25,8 @@ class RobotContainer {
   RobotContainer();
 
  private:
-
+  // The robot's subsystems and commands are defined here...
 
   void ConfigureButtonBindings();
+  Drivetrain m_drivetrain;
 };
