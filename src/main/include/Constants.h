@@ -57,8 +57,5 @@ namespace constants
     {
 
     }
-    namespace limelight
-    {
-        
-    }
+
 }
