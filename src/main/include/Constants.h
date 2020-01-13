@@ -57,5 +57,7 @@ namespace control_panel_manipulator
 }
 namespace limelight
 {
-    constexpr double kP = 0.0, kI = 0.0, kD = 0.0;
+    constexpr double kP = 0.0;
+    constexpr double kI = 0.0;
+    constexpr double kD = 0.0;
 } 
