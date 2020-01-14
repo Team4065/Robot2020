@@ -1,6 +1,6 @@
 #pragma once
 
-class RunnableTrajectoryBase
+class AutoSelector
 {
 public:
 private:
