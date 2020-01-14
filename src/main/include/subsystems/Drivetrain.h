@@ -3,6 +3,7 @@
 #include <frc2/command/SubsystemBase.h>
 
 #include "Constants.h"
+#include "util/Macros.h"
 
 #include "rev/CANSparkMax.h"
 
@@ -16,8 +17,7 @@ public:
   };
 
   static Drivetrain& GetInstance();
-  Drivetrain(Drivetrain const&)      = delete;
-  void operator=(Drivetrain const&)  = delete;
+  DISALLOW_COPY_AND_ASSIGN(Drivetrain);
   void Periodic();
 
 private:

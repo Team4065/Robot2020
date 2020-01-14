@@ -2,9 +2,13 @@
 
 #include <frc2/command/SubsystemBase.h>
 
+#include "util/Macros.h"
+#include "Constants.h"
+
 class ControlPanelManipulator : public frc2::SubsystemBase {
 public:
-  ControlPanelManipulator& GetInstance();
+  static ControlPanelManipulator& GetInstance();
+  DISALLOW_COPY_AND_ASSIGN(ControlPanelManipulator);
 
   void Periodic();
 private:

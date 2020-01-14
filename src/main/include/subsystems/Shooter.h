@@ -7,6 +7,7 @@
 #include <units/units.h>
 
 #include "Constants.h"
+#include "util/Macros.h"
 
 #include "rev/CANSparkMax.h"
 
@@ -40,8 +41,7 @@ public:
   units::current::ampere_t GetCurrentDraw() const;
   State GetState() const;
 
-  Shooter(Shooter const&)      = delete;
-  void operator=(Shooter const&)  = delete;
+  DISALLOW_COPY_AND_ASSIGN(Shooter);
   void Periodic();
 
  private:

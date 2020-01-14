@@ -8,6 +8,10 @@ namespace constants
     using Acceleration = units::compound_unit<Velocity,            units::inverse<units::seconds>>;
     using kv           = units::compound_unit<units::volts,        units::inverse<Velocity>>;
     using ka           = units::compound_unit<units::volts,        units::inverse<Acceleration>>;
+    namespace oi
+    {
+        constexpr int kDriverXboxControllerPort = 0;
+    }
     namespace shooter
     {
         constexpr int kLeftMotorPort = 1;
