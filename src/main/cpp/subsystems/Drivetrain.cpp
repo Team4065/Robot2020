@@ -31,6 +31,8 @@ void Drivetrain::Periodic()
     //odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
 }
 
+void Drivetrain::ArcadeDrive(double fwd, double rot){}
+
 void Drivetrain::TankDriveVolts(units::volt_t left, units::volt_t right)
 {
     left_front_master_.SetVoltage(left);

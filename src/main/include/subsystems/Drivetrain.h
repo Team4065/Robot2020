@@ -20,6 +20,7 @@ public:
     TRACKING, OPENLOOP, VELOCITY
   };
 
+  void ArcadeDrive(double fwd, double rot);
   void TankDriveVolts(units::volt_t left, units::volt_t right);
 
   frc::DifferentialDriveWheelSpeeds GetWheelSpeeds();
