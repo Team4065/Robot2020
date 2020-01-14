@@ -13,11 +13,11 @@ Drivetrain::Drivetrain()
     left_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
     left_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
     left_rear_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    
+
     right_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
     right_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
     right_rear_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    
+
     left_middle_slave_.Follow(left_front_master_, false);
     left_rear_slave_.Follow(left_front_master_, false);
 
@@ -31,7 +31,7 @@ void Drivetrain::Periodic()
     //odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
 }
 
-void Drivetrain::ArcadeDrive(double fwd, double rot){}
+void Drivetrain::ArcadeDrive(double fwd, double rot) {}
 
 void Drivetrain::TankDriveVolts(units::volt_t left, units::volt_t right)
 {
@@ -43,8 +43,7 @@ frc::DifferentialDriveWheelSpeeds Drivetrain::GetWheelSpeeds()
 {
     return {
         units::feet_per_second_t(left_encoder_.GetVelocity()),
-        units::feet_per_second_t(right_encoder_.GetVelocity())
-    };
+        units::feet_per_second_t(right_encoder_.GetVelocity())};
 }
 frc::Pose2d Drivetrain::GetPose() const
 {
@@ -56,20 +55,19 @@ units::degree_t Drivetrain::GetHeading()
 }
 units::foot_t Drivetrain::GetLeftEncoderDistance() const
 {
-
 }
 units::foot_t Drivetrain::GetRightEncoderDistance() const
 {
-
 }
 
 void Drivetrain::ResetEncoders()
 {
-
+    left_encoder_.SetPosition(0);
+    right_encoder_.SetPosition(0);
 }
 
-Drivetrain& Drivetrain::GetInstance()
+Drivetrain &Drivetrain::GetInstance()
 {
-    static Drivetrain instance;  // Guaranteed to be destroyed. Instantiated on first use.
+    static Drivetrain instance; // Guaranteed to be destroyed. Instantiated on first use.
     return instance;
 }
