@@ -2,6 +2,7 @@
 
 #include <frc2/command/Command.h>
 #include <frc/XboxController.h>
+#include <frc/smartdashboard/SendableChooser.h>
 
 #include "subsystems/Shooter.h"
 #include "subsystems/Serializer.h"
@@ -24,6 +25,8 @@ private:
   ControlPanelManipulator& control_panel_manipulator_ = ControlPanelManipulator::GetInstance();
 
   frc::XboxController controller_ { constants::oi::kDriverXboxControllerPort };
+
+  frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions
 
   void ConfigureButtonBindings();
 };

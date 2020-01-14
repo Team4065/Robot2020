@@ -1,6 +1,7 @@
 #pragma once
 
 #include <units/units.h>
+#include <frc/kinematics/DifferentialDriveKinematics.h>
 
 namespace constants
 {
@@ -31,12 +32,14 @@ namespace constants
         constexpr int kRightFrontMotorPort = 6; // Inaccurate!
         constexpr int kRightMiddleMotorPort = 7; // Inaccurate!
         constexpr int kRightRearMotorPort = 8; // Inaccurate!
+        constexpr bool kGyroReversed = false; // Inaccurate!
         constexpr units::current::ampere_t kMaxCurrentDraw { 30.0 };
         constexpr units::inch_t kWheelDiameter { 6.0 };
         constexpr units::inch_t kWheelBase { 28.0 }; // Maybe 
         constexpr units::volt_t kS { 0.0 }; // Inaccurate!
         constexpr units::unit_t<kv> kV { 0.0 }; // Inaccurate!
         constexpr units::unit_t<ka> kA { 0.0 }; // Inaccurate!
+        extern const frc::DifferentialDriveKinematics kDriveKinematics;
         namespace auto_mode
         {
             constexpr units::feet_per_second_t kMaxVelocity { 10.0 };

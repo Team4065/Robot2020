@@ -1,6 +1,10 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <frc/geometry/Pose2d.h>
+#include <frc/kinematics/DifferentialDriveOdometry.h>
+#include <units/units.h>
+#include <AHRS.h>
 
 #include "Constants.h"
 #include "util/Macros.h"
@@ -15,6 +19,16 @@ public:
   {
     TRACKING, OPENLOOP, VELOCITY
   };
+
+  void TankDriveVolts(units::volt_t left, units::volt_t right);
+
+  frc::DifferentialDriveWheelSpeeds GetWheelSpeeds();
+  frc::Pose2d GetPose() const;
+  units::degree_t GetHeading();
+  units::foot_t GetLeftEncoderDistance() const;
+  units::foot_t GetRightEncoderDistance() const;
+
+  void ResetEncoders();
 
   static Drivetrain& GetInstance();
   DISALLOW_COPY_AND_ASSIGN(Drivetrain);
@@ -33,6 +47,10 @@ private:
   rev::CANSparkMax right_rear_slave_   { constants::drivetrain::kRightRearMotorPort, rev::CANSparkMax::MotorType::kBrushless };
   rev::CANEncoder  right_encoder_      { right_front_master_.GetEncoder() };
   rev::CANPIDController right_pid_     { right_front_master_.GetPIDController() };
+
+  AHRS gyro_ { frc::SPI::Port::kMXP };
+
+  frc::DifferentialDriveOdometry odometry_;
 
   Drivetrain();
 };
