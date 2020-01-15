@@ -20,5 +20,5 @@ public:
 protected:
     virtual frc::Trajectory GetTrajectory() = 0;
 private:
-    frc2::Command* command_;
+    frc2::Command& command_;
 };

@@ -15,7 +15,7 @@ void RunnableTrajectoryBase::Run()
         [this](auto left, auto right) { Drivetrain::GetInstance().TankDriveVolts(left, right); },
     {&Drivetrain::GetInstance()});
 
-    command_ = &frc2::SequentialCommandGroup(
+    command_ = frc2::SequentialCommandGroup(
         std::move(ramsete_command_),
         frc2::InstantCommand([&] { Drivetrain::GetInstance().TankDriveVolts(0_V, 0_V); })
     );
@@ -23,5 +23,5 @@ void RunnableTrajectoryBase::Run()
 
 bool RunnableTrajectoryBase::Done() const
 {
-    return command_->IsFinished();
+    return command_.IsFinished();
 }
