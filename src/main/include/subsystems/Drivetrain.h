@@ -30,6 +30,7 @@ public:
   units::foot_t GetRightEncoderDistance() const;
 
   void ResetEncoders();
+  void ResetOdometry(frc::Pose2d pose);
 
   static Drivetrain& GetInstance();
   DISALLOW_COPY_AND_ASSIGN(Drivetrain);

@@ -35,10 +35,11 @@ namespace constants
         constexpr bool kGyroReversed = false; // Inaccurate!
         constexpr units::current::ampere_t kMaxCurrentDraw { 30.0 };
         constexpr units::inch_t kWheelDiameter { 6.0 };
-        constexpr units::inch_t kWheelBase { 28.0 }; // Maybe 
+        constexpr units::inch_t kTrackWidth { 28.0 }; // Maybe 
         constexpr units::volt_t kS { 0.0 }; // Inaccurate!
         constexpr units::unit_t<kv> kV { 0.0 }; // Inaccurate!
         constexpr units::unit_t<ka> kA { 0.0 }; // Inaccurate!
+        constexpr double kPDriveVel = 0.0;
         extern const frc::DifferentialDriveKinematics kDriveKinematics;
         namespace auto_mode
         {

@@ -28,7 +28,7 @@ Drivetrain::Drivetrain()
 // This method will be called once per scheduler run
 void Drivetrain::Periodic()
 {
-    //odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
+    odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
 }
 
 void Drivetrain::ArcadeDrive(double fwd, double rot) {}
@@ -43,7 +43,8 @@ frc::DifferentialDriveWheelSpeeds Drivetrain::GetWheelSpeeds()
 {
     return {
         units::feet_per_second_t(left_encoder_.GetVelocity()),
-        units::feet_per_second_t(right_encoder_.GetVelocity())};
+        units::feet_per_second_t(right_encoder_.GetVelocity())
+    };
 }
 frc::Pose2d Drivetrain::GetPose() const
 {
@@ -64,6 +65,12 @@ void Drivetrain::ResetEncoders()
 {
     left_encoder_.SetPosition(0);
     right_encoder_.SetPosition(0);
+}
+
+void Drivetrain::ResetOdometry(frc::Pose2d pose)
+{
+    ResetEncoders();
+    odometry_.ResetPosition(pose, frc::Rotation2d(GetHeading()));
 }
 
 Drivetrain &Drivetrain::GetInstance()
