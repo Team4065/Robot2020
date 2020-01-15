@@ -2,6 +2,7 @@
 
 #include <units/units.h>
 #include <frc/kinematics/DifferentialDriveKinematics.h>
+#include <frc/trajectory/TrajectoryConfig.h>
 
 namespace constants
 {
@@ -41,6 +42,7 @@ namespace constants
         constexpr units::unit_t<ka> kA { 0.0 }; // Inaccurate!
         constexpr double kPDriveVel = 0.0;
         extern const frc::DifferentialDriveKinematics kDriveKinematics;
+        extern const frc::TrajectoryConfig kAutoConfig;
         namespace auto_mode
         {
             constexpr units::feet_per_second_t kMaxVelocity { 10.0 };

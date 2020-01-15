@@ -6,6 +6,9 @@
 #include <frc2/command/Command.h>
 #include <frc/trajectory/TrajectoryGenerator.h>
 #include <frc/trajectory/Trajectory.h>
+#include <frc/geometry/Pose2d.h>
+#include <frc/geometry/Translation2d.h>
+#include <frc/geometry/Rotation2d.h>
 
 #include "subsystems/Drivetrain.h"
 
@@ -20,5 +23,5 @@ public:
 protected:
     virtual frc::Trajectory GetTrajectory() = 0;
 private:
-    frc2::Command& command_;
+    frc2::Command* command_;
 };
