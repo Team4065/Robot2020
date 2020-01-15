@@ -32,6 +32,8 @@ public:
   void ResetEncoders();
   void ResetOdometry(frc::Pose2d pose);
 
+  void NeutralMode(bool isEnable);
+
   static Drivetrain& GetInstance();
   DISALLOW_COPY_AND_ASSIGN(Drivetrain);
   void Periodic();

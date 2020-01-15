@@ -72,7 +72,29 @@ void Drivetrain::ResetOdometry(frc::Pose2d pose)
     ResetEncoders();
     odometry_.ResetPosition(pose, frc::Rotation2d(GetHeading()));
 }
+void Drivetrain::NeutralMode(bool isEnable)
+{
+  if (isEnable)
+  {
+    left_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    left_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    left_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
+    right_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    right_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    right_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  }
+  else
+  {
+    left_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+    left_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+    left_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+
+    right_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+    right_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+    right_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+  }
+}
 Drivetrain &Drivetrain::GetInstance()
 {
     static Drivetrain instance; // Guaranteed to be destroyed. Instantiated on first use.
