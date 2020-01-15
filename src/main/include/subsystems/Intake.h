@@ -1,15 +1,13 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include "util/Macros.h"
 
 class Intake : public frc2::SubsystemBase
 {
 public:
-  
   static Intake& GetInstance();
-
-  Intake(Intake const&)       = delete;
-  void operator=(Intake const&)  = delete;
+  DISALLOW_COPY_AND_ASSIGN(Intake);
   void Periodic();
 private:
   Intake() = default;

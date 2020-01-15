@@ -24,9 +24,15 @@ void Shooter::ShootWithDistanceEstimation(units::foot_t distanceToTarget)
 {
     // 1. Turn a distance into a velocity using numerical analysis.
     // 2. Set shooter to that velocity.
+    if (distanceToTarget > constants::shooter::kDistanceUpperBound || distanceToTarget < constants::shooter::kDistanceLowerBound)
+        INFO_LOG("Current distance to target is out of bounds.");
+    
+    units::revolutions_per_minute_t rpm_estimation = 0_rpm;
+
+    SetShooterVelocity(rpm_estimation);
 }
 
-void Shooter::SetShooterVelocity(units::radians_per_second_t angularVelocity)
+void Shooter::SetShooterVelocity(units::revolutions_per_minute_t angularVelocity)
 {
     state_ = State::SPINUP;
     // 1. Calculate motor velocity from rad/s and wheel radius.
@@ -37,22 +43,26 @@ Shooter::State Shooter::GetState() const
     return state_;
 }
 
-units::radians_per_second_t Shooter::GetVelocity() const
+units::revolutions_per_minute_t Shooter::GetVelocity() const
 {
     return units::radians_per_second_t(0.0);
 }
 
-units::radians_per_second_t Shooter::GetDesiredVelocity() const
+units::revolutions_per_minute_t Shooter::GetDesiredVelocity() const
 {
     return desired_velocity_;
 }
 
 void Shooter::Periodic()
 {
+    // Poll velocity so when we get up to speed we can start shooting.
     if (state_ == SPINUP)
-        if (std::abs(desired_velocity_.to<double>() - GetVelocity().to<double>())
-            / (desired_velocity_.to<double>() + GetVelocity().to<double>()) / 2 < constants::shooter::kAllowableVelocityError)
+        if (std::abs( (desired_velocity_ - GetVelocity()).to<double>() )
+            / (desired_velocity_ + GetVelocity()).to<double>() / 2 < constants::shooter::kAllowableVelocityError)
             state_ = State::SHOOTING;
+    // Make sure while shooting we aren't below the allowable velocity error
+    if (state_ == SHOOTING && GetVelocity().to<double>() < desired_velocity_.to<double>() * (1 + constants::shooter::kAllowableVelocityError))
+        state_ = State::SPINUP;
 }
 
 Shooter& Shooter::GetInstance()
