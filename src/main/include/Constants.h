@@ -59,6 +59,6 @@ namespace constants
     }
     namespace limelight
     {
-        int n=2;
+        constexpr units::degree_t kCameraPitch { 30.0 };
     }
 }
