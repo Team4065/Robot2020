@@ -12,7 +12,7 @@ class StraightLineTest
 
   frc::Trajectory GetTrajectory() override;
 
-  void Initialize() override {};
+  void Initialize() override;
   void Execute() override {};
   void End(bool interrupted) override {};
   bool IsFinished() override;

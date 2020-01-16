@@ -13,4 +13,7 @@ frc::Trajectory StraightLineTest::GetTrajectory()
     constants::drivetrain::kAutoConfig
   );
 }
+
+void StraightLineTest::Initialize() { Run(); }
+
 bool StraightLineTest::IsFinished() { return Done(); }
