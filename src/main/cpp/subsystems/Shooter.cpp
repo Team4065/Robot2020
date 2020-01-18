@@ -34,7 +34,7 @@ void Shooter::ShootWithDistanceEstimation(units::foot_t distanceToTarget)
 
 void Shooter::SetShooterVelocity(units::revolutions_per_minute_t angularVelocity)
 {
-    if(angularVelocity == 0)
+    if(angularVelocity == 0_rpm)
         state_ = State::IDLE;
     else
         state_ = State::SPINUP;
@@ -49,9 +49,14 @@ Shooter::State Shooter::GetState() const
     return state_;
 }
 
+units::revolutions_per_minute_t Shooter::GetVelocityError() const
+{
+    return units::revolutions_per_minute_t( std::abs((desired_velocity_ - GetVelocity()).to<double>()) );
+}
+
 units::revolutions_per_minute_t Shooter::GetVelocity() const
 {
-    return units::revolutions_per_minite_t(0.0);
+    return 0_rpm;
 }
 
 units::revolutions_per_minute_t Shooter::GetDesiredVelocity() const
@@ -65,21 +70,15 @@ void Shooter::Periodic()
     switch(state_){
         case State::SPINUP:
             // Poll velocity so when we get up to speed we can start shooting.
-            if (std::abs( (desired_velocity_ - GetVelocity()).to<double>() ) < constants::shooter::kAllowableVelocityError)
+            if (GetVelocityError() < constants::shooter::kAllowableSpinupVelocityError)
                 state_ = State::SHOOTING;
-            
-            //
             break;
-
         case State::SHOOTING:
             // Makes sure while shooting we aren't below the allowable velocity error
-            if (std::abs( (desired_velocity_ - GetVelocity()).to<double>() ) > constants::shooter::kAllowableVelocityError)
+            if (GetVelocityError() > constants::shooter::kAllowableShootingVelocityError)
                 state_ = State::SPINUP;
-            
             break;
-
         case State::IDLE:
-            right_pid_.SetReference(desired_velocity_, rev::ControlType::kVelocity);
             break;
 
     }

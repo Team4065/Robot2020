@@ -23,7 +23,8 @@ namespace constants
         constexpr double kD = 0.0;
         constexpr double kFF = 0.0;
         constexpr units::inch_t kWheelDiameter { 6.0 };
-        constexpr double kAllowableVelocityError = 0.05; // 5 units of error
+        constexpr units::revolutions_per_minute_t kAllowableShootingVelocityError = 45_rpm; // within 30 rpm of target rate
+        constexpr units::revolutions_per_minute_t kAllowableSpinupVelocityError = 30_rpm; // within 30 rpm of target rate
         constexpr units::foot_t kDistanceLowerBound { 10 }; // 10 feet away
         constexpr units::foot_t kDistanceUpperBound { 30 }; // 30 feet away
     }
