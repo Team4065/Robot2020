@@ -74,4 +74,12 @@ namespace constants
     {
         constexpr units::degree_t kCameraPitch { 30.0 };
     }
+    namespace joy_deadband
+    {
+    inline float deadband(float joyValue)
+    {
+        
+        return (std::abs(joyValue) > 0.15f) ? joyValue : 0.0f;
+    }
+    }
 }
