@@ -3,8 +3,8 @@
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
-
-  Drivetrain::GetInstance().SetDefaultCommand(TankDrive(Drivetrain::GetInstance(), controller));
+  
+  Drivetrain::GetInstance().SetDefaultCommand(TankDrive(Drivetrain::GetInstance()));
 
   // Configure the button bindings
   ConfigureButtonBindings();

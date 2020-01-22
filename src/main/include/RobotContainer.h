@@ -11,6 +11,7 @@
 #include "subsystems/Drivetrain.h"
 #include "commands/TankDrive.h"
 #include <frc/XboxController.h>
+#include "Constants.h"
 
 /**
  * This class is where the bulk of the robot should be declared.  Since
@@ -19,13 +20,14 @@
  * scheduler calls).  Instead, the structure of the robot (including subsystems,
  * commands, and button mappings) should be declared here.
  */
+
 class RobotContainer {
  public:
   RobotContainer();
 
  private:
 
-  frc::XboxController controller {0};
+  frc::XboxController controller {constants::controller::kMainController};
 
   void ConfigureButtonBindings();
 };

@@ -17,4 +17,9 @@ namespace constants
         constexpr int kRightMiddleMotorPort = 7;
         constexpr int kRightRearMotorPort = 8;
     }
+
+    namespace controller
+    {
+        constexpr int kMainController = 0;
+    }
 }

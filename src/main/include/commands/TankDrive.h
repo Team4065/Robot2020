@@ -10,8 +10,9 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 #include <frc/XboxController.h>
+#include "Constants.h"
 
-#include "Robot.h"
+//#include "Robot.h"
 #include "subsystems/Drivetrain.h"
 /**
  * An example command.
@@ -23,7 +24,7 @@
 class TankDrive
     : public frc2::CommandHelper<frc2::CommandBase, TankDrive> {
  public:
-  TankDrive(Drivetrain&, frc::XboxController&);
+  TankDrive(Drivetrain&);
 
   void Initialize() override;
 
@@ -33,5 +34,5 @@ class TankDrive
 
   bool IsFinished() override;
  private:
-  frc::XboxController controller;
+  frc::XboxController controller {constants::controller::kMainController};
 };

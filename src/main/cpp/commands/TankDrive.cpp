@@ -6,11 +6,11 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/TankDrive.h"
+#include <iostream>
 
-TankDrive::TankDrive(Drivetrain& drivetrain, frc::XboxController& _controller) {
+TankDrive::TankDrive(Drivetrain& drivetrain) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({drivetrain});
-  controller = _controller;
+  AddRequirements({&drivetrain});
 }
 
 // Called when the command is initially scheduled.
