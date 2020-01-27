@@ -46,6 +46,14 @@ namespace constants
         constexpr double kPDriveVel = 0.0;
         extern const frc::DifferentialDriveKinematics kDriveKinematics;
         extern const frc::TrajectoryConfig kAutoConfig;
+
+        constexpr int kVelocityPIDPort = 0;
+        constexpr float kP_Velocity = 0;
+        constexpr float kD_Velocity = 0;
+        constexpr float kF_Velocity = 0;
+
+        constexpr int kPositionPIDPort = 1;
+
         namespace auto_mode
         {
             constexpr units::feet_per_second_t kMaxVelocity { 10.0 };

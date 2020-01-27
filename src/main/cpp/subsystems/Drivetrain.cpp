@@ -23,12 +23,44 @@ Drivetrain::Drivetrain()
 
     right_middle_slave_.Follow(right_front_master_, false);
     right_rear_slave_.Follow(right_front_master_, false);
+
+    left_pid_.SetP(constants::drivetrain::kP_Velocity, constants::drivetrain::kVelocityPIDPort);
+    left_pid_.SetD(constants::drivetrain::kD_Velocity, constants::drivetrain::kVelocityPIDPort);
+    left_pid_.SetFF(constants::drivetrain::kF_Velocity, constants::drivetrain::kVelocityPIDPort);
 }
 
 // This method will be called once per scheduler run
 void Drivetrain::Periodic()
 {
+    //state.currentTime = 
+
     odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
+
+    int PIDPortSelected = 0;
+    switch(state.outputMode)
+    {
+        case rev::ControlType::kVelocity:
+            PIDPortSelected = constants::drivetrain::kVelocityPIDPort;
+            break;
+        case rev::ControlType::kPosition:
+            PIDPortSelected = constants::drivetrain::kPositionPIDPort;
+            break;
+        case rev::ControlType::kSmartVelocity:
+            PIDPortSelected = constants::drivetrain::kVelocityPIDPort;
+            break;
+        case rev::ControlType::kSmartMotion:
+            PIDPortSelected = constants::drivetrain::kPositionPIDPort;
+            break;
+        default:
+            PIDPortSelected = constants::drivetrain::kVelocityPIDPort;
+            break;
+    }
+
+    Tracking();
+
+    left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected);
+    right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected);
+    
 }
 
 void Drivetrain::ArcadeDrive(double fwd, double rot) {}
@@ -99,4 +131,8 @@ Drivetrain &Drivetrain::GetInstance()
 {
     static Drivetrain instance; // Guaranteed to be destroyed. Instantiated on first use.
     return instance;
+}
+
+void Drivetrain::Tracking(){
+
 }

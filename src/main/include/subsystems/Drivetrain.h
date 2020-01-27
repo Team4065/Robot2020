@@ -15,9 +15,23 @@ class Drivetrain : public frc2::SubsystemBase
 {
 public:
 
-  enum State
+  enum TrackingMode
   {
-    TRACKING, OPENLOOP, VELOCITY
+    NONE,
+    TAPE,
+    BALL
+  };
+
+  struct State
+  {
+    rev::ControlType outputMode = rev::ControlType::kVoltage;
+    float leftTarget = 0;
+    float rightTarget = 0;
+
+    TrackingMode trackingMode = TrackingMode::NONE;
+    double kP_tracking = 0;
+    double kD_tracking = 0;
+    double kF_tracking = 0;
   };
 
   void ArcadeDrive(double fwd, double rot);
@@ -39,6 +53,8 @@ public:
   void Periodic();
 
 private:
+
+  State state;
   
   rev::CANSparkMax left_front_master_ { constants::drivetrain::kLeftFrontMotorPort, rev::CANSparkMax::MotorType::kBrushless };
   rev::CANSparkMax left_middle_slave_ { constants::drivetrain::kLeftMiddleMotorPort, rev::CANSparkMax::MotorType::kBrushless };
@@ -57,4 +73,6 @@ private:
   frc::DifferentialDriveOdometry odometry_;
 
   Drivetrain();
+
+  void Tracking();
 };
