@@ -136,7 +136,8 @@ Drivetrain &Drivetrain::GetInstance()
 }
 
 void Drivetrain::Tracking(){
-    //limelight->Set
+    limelight->PutNumber("pipeline", state.trackingMode);
+
     double tx = limelight->GetNumber("tx", 0.0);
     
     double error = -tx;// 0 - tx // 0 is always the target
@@ -145,6 +146,7 @@ void Drivetrain::Tracking(){
 
     double leftOutput = error * state.kP_tracking + deltaError * state.kD_tracking + (abs(error) / error) * state.kF_tracking;
 
+    //may need to be put in a conditional to prevent tracking when it isn't supposed to be (the pipline shouldn't find a target during no tracking)
     state.leftTarget += leftOutput;
     state.rightTarget -= leftOutput;
 
