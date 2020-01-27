@@ -26,10 +26,17 @@ Drivetrain::Drivetrain(){
 
 // This method will be called once per scheduler run
 void Drivetrain::Periodic() {
-    switch(mode){
-        case Mode::DRIVER:
-            SetLeft(this->targetLeft, ControlMode::PercentOutput);
-            SetRight(this->targetRight, ControlMode::PercentOutput);
+    state.pastTime = state.currentTime;
+    state.currentTime = frc::Timer::GetFPGATimestamp();
+
+    state.targetOffsetX = table->GetNumber("tx", 0.0);
+    state.targetOffsetY = table->GetNumber("ty", 0.0);
+
+    switch(state.driveMode){
+        case DriveMode::DRIVER:
+            
+            SetLeft(this->state.leftSpeedTarget, ControlMode::PercentOutput);
+            SetRight(this->state.leftSpeedTarget, ControlMode::PercentOutput);
             break;
     }
 
@@ -42,9 +49,13 @@ Drivetrain& Drivetrain::GetInstance()
 }
 
 void Drivetrain::SetLeft(float value, ControlMode _controlMode){
-    left_front_master_.Set(_controlMode, value);
+    state.leftSpeedTarget = value;
 }
 
 void Drivetrain::SetRight(float value, ControlMode _controlMode){
-    right_front_master_.Set(_controlMode, value);
+    state.rightSpeedTarget = value;
+}
+
+void Drivetrain::SetTrackingTarget(TrackingTarget target){
+    state.trackingTarget = target;
 }
