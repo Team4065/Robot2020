@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #include <frc2/command/SubsystemBase.h>
 #include <frc/geometry/Pose2d.h>
 #include <frc/kinematics/DifferentialDriveOdometry.h>
@@ -77,7 +79,7 @@ private:
 
   frc::DifferentialDriveOdometry odometry_;
 
-  shared_ptr<nt::NetworkTable> limelight("limelight");
+  std::shared_ptr<NetworkTable> limelight = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
 
   Drivetrain();
 
