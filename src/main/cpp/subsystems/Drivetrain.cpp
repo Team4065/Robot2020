@@ -34,9 +34,8 @@ void Drivetrain::Periodic() {
 
     switch(state.driveMode){
         case DriveMode::DRIVER:
-            
-            SetLeft(this->state.leftSpeedTarget, ControlMode::PercentOutput);
-            SetRight(this->state.leftSpeedTarget, ControlMode::PercentOutput);
+            left_front_master_.Set(ControlMode::PercentOutput, state.leftSpeedTarget);
+            right_front_master_.Set(ControlMode::PercentOutput, state.rightSpeedTarget);
             break;
     }
 
