@@ -32,7 +32,9 @@ Drivetrain::Drivetrain()
 // This method will be called once per scheduler run
 void Drivetrain::Periodic()
 {
-    //state.currentTime = 
+    state.pastTime = state.currentTime;
+    state.currentTime = frc::Timer::GetFPGATimestamp();
+    state.deltaTime = state.currentTime - state.pastTime;
 
     odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
 
@@ -134,5 +136,5 @@ Drivetrain &Drivetrain::GetInstance()
 }
 
 void Drivetrain::Tracking(){
-
+    
 }

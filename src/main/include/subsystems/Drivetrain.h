@@ -4,6 +4,7 @@
 #include <frc/geometry/Pose2d.h>
 #include <frc/kinematics/DifferentialDriveOdometry.h>
 #include <units/units.h>
+#include <networkTables/NetworkTable.h>
 #include <AHRS.h>
 
 #include "Constants.h"
@@ -32,6 +33,10 @@ public:
     double kP_tracking = 0;
     double kD_tracking = 0;
     double kF_tracking = 0;
+
+    double currentTime = 0;
+    double pastTime = 0;
+    double deltaTime = 0;
   };
 
   void ArcadeDrive(double fwd, double rot);
@@ -71,6 +76,8 @@ private:
   AHRS gyro_ { frc::SPI::Port::kMXP };
 
   frc::DifferentialDriveOdometry odometry_;
+
+  shared_ptr<nt::NetworkTable> limelight("limelight");
 
   Drivetrain();
 
