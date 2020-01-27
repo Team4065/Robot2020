@@ -136,5 +136,17 @@ Drivetrain &Drivetrain::GetInstance()
 }
 
 void Drivetrain::Tracking(){
+    //limelight->Set
+    double tx = limelight->GetNumber("tx", 0.0);
     
+    double error = -tx;// 0 - tx // 0 is always the target
+    static double pastError;
+    double deltaError = (pastError - error) / state.deltaTime;
+
+    double leftOutput = error * state.kP_tracking + deltaError * state.kD_tracking + (abs(error) / error) * state.kF_tracking;
+
+    state.leftTarget += leftOutput;
+    state.rightTarget -= leftOutput;
+
+    pastError = error;
 }

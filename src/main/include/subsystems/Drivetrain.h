@@ -6,7 +6,9 @@
 #include <frc/geometry/Pose2d.h>
 #include <frc/kinematics/DifferentialDriveOdometry.h>
 #include <units/units.h>
-#include <networkTables/NetworkTable.h>
+#include "networktables/NetworkTable.h"
+#include "networktables/NetworkTableEntry.h"
+#include "networktables/NetworkTableInstance.h"
 #include <AHRS.h>
 
 #include "Constants.h"
