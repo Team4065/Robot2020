@@ -29,7 +29,7 @@ public:
 
   struct State
   {
-    rev::ControlType outputMode = rev::ControlType::kVoltage;
+    rev::ControlType outputMode = rev::ControlType::kVelocity;
     float leftTarget = 0;
     float rightTarget = 0;
 
@@ -37,7 +37,6 @@ public:
     double kP_tracking = 0;
     double kD_tracking = 0;
     double kF_tracking = 0;
-
     double currentTime = 0;
     double pastTime = 0;
     double deltaTime = 0;
@@ -60,6 +59,9 @@ public:
   static Drivetrain& GetInstance();
   DISALLOW_COPY_AND_ASSIGN(Drivetrain);
   void Periodic();
+
+  static void SetLeft(double value);
+  static void SetRight(double value);
 
 private:
 

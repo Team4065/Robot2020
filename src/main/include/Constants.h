@@ -50,7 +50,7 @@ namespace constants
         constexpr int kVelocityPIDPort = 0;
         constexpr float kP_Velocity = 0;
         constexpr float kD_Velocity = 0;
-        constexpr float kF_Velocity = 0;
+        constexpr float kF_Velocity = 0.1;
 
         constexpr int kPositionPIDPort = 1;
 

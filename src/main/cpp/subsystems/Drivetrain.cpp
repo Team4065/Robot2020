@@ -152,3 +152,11 @@ void Drivetrain::Tracking(){
 
     pastError = error;
 }
+
+void Drivetrain::SetLeft(double value){
+    Drivetrain::GetInstance().state.leftTarget;
+}
+
+void Drivetrain::SetRight(double value){
+    Drivetrain::GetInstance().state.rightTarget;
+}
