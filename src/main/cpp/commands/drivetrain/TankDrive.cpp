@@ -9,7 +9,7 @@
 
 TankDrive::TankDrive(Drivetrain& _drivetrain) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({&_drivetrain})
+  AddRequirements({&_drivetrain});
 }
 
 // Called when the command is initially scheduled.
