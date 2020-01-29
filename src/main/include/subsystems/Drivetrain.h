@@ -13,6 +13,7 @@
 
 #include "Constants.h"
 #include "util/Macros.h"
+#include <iostream>
 
 #include "rev/CANSparkMax.h"
 

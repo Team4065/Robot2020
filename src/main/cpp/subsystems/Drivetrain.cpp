@@ -60,6 +60,7 @@ void Drivetrain::Periodic()
 
     Tracking();
 
+    std::cout << "left: " << state.leftTarget << " right: " << state.rightTarget << std::endl;
     left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected);
     right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected);
     
@@ -154,9 +155,9 @@ void Drivetrain::Tracking(){
 }
 
 void Drivetrain::SetLeft(double value){
-    Drivetrain::GetInstance().state.leftTarget;
+    Drivetrain::GetInstance().state.leftTarget = value;
 }
 
 void Drivetrain::SetRight(double value){
-    Drivetrain::GetInstance().state.rightTarget;
+    Drivetrain::GetInstance().state.rightTarget = value;
 }
