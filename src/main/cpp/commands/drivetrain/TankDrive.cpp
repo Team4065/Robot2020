@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/auto/drivetrain/TankDrive.h"
+#include "commands/drivetrain/TankDrive.h"
 
 TankDrive::TankDrive(Drivetrain& _drivetrain) {
   // Use addRequirements() here to declare subsystem dependencies.
@@ -17,7 +17,8 @@ void TankDrive::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void TankDrive::Execute() {
-  Drivetrain::Set
+  Drivetrain::SetLeft(controller.GetY(frc::XboxController::kLeftHand));
+  Drivetrain::SetRight(controller.GetY(frc::XboxController::kRightHand));
 }
 
 // Called once the command ends or is interrupted.

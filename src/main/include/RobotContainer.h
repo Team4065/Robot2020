@@ -10,6 +10,8 @@
 #include "subsystems/Drivetrain.h"
 #include "subsystems/ControlPanelManipulator.h"
 
+#include "commands/drivetrain/TankDrive.h"
+
 #include "Constants.h"
 
 class RobotContainer

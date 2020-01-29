@@ -9,6 +9,8 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <frc/XboxController.h>
+#include <Constants.h>
 
 #include "subsystems/Drivetrain.h"
 
@@ -31,4 +33,6 @@ class TankDrive
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+  frc::XboxController controller {constants::oi::kDriverXboxControllerPort};
 };
