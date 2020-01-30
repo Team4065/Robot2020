@@ -2,8 +2,14 @@
 
 #include <frc/TimedRobot.h>
 #include <frc2/command/Command.h>
+#include <frc/XboxController.h>
+#include <rev/CANSparkMax.h>
+#include <rev/CANPIDController.h>
+#include <rev/CANSparkMaxHeartbeat.h>
 
 #include "RobotContainer.h"
+
+
 
 class Robot : public frc::TimedRobot {
  public:
@@ -23,4 +29,12 @@ class Robot : public frc::TimedRobot {
   frc2::Command* m_autonomousCommand = nullptr;
 
   RobotContainer m_container;
+
+  rev::CANSparkMax left1 { 1 };
+  rev::CANSparkMax left2 { 2 };
+
+  rev::CANSparkMax right1 { 3 };
+  rev::CANSparkMax right2 { 4 };
+
+  frc::XboxController controller { 0 };
 };
