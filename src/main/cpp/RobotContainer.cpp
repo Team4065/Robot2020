@@ -2,8 +2,6 @@
 
 RobotContainer::RobotContainer() {
 
-  drivetrain_.SetDefaultCommand(TankDrive(drivetrain_));
-
   ConfigureButtonBindings();
 }
 

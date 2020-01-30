@@ -20,13 +20,7 @@ public:
   RobotContainer();
 
 private:
-  Shooter& shooter_ = Shooter::GetInstance();
-  Serializer& serializer_ = Serializer::GetInstance();
-  Intake& intake_ = Intake::GetInstance();
-  Drivetrain& drivetrain_ = Drivetrain::GetInstance();
-  ControlPanelManipulator& control_panel_manipulator_ = ControlPanelManipulator::GetInstance();
-
-  frc::XboxController controller_ { constants::oi::kDriverXboxControllerPort };
+  frc::XboxController controller_ { 0 };
 
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions
 
