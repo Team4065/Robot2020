@@ -36,7 +36,7 @@ public:
 
   struct State
   {
-    rev::ControlType outputMode = rev::ControlType::kVelocity;
+    rev::ControlType outputMode = rev::ControlType::kSmartVelocity;
     float leftTarget = 0;
     float rightTarget = 0;
 
@@ -69,6 +69,8 @@ public:
 
   static void SetLeft(double value);
   static void SetRight(double value);
+  static double GetLeft();
+  static double GetRight();
 
 private:
 

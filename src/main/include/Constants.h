@@ -49,11 +49,12 @@ namespace constants
         extern const frc::TrajectoryConfig kAutoConfig;
 
         const int kVelocityPIDPort = 0;
-        const float kVelocityRange = 100;
-        //const float kP_Velocity = 2.31/100;
+        const float kVelocityRange = 1000;
+        //const float kP_Velocity = 0;//2.31/100;
         //const float kD_Velocity = 0;
-        //const float kF_Velocity = 0;//0.00125;
-        //const float kArbiFeedForw = 0;//0.14;//units are in volts
+        //const float kF_Velocity = 0.00125;
+        //const float kArbiFeedForw = 0.14;//units are in volts
+        //const float kMaxAccel = 1;
 
         constexpr int kPositionPIDPort = 1;
 
