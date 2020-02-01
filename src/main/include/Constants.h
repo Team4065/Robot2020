@@ -32,10 +32,10 @@ namespace constants
     {
         const int kLeftFrontMotorPort = 3; // Inaccurate!
         const int kLeftMiddleMotorPort = 4; // Inaccurate!
-        const int kLeftRearMotorPort = 5; // Inaccurate!
-        const int kRightFrontMotorPort = 6; // Inaccurate!
-        const int kRightMiddleMotorPort = 7; // Inaccurate!
-        const int kRightRearMotorPort = 8; // Inaccurate!
+        //const int kLeftRearMotorPort = 5; // Inaccurate!
+        const int kRightFrontMotorPort = 1; // Inaccurate!
+        const int kRightMiddleMotorPort = 2; // Inaccurate!
+        //const int kRightRearMotorPort = 8; // Inaccurate!
         const bool kGyroReversed = false; // Inaccurate!
         const units::current::ampere_t kMaxCurrentDraw { 30.0 };
         const units::inch_t kWheelDiameter { 6.0 };
@@ -48,9 +48,11 @@ namespace constants
         extern const frc::TrajectoryConfig kAutoConfig;
 
         const int kVelocityPIDPort = 0;
+        const float kVelocityRange = 100;
         const float kP_Velocity = 0;
         const float kD_Velocity = 0;
-        const float kF_Velocity = 0.1;
+        const float kF_Velocity = 0.0025;
+        const float kArbiFeedForw = 0;
 
         constexpr int kPositionPIDPort = 1;
 

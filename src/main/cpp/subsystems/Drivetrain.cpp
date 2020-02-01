@@ -5,24 +5,26 @@ Drivetrain::Drivetrain()
 {
     left_front_master_.RestoreFactoryDefaults();
     left_middle_slave_.RestoreFactoryDefaults();
-    left_rear_slave_.RestoreFactoryDefaults();
+    //left_rear_slave_.RestoreFactoryDefaults();
     right_front_master_.RestoreFactoryDefaults();
     right_middle_slave_.RestoreFactoryDefaults();
-    right_rear_slave_.RestoreFactoryDefaults();
+    //right_rear_slave_.RestoreFactoryDefaults();
 
     left_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
     left_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    left_rear_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    //left_rear_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
 
     right_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
     right_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    right_rear_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+   // right_rear_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+
+    left_front_master_.SetInverted(true);
 
     left_middle_slave_.Follow(left_front_master_, false);
-    left_rear_slave_.Follow(left_front_master_, false);
+    //left_rear_slave_.Follow(left_front_master_, false);
 
     right_middle_slave_.Follow(right_front_master_, false);
-    right_rear_slave_.Follow(right_front_master_, false);
+    //right_rear_slave_.Follow(right_front_master_, false);
 
     left_pid_.SetP(constants::drivetrain::kP_Velocity, constants::drivetrain::kVelocityPIDPort);
     left_pid_.SetD(constants::drivetrain::kD_Velocity, constants::drivetrain::kVelocityPIDPort);
@@ -64,9 +66,13 @@ void Drivetrain::Periodic()
 
     Tracking();
 
-    std::cout << "left: " << state.leftTarget << " right: " << state.rightTarget << std::endl;
-    left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected);
-    right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected);
+    std::cout << "left target: " << state.leftTarget << " right target: " << state.rightTarget << std::endl;
+    std::cout << "left velocity: " << left_encoder_.GetVelocity() / 7.29 << " right velocity: " << right_encoder_.GetVelocity() / 7.29 << std::endl;
+    //std::cout << "left voltage: " << state.leftTarget << " right voltage: " << state.rightTarget << std::endl;
+    //left_front_master_.Set(state.leftTarget);
+    //right_front_master_.Set(state.rightTarget);
+    left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected, constants::drivetrain::kArbiFeedForw);
+    right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected, constants::drivetrain::kArbiFeedForw);
     
 }
 
@@ -117,21 +123,21 @@ void Drivetrain::NeutralMode(bool isEnable)
   {
     left_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     left_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-    left_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    //left_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
 
     right_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     right_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-    right_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    //right_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
   }
   else
   {
     left_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
     left_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-    left_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+    //left_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
 
     right_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
     right_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-    right_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+    //right_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
   }
 }
 Drivetrain &Drivetrain::GetInstance()
