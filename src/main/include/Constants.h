@@ -3,6 +3,7 @@
 #include <units/units.h>
 #include <frc/kinematics/DifferentialDriveKinematics.h>
 #include <frc/trajectory/TrajectoryConfig.h>
+#include <cmath>
 
 namespace constants
 {
@@ -49,10 +50,10 @@ namespace constants
 
         const int kVelocityPIDPort = 0;
         const float kVelocityRange = 100;
-        const float kP_Velocity = 0;
-        const float kD_Velocity = 0;
-        const float kF_Velocity = 0.0025;
-        const float kArbiFeedForw = 0;
+        //const float kP_Velocity = 2.31/100;
+        //const float kD_Velocity = 0;
+        //const float kF_Velocity = 0;//0.00125;
+        //const float kArbiFeedForw = 0;//0.14;//units are in volts
 
         constexpr int kPositionPIDPort = 1;
 
@@ -86,10 +87,10 @@ namespace constants
     }
     namespace joy_deadband
     {
-    inline float deadband(float joyValue)
-    {
-        
-        return (std::abs(joyValue) > 0.15f) ? joyValue : 0.0f;
-    }
+        inline float deadband(float joyValue)
+        {
+            
+            return (std::abs(joyValue) > 0.15f) ? joyValue : 0.0f;
+        }
     }
 }

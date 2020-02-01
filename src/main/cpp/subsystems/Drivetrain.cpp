@@ -1,5 +1,10 @@
 #include "subsystems/Drivetrain.h"
 
+std::shared_ptr<double> kP_Velocity;//2.31 / 100;
+std::shared_ptr<double> kD_Velocity;
+std::shared_ptr<double> kF_Velocity;
+std::shared_ptr<double> kArbiFeedForw;
+
 Drivetrain::Drivetrain()
     : odometry_(frc::Rotation2d(GetHeading()))
 {
@@ -26,6 +31,7 @@ Drivetrain::Drivetrain()
     right_middle_slave_.Follow(right_front_master_, false);
     //right_rear_slave_.Follow(right_front_master_, false);
 
+    /*
     left_pid_.SetP(constants::drivetrain::kP_Velocity, constants::drivetrain::kVelocityPIDPort);
     left_pid_.SetD(constants::drivetrain::kD_Velocity, constants::drivetrain::kVelocityPIDPort);
     left_pid_.SetFF(constants::drivetrain::kF_Velocity, constants::drivetrain::kVelocityPIDPort);
@@ -33,11 +39,28 @@ Drivetrain::Drivetrain()
     right_pid_.SetP(constants::drivetrain::kP_Velocity, constants::drivetrain::kVelocityPIDPort);
     right_pid_.SetD(constants::drivetrain::kD_Velocity, constants::drivetrain::kVelocityPIDPort);
     right_pid_.SetFF(constants::drivetrain::kF_Velocity, constants::drivetrain::kVelocityPIDPort);
+    */
+
+    // frc4065::ReferencedTunable::Register("kP", kP_Velocity);
+    // frc4065::ReferencedTunable::Register("kD", kD_Velocity);
+    // frc4065::ReferencedTunable::Register("kF", kF_Velocity);
+    // frc4065::ReferencedTunable::Register("kArbiFeedForw", kArbiFeedForw);
+    
 }
 
 // This method will be called once per scheduler run
 void Drivetrain::Periodic()
 {
+    
+    left_pid_.SetP(*kP_Velocity, constants::drivetrain::kVelocityPIDPort);
+    left_pid_.SetD(*kD_Velocity, constants::drivetrain::kVelocityPIDPort);
+    left_pid_.SetFF(*kF_Velocity, constants::drivetrain::kVelocityPIDPort);
+
+    right_pid_.SetP(*kP_Velocity, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetD(*kD_Velocity, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetFF(*kF_Velocity, constants::drivetrain::kVelocityPIDPort);
+    
+
     state.pastTime = state.currentTime;
     state.currentTime = frc::Timer::GetFPGATimestamp();
     state.deltaTime = state.currentTime - state.pastTime;
@@ -67,12 +90,15 @@ void Drivetrain::Periodic()
     Tracking();
 
     std::cout << "left target: " << state.leftTarget << " right target: " << state.rightTarget << std::endl;
-    std::cout << "left velocity: " << left_encoder_.GetVelocity() / 7.29 << " right velocity: " << right_encoder_.GetVelocity() / 7.29 << std::endl;
-    //std::cout << "left voltage: " << state.leftTarget << " right voltage: " << state.rightTarget << std::endl;
-    //left_front_master_.Set(state.leftTarget);
-    //right_front_master_.Set(state.rightTarget);
-    left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected, constants::drivetrain::kArbiFeedForw);
-    right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected, constants::drivetrain::kArbiFeedForw);
+    std::cout << "left velocity: " << left_encoder_.GetVelocity() / 7.49 << " right velocity: " << right_encoder_.GetVelocity() / 7.49 << std::endl;
+    //std::cout << "left voltage: " << state.leftTarget / 4 << " right voltage: " << state.rightTarget / 4 << std::endl;
+    //left_front_master_.Set((state.leftTarget / 12) / 4);
+    //right_front_master_.Set((state.leftTarget / 12) / 4);
+    //left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected, constants::drivetrain::kArbiFeedForw * abs(state.leftTarget) / state.leftTarget);
+    //right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected, constants::drivetrain::kArbiFeedForw * abs(state.rightTarget) / state.rightTarget);
+
+    // left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected, *kArbiFeedForw * abs(state.leftTarget) / state.leftTarget);
+    // right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected, *kArbiFeedForw * abs(state.rightTarget) / state.rightTarget);
     
 }
 
