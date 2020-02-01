@@ -27,6 +27,10 @@ Drivetrain::Drivetrain()
     left_pid_.SetP(constants::drivetrain::kP_Velocity, constants::drivetrain::kVelocityPIDPort);
     left_pid_.SetD(constants::drivetrain::kD_Velocity, constants::drivetrain::kVelocityPIDPort);
     left_pid_.SetFF(constants::drivetrain::kF_Velocity, constants::drivetrain::kVelocityPIDPort);
+
+    right_pid_.SetP(constants::drivetrain::kP_Velocity, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetD(constants::drivetrain::kD_Velocity, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetFF(constants::drivetrain::kF_Velocity, constants::drivetrain::kVelocityPIDPort);
 }
 
 // This method will be called once per scheduler run
@@ -148,13 +152,16 @@ void Drivetrain::Tracking(){
     double leftOutput = error * state.kP_tracking + deltaError * state.kD_tracking + (abs(error) / error) * state.kF_tracking;
 
     //may need to be put in a conditional to prevent tracking when it isn't supposed to be (the pipline shouldn't find a target during no tracking)
-    state.leftTarget += leftOutput;
-    state.rightTarget -= leftOutput;
+    if(state.trackingMode != TrackingMode::NONE){
+        state.leftTarget += leftOutput;
+        state.rightTarget -= leftOutput;
+    }
+
 
     pastError = error;
 }
 
-void Drivetrain::SetLeft(double value){
+void Drivetrain::SetLeft(double value){ 
     Drivetrain::GetInstance().state.leftTarget = value;
 }
 
