@@ -1,4 +1,6 @@
 //TODO test shaped drivetraindecceleration
+//TODO set up singleton lift
+//TODO make lift commands
 #include "Robot.h"
 
 #include <frc/smartdashboard/SmartDashboard.h>
