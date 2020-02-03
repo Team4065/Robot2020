@@ -31,11 +31,11 @@ namespace constants
     }
     namespace drivetrain
     {
-        const int kLeftFrontMotorPort = 3; // Inaccurate!
-        const int kLeftMiddleMotorPort = 4; // Inaccurate!
+        const int kLeftFrontMotorPort = 3;
+        const int kLeftMiddleMotorPort = 4; 
         //const int kLeftRearMotorPort = 5; // Inaccurate!
-        const int kRightFrontMotorPort = 1; // Inaccurate!
-        const int kRightMiddleMotorPort = 2; // Inaccurate!
+        const int kRightFrontMotorPort = 1; 
+        const int kRightMiddleMotorPort = 2; 
         //const int kRightRearMotorPort = 8; // Inaccurate!
         const bool kGyroReversed = false; // Inaccurate!
         const units::current::ampere_t kMaxCurrentDraw { 30.0 };
@@ -50,11 +50,12 @@ namespace constants
 
         const int kVelocityPIDPort = 0;
         const float kVelocityRange = 1000;
-        //const float kP_Velocity = 0;//2.31/100;
-        //const float kD_Velocity = 0;
-        //const float kF_Velocity = 0.00125;
-        //const float kArbiFeedForw = 0.14;//units are in volts
-        //const float kMaxAccel = 1;
+        const float kP_Velocity = 0;
+        const float kD_Velocity = 0;
+        const float kF_Velocity = 0.00125;
+        const float kArbiFeedForw = 0;//units are in volts
+        const float kMaxAccel = 500;
+        const float kMaxVelocity = 100;
 
         constexpr int kPositionPIDPort = 1;
 
@@ -68,12 +69,19 @@ namespace constants
     }
     namespace intake
     {
-        constexpr int kIntakeMotorPort = 0; // Inaccurate!
-        constexpr int kLeftSolenoidPorts[2] = { 0, 0 }; // Inaccurate!
-        constexpr int kRightSolenoidPorts[2] = { 0, 0 }; // Inaccurate!
+        constexpr int kIntakeMotorID = 10; // Inaccurate!
+        constexpr int kLeftSolenoidPorts[2] = { 0, 1 }; // Inaccurate!
+        constexpr int kRightSolenoidPorts[2] = { 2, 3 }; // Inaccurate!
         constexpr units::current::ampere_t kMaxCurrentDraw { 25.0 };
         constexpr float kMotorOperatingPercentage = 0.8f; // 
     }
+    namespace lift
+    {
+        const int kLeftSolenoidPorts[2] = { 4, 5 };
+        const int kRightSolenoidPorts[2] = { 6, 7 };
+        const int kMotorPorts[1] = { 11 };
+    } // namespace lift
+    
     namespace serializer
     {
 

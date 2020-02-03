@@ -9,3 +9,21 @@ Intake& Intake::GetInstance()
                                     // Instantiated on first use.
     return instance;
 }
+
+void Intake::Suck(){
+    motor.Set(kMotorOperatingPercentage);
+}
+
+void Intake::DontSuck(){
+    motor.Set(0);
+}
+
+void Intake::Up(){
+    leftSolenoid.Set(frc::DoubleSolenoid::kForward);
+    rightSolenoid.Set(frc::DoubleSolenoid::kForward);
+}
+
+void Intake::Down(){
+    leftSolenoid.Set(frc::DoubleSolenoid::kReverse);
+    rightSolenoid.Set(frc::DoubleSolenoid::kReverse);
+}

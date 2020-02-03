@@ -1,5 +1,6 @@
 #include "subsystems/Drivetrain.h"
 
+/*
 double kP_Velocity = 0;//2.31 / 100;
 double kD_Velocity = 0;
 double kF_Velocity = 0.00125;
@@ -7,6 +8,7 @@ double kArbiFeedForw = 0.130;
 
 double maxAccel = 500;
 double maxVelocity = 100;
+*/
 
 Drivetrain::Drivetrain()
     : odometry_(frc::Rotation2d(GetHeading()))
@@ -34,7 +36,6 @@ Drivetrain::Drivetrain()
     right_middle_slave_.Follow(right_front_master_, false);
     //right_rear_slave_.Follow(right_front_master_, false);
 
-    /*
     left_pid_.SetP(constants::drivetrain::kP_Velocity, constants::drivetrain::kVelocityPIDPort);
     left_pid_.SetD(constants::drivetrain::kD_Velocity, constants::drivetrain::kVelocityPIDPort);
     left_pid_.SetFF(constants::drivetrain::kF_Velocity, constants::drivetrain::kVelocityPIDPort);
@@ -43,24 +44,27 @@ Drivetrain::Drivetrain()
     right_pid_.SetD(constants::drivetrain::kD_Velocity, constants::drivetrain::kVelocityPIDPort);
     right_pid_.SetFF(constants::drivetrain::kF_Velocity, constants::drivetrain::kVelocityPIDPort);
 
-    left_pid_.SetSmartMotionMaxAccel(constants::drivetrain::maxAccel, constants::drivetrain::kVelocityPIDPort);
-    right_pid_.SetSmartMotionMaxAccel(constants::drivetrain::maxAccel, constants::drivetrain::kVelocityPIDPort);
-    */
+    left_pid_.SetSmartMotionMaxAccel(constants::drivetrain::kMaxAccel, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetSmartMotionMaxAccel(constants::drivetrain::kMaxAccel, constants::drivetrain::kVelocityPIDPort);
+    
+    left_pid_.SetSmartMotionMaxVelocity(constants::drivetrain::kMaxVelocity, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetSmartMotionMaxVelocity(constants::drivetrain::kMaxVelocity, constants::drivetrain::kVelocityPIDPort);
 
 
-
+   /*
     frc4065::ReferencedTunable::Register("kP", kP_Velocity);
     frc4065::ReferencedTunable::Register("kD", kD_Velocity);
     frc4065::ReferencedTunable::Register("kF", kF_Velocity);
     frc4065::ReferencedTunable::Register("kArbiFeedForw", kArbiFeedForw);
     frc4065::ReferencedTunable::Register("maxAccel", maxAccel);
     frc4065::ReferencedTunable::Register("maxVelocity", maxVelocity);
+    */
 }
 
 // This method will be called once per scheduler run
 void Drivetrain::Periodic()
 {
-    
+    /*
     left_pid_.SetP(kP_Velocity, constants::drivetrain::kVelocityPIDPort);
     left_pid_.SetD(kD_Velocity, constants::drivetrain::kVelocityPIDPort);
     left_pid_.SetFF(kF_Velocity, constants::drivetrain::kVelocityPIDPort);
@@ -74,6 +78,7 @@ void Drivetrain::Periodic()
 
     left_pid_.SetSmartMotionMaxAccel(maxAccel, constants::drivetrain::kVelocityPIDPort);
     right_pid_.SetSmartMotionMaxAccel(maxAccel, constants::drivetrain::kVelocityPIDPort);
+    */
 
     state.pastTime = state.currentTime;
     state.currentTime = frc::Timer::GetFPGATimestamp();
@@ -103,16 +108,16 @@ void Drivetrain::Periodic()
 
     Tracking();
 
-    std::cout << "left target: " << state.leftTarget << " right target: " << state.rightTarget << std::endl;
-    std::cout << "left velocity: " << left_encoder_.GetVelocity() / 7.49 << " right velocity: " << right_encoder_.GetVelocity() / 7.49 << std::endl;
+    //std::cout << "left target: " << state.leftTarget << " right target: " << state.rightTarget << std::endl;
+    //std::cout << "left velocity: " << left_encoder_.GetVelocity() / 7.49 << " right velocity: " << right_encoder_.GetVelocity() / 7.49 << std::endl;
     //std::cout << "left voltage: " << state.leftTarget / 4 << " right voltage: " << state.rightTarget / 4 << std::endl;
     //left_front_master_.Set((state.leftTarget / 12) / 4);
     //right_front_master_.Set((state.leftTarget / 12) / 4);
-    //left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected, constants::drivetrain::kArbiFeedForw * abs(state.leftTarget) / state.leftTarget);
-    //right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected, constants::drivetrain::kArbiFeedForw * abs(state.rightTarget) / state.rightTarget);
+    left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected, constants::drivetrain::kArbiFeedForw * abs(state.leftTarget) / state.leftTarget);
+    right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected, constants::drivetrain::kArbiFeedForw * abs(state.rightTarget) / state.rightTarget);
 
-    left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected, kArbiFeedForw * abs(state.leftTarget) / state.leftTarget);
-    right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected, kArbiFeedForw * abs(state.rightTarget) / state.rightTarget);
+    //left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected, kArbiFeedForw * abs(state.leftTarget) / state.leftTarget);
+    //right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected, kArbiFeedForw * abs(state.rightTarget) / state.rightTarget);
     
 }
 
@@ -211,8 +216,8 @@ void Drivetrain::SetLeft(double value){
     if(abs(value) < abs(Drivetrain::GetInstance().state.leftTarget))
     {
         double offset = value - Drivetrain::GetInstance().state.leftTarget;
-        if(abs(offset) > maxAccel / (pow(60, 2) * 50))// rot/min^2 * (1min/60sec)^2 * (1sec/50cycles)
-            Drivetrain::GetInstance().state.leftTarget += (abs(offset) / offset) * maxAccel / (pow(60, 2) * 50);
+        if(abs(offset) > constants::drivetrain::kMaxAccel / (pow(60, 2) * 50))// rot/min^2 * (1min/60sec)^2 * (1sec/50cycles)
+            Drivetrain::GetInstance().state.leftTarget += (abs(offset) / offset) * constants::drivetrain::kMaxAccel / (pow(60, 2) * 50);
         else
             Drivetrain::GetInstance().state.leftTarget += offset;
     }else
@@ -225,8 +230,8 @@ void Drivetrain::SetRight(double value){
     if(abs(value) < abs(Drivetrain::GetInstance().state.rightTarget))
     {
         double offset = value - Drivetrain::GetInstance().state.rightTarget;
-        if(abs(offset) > maxAccel / (pow(60, 2) * 50))//60 seconds per minute, 50 updates per second
-            Drivetrain::GetInstance().state.rightTarget += (abs(offset) / offset) * maxAccel / (pow(60, 2) * 50);
+        if(abs(offset) > constants::drivetrain::kMaxAccel / (pow(60, 2) * 50))//60 seconds per minute, 50 updates per second
+            Drivetrain::GetInstance().state.rightTarget += (abs(offset) / offset) * constants::drivetrain::kMaxAccel / (pow(60, 2) * 50);
         else
             Drivetrain::GetInstance().state.rightTarget += offset;
     }else
