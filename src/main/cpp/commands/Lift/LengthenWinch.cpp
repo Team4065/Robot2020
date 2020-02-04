@@ -5,23 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Lift/ExtendLift.h"
+#include "commands/Lift/LengthenWinch.h"
 
-ExtendLift::ExtendLift(Lift& lift) {
+LengthenWinch::LengthenWinch(Lift& lift) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({&lift});
 }
 
 // Called when the command is initially scheduled.
-void ExtendLift::Initialize() {}
+void LengthenWinch::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void ExtendLift::Execute() {
-  Lift::GetInstance().Extend();
+void LengthenWinch::Execute() {
+  Lift::GetInstance().LengthenWinch();
 }
 
 // Called once the command ends or is interrupted.
-void ExtendLift::End(bool interrupted) {}
+void LengthenWinch::End(bool interrupted) {
+  Lift::GetInstance().StopWinch();
+}
 
 // Returns true when the command should end.
-bool ExtendLift::IsFinished() { return false; }
+bool LengthenWinch::IsFinished() { return false; }

@@ -7,7 +7,11 @@
 
 #include "subsystems/Lift.h"
 
-Lift::Lift() {}
+Lift& Lift::GetInstance(){
+    static Lift instance;  // Guaranteed to be destroyed.
+                                    // Instantiated on first use.
+    return instance;
+}
 
 // This method will be called once per scheduler run
 void Lift::Periodic() {}
@@ -28,4 +32,8 @@ void Lift::ShortenWinch(){
 
 void Lift::LengthenWinch(){
     motor.Set(1);
+}
+
+void Lift::StopWinch(){
+    motor.Set(0);
 }

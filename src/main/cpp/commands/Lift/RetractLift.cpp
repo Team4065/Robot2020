@@ -5,23 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Lift/ExtendLift.h"
+#include "commands/Lift/RetractLift.h"
 
-ExtendLift::ExtendLift(Lift& lift) {
+RetractLift::RetractLift(Lift& lift) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({&lift});
 }
 
 // Called when the command is initially scheduled.
-void ExtendLift::Initialize() {}
+void RetractLift::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void ExtendLift::Execute() {
-  Lift::GetInstance().Extend();
+void RetractLift::Execute() {
+  Lift::GetInstance().Retract();
 }
 
 // Called once the command ends or is interrupted.
-void ExtendLift::End(bool interrupted) {}
+void RetractLift::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool ExtendLift::IsFinished() { return false; }
+bool RetractLift::IsFinished() { return false; }

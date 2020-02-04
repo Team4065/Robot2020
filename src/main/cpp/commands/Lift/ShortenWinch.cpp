@@ -5,23 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Lift/ExtendLift.h"
+#include "commands/Lift/ShortenWinch.h"
 
-ExtendLift::ExtendLift(Lift& lift) {
+ShortenWinch::ShortenWinch(Lift& lift) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({&lift});
 }
 
 // Called when the command is initially scheduled.
-void ExtendLift::Initialize() {}
+void ShortenWinch::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void ExtendLift::Execute() {
-  Lift::GetInstance().Extend();
+void ShortenWinch::Execute() {
+  Lift::GetInstance().ShortenWinch();
 }
 
 // Called once the command ends or is interrupted.
-void ExtendLift::End(bool interrupted) {}
+void ShortenWinch::End(bool interrupted) {
+  Lift::GetInstance().StopWinch();
+}
 
 // Returns true when the command should end.
-bool ExtendLift::IsFinished() { return false; }
+bool ShortenWinch::IsFinished() { return false; }

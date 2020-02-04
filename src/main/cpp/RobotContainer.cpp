@@ -4,6 +4,7 @@ RobotContainer::RobotContainer() {
 
   drivetrain_.SetDefaultCommand(TankDrive(drivetrain_));
   intake_.SetDefaultCommand(DontSuck(intake_));
+  lift_.SetDefaultCommand(RetractLift(lift_));
 
   ConfigureButtonBindings();
 }

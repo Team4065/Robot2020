@@ -13,17 +13,15 @@
 #include <rev/CANSparkMax.h>
 #include <ctre/Phoenix.h>
 
+#include "util/Macros.h"
 #include <Constants.h>
 
 using namespace constants::lift;
 
 class Lift : public frc2::SubsystemBase {
  public:
-  Lift();
-
-  /**
-   * Will be called periodically whenever the CommandScheduler runs.
-   */
+  static Lift& GetInstance();
+  DISALLOW_COPY_AND_ASSIGN(Lift);
   void Periodic();
 
   void Extend();
@@ -31,13 +29,15 @@ class Lift : public frc2::SubsystemBase {
 
   void ShortenWinch();
   void LengthenWinch();
+  void StopWinch();
 
  private:
+  Lift() = default;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  frc::DoubleSolenoid left { kLeftSolenoidPorts[0], kLeftSolenoidPorts[1] };
-  frc::DoubleSolenoid right { kRightSolenoidPorts[0], kRightSolenoidPorts[1] };
+  frc::DoubleSolenoid left { constants::lift::kLeftSolenoidPorts[0], constants::lift::kLeftSolenoidPorts[1] };
+  frc::DoubleSolenoid right { constants::lift::kRightSolenoidPorts[0], constants::lift::kRightSolenoidPorts[1] };
 
   rev::CANSparkMax motor { kMotorPorts[0], rev::CANSparkMax::MotorType::kBrushless};
 };
