@@ -20,8 +20,8 @@ public:
   void Suck();
   void DontSuck();
 
-  void Up();
-  void Down();
+  void Retract();
+  void Extend();
 
   bool isDeployed = false;
 private:

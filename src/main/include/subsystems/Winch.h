@@ -9,35 +9,30 @@
 
 #include <frc2/command/SubsystemBase.h>
 
-#include <frc/DoubleSolenoid.h>
+#include "Constants.h"
+
 #include <rev/CANSparkMax.h>
+#include <ctre/Phoenix.h>
 
+using namespace constants::winch;
 
-#include "util/Macros.h"
-#include <Constants.h>
-
-using namespace constants::lift;
-
-class Lift : public frc2::SubsystemBase {
+class Winch : public frc2::SubsystemBase {
  public:
-  static Lift& GetInstance();
-  DISALLOW_COPY_AND_ASSIGN(Lift);
+  static Winch& GetInstance();
+  DISALLOW_COPY_AND_ASSIGN(Winch);
+
+  /**
+   * Will be called periodically whenever the CommandScheduler runs.
+   */
   void Periodic();
 
-  void Extend();
-  void Retract();
-
-  void ShortenWinch();
-  void LengthenWinch();
-  void StopWinch();
+  void MoveRight();
+  void DontMove();
+  void MoveLeft();
 
  private:
-  Lift() = default;
+  Winch() = default;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
-
-  frc::DoubleSolenoid left { constants::lift::kLeftSolenoidPorts[0], constants::lift::kLeftSolenoidPorts[1] };
-  frc::DoubleSolenoid right { constants::lift::kRightSolenoidPorts[0], constants::lift::kRightSolenoidPorts[1] };
-  
-  rev::CANSparkMax motor { kMotorPorts[0], rev::CANSparkMax::}
+  rev::CANSparkMax motor { kMotorPorts[0], rev::CANSparkMax::MotorType::kBrushless};
 };

@@ -18,12 +18,14 @@ void Intake::DontSuck(){
     motor.Set(0);
 }
 
-void Intake::Up(){
+void Intake::Retract(){
+    isDeployed = false;
     leftSolenoid.Set(frc::DoubleSolenoid::kForward);
     rightSolenoid.Set(frc::DoubleSolenoid::kForward);
 }
 
-void Intake::Down(){
+void Intake::Extend(){
+    isDeployed = true;
     leftSolenoid.Set(frc::DoubleSolenoid::kReverse);
     rightSolenoid.Set(frc::DoubleSolenoid::kReverse);
 }

@@ -5,28 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Intake/Suck.h"
+#include "commands/Intake/RetractIntake.h"
 
-Suck::Suck(Intake& intake) {
+RetractIntake::RetractIntake(Intake& intake) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({&intake});
 }
 
 // Called when the command is initially scheduled.
-void Suck::Initialize() {}
+void RetractIntake::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void Suck::Execute() {
-  if(Intake::GetInstance().isDeployed)
-    Intake::GetInstance().Suck();
-  else
-    Intake::GetInstance().DontSuck();
+void RetractIntake::Execute() {
+  Intake::GetInstance().Retract();
 }
 
 // Called once the command ends or is interrupted.
-void Suck::End(bool interrupted) {
-  Intake::GetInstance().DontSuck();
-}
+void RetractIntake::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool Suck::IsFinished() { return false; }
+bool RetractIntake::IsFinished() { return false; }

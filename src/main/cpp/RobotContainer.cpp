@@ -3,14 +3,18 @@
 RobotContainer::RobotContainer() {
 
   drivetrain_.SetDefaultCommand(TankDrive(drivetrain_));
-  intake_.SetDefaultCommand(DontSuck(intake_));
-  lift_.SetDefaultCommand(RetractLift(lift_));
+  intake_.SetDefaultCommand(IntakeDefaultState(intake_));
+  lift_.SetDefaultCommand(LiftDefaultState(lift_));
 
   ConfigureButtonBindings();
 }
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here 
-  SuckButton.WhenHeld(Suck(intake_));
-  ToggleIntakeDeploymentStateButton.WhenPressed(DeployIntake(intake_));
+  
+  IntakeButton.ToggleWhenPressed(DeployAndSuck(intake_));
+
+  ToggleLiftExtensionButton.ToggleWhenPressed(ExtendLift(lift_));
+  LengthenWinchButton.WhenHeld(ShortenWinch(lift_));
+  ShortenWinchButton.WhenHeld(LengthenWinch(lift_));
 }

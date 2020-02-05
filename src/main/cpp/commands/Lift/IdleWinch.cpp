@@ -5,28 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Intake/Suck.h"
+#include "commands/Lift/IdleWinch.h"
 
-Suck::Suck(Intake& intake) {
+IdleWinch::IdleWinch(Lift& lift) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({&intake});
+  AddRequirements({&lift});
 }
 
 // Called when the command is initially scheduled.
-void Suck::Initialize() {}
+void IdleWinch::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void Suck::Execute() {
-  if(Intake::GetInstance().isDeployed)
-    Intake::GetInstance().Suck();
-  else
-    Intake::GetInstance().DontSuck();
+void IdleWinch::Execute() {
+  Lift::GetInstance().StopWinch();
 }
 
 // Called once the command ends or is interrupted.
-void Suck::End(bool interrupted) {
-  Intake::GetInstance().DontSuck();
-}
+void IdleWinch::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool Suck::IsFinished() { return false; }
+bool IdleWinch::IsFinished() { return false; }

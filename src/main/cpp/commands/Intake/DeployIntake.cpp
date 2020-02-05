@@ -13,15 +13,12 @@ DeployIntake::DeployIntake(Intake& intake) {
 }
 
 // Called when the command is initially scheduled.
-void DeployIntake::Initialize() {
-  if(Intake::GetInstance().isDeployed)
-    Intake::GetInstance().Up();
-  else
-    Intake::GetInstance().Down();
-}
+void DeployIntake::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void DeployIntake::Execute() {}
+void DeployIntake::Execute() {
+  Intake::GetInstance().Extend();
+}
 
 // Called once the command ends or is interrupted.
 void DeployIntake::End(bool interrupted) {}

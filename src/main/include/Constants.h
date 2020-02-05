@@ -79,9 +79,10 @@ namespace constants
     {
         const int kLeftSolenoidPorts[2] = { 4, 5 };
         const int kRightSolenoidPorts[2] = { 6, 7 };
+
         const int kMotorPorts[1] = { 11 };
     } // namespace lift
-    
+     
     namespace serializer
     {
 
