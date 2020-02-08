@@ -14,4 +14,22 @@ ControlPanelManipulator& ControlPanelManipulator::GetInstance()
 }
 
 // This method will be called once per scheduler run
-void ControlPanelManipulator::Periodic() {}
+void ControlPanelManipulator::Periodic() {
+
+}
+
+std::pair<frc::Color, double> GetColorAndConfidence() const
+{
+    static double confidence_ = 0.0;
+    frc::Color detected_ = color_sensor_.GetColor();
+    frc::Color matched_color_  color_matcher_.MatchClosestColor(detected_, confidence_);
+
+    return { matched_color_, confidence_ };
+}
+
+void ControlPanelManipulator::ControlPanelManipulator() {
+    color_matcher_.AddColorMatch(kBlueTarget);
+    color_matcher_.AddColorMatch(kYellowTarget);
+    color_matcher_.AddColorMatch(kRedTarget);
+    color_matcher_.AddColorMatch(kGreenTarget);
+}
