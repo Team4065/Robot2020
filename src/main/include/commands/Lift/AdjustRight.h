@@ -7,16 +7,28 @@
 
 #pragma once
 
+#include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc2/command/ParallelCommandGroup.h>
-#include <frc2/command/PrintCommand.h>
 
-#include "commands/Intake/DeployIntake.h"
-#include "commands/Intake/Suck.h"
+#include "subsystems/Lift.h"
 
-class DeployAndSuck
-    : public frc2::CommandHelper<frc2::ParallelCommandGroup,
-                                 DeployAndSuck> {
+/**
+ * An example command.
+ *
+ * <p>Note that this extends CommandHelper, rather extending CommandBase
+ * directly; this is crucially important, or else the decorator functions in
+ * Command will *not* work!
+ */
+class AdjustRight
+    : public frc2::CommandHelper<frc2::CommandBase, AdjustRight> {
  public:
-  DeployAndSuck(Intake& intake);
+  AdjustRight(Lift& lift);
+
+  void Initialize() override;
+
+  void Execute() override;
+
+  void End(bool interrupted) override;
+
+  bool IsFinished() override;
 };

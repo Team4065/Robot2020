@@ -13,15 +13,21 @@ DeployIntake::DeployIntake(Intake& intake) {
 }
 
 // Called when the command is initially scheduled.
-void DeployIntake::Initialize() {}
+void DeployIntake::Initialize() {
+  if(Intake::GetInstance().isDeployed)
+    std::cout << "Stow Intake" << std::endl;
+  else
+    std::cout << "Deploy Intake" << std::endl;
+  Intake::GetInstance().isDeployed = !Intake::GetInstance().isDeployed;
+  //Intake::GetInstance().isDeployed = true;
+  //Intake::GetInstance().Extend();
+}
 
 // Called repeatedly when this Command is scheduled to run
-void DeployIntake::Execute() {
-  Intake::GetInstance().Extend();
-}
+void DeployIntake::Execute() {}
 
 // Called once the command ends or is interrupted.
 void DeployIntake::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool DeployIntake::IsFinished() { return false; }
+bool DeployIntake::IsFinished() { return true; }

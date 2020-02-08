@@ -17,12 +17,13 @@ void ShortenWinch::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void ShortenWinch::Execute() {
-  Lift::GetInstance().ShortenWinch();
+  std::cout << "Shorten Winch" << std::endl;
+  //Lift::GetInstance().ShortenWinch();
 }
 
 // Called once the command ends or is interrupted.
 void ShortenWinch::End(bool interrupted) {
-  Lift::GetInstance().StopWinch();
+  //Lift::GetInstance().StopWinch();
 }
 
 // Returns true when the command should end.

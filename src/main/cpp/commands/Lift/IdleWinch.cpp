@@ -17,7 +17,8 @@ void IdleWinch::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void IdleWinch::Execute() {
-  Lift::GetInstance().StopWinch();
+  std::cout << "Idle Winch" << std::endl;
+  //Lift::GetInstance().StopWinch();
 }
 
 // Called once the command ends or is interrupted.

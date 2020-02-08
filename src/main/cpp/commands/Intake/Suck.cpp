@@ -17,15 +17,18 @@ void Suck::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void Suck::Execute() {
-  if(Intake::GetInstance().isDeployed)
-    Intake::GetInstance().Suck();
-  else
-    Intake::GetInstance().DontSuck();
+
+  if(Intake::GetInstance().isDeployed){
+    std::cout << "Suck" << std::endl;
+    //Intake::GetInstance().Suck();
+  }else
+    std::cout << "Don't Suck" << std::endl;
+    //Intake::GetInstance().DontSuck();
 }
 
 // Called once the command ends or is interrupted.
 void Suck::End(bool interrupted) {
-  Intake::GetInstance().DontSuck();
+  //Intake::GetInstance().DontSuck();
 }
 
 // Returns true when the command should end.

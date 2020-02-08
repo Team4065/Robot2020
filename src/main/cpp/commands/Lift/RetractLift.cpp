@@ -17,7 +17,8 @@ void RetractLift::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void RetractLift::Execute() {
-  Lift::GetInstance().Retract();
+  std::cout << "Retract Lift" << std::endl;
+  //Lift::GetInstance().Retract();
 }
 
 // Called once the command ends or is interrupted.

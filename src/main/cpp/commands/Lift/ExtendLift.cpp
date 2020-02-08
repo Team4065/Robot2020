@@ -17,7 +17,8 @@ void ExtendLift::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void ExtendLift::Execute() {
-  Lift::GetInstance().Extend();
+  std::cout << "Extend Lift" << std::endl;
+  //Lift::GetInstance().Extend();
 }
 
 // Called once the command ends or is interrupted.

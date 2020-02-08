@@ -7,15 +7,28 @@
 
 #pragma once
 
+#include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc2/command/ParallelCommandGroup.h>
 
-#include "commands/Intake/RetractIntake.h"
-#include "commands/Intake/DontSuck.h"
+#include "subsystems/Lift.h"
 
-class IntakeDefaultState
-    : public frc2::CommandHelper<frc2::ParallelCommandGroup,
-                                 IntakeDefaultState> {
+/**
+ * An example command.
+ *
+ * <p>Note that this extends CommandHelper, rather extending CommandBase
+ * directly; this is crucially important, or else the decorator functions in
+ * Command will *not* work!
+ */
+class AdjustLeft
+    : public frc2::CommandHelper<frc2::CommandBase, AdjustLeft> {
  public:
-  IntakeDefaultState(Intake& intake);
+  AdjustLeft(Lift& lift);
+
+  void Initialize() override;
+
+  void Execute() override;
+
+  void End(bool interrupted) override;
+
+  bool IsFinished() override;
 };

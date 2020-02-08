@@ -5,16 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Intake/IntakeDefaultState.h"
+#pragma once
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.
-// For more information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-IntakeDefaultState::IntakeDefaultState(Intake& intake) {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
-  AddCommands(
-    RetractIntake(intake),
-    DontSuck(intake)
-  );
-}
+#include <frc2/command/CommandHelper.h>
+#include <frc2/command/SequentialCommandGroup.h>
+#include "commands/Intake/DeployIntake.h"
+#include "commands/Intake/DeployAndSuck.h"
+#include "subsystems/Intake.h"
+
+class test
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
+                                 test> {
+ public:
+  test(Intake& intake);
+};

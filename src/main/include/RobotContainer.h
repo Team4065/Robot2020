@@ -17,7 +17,7 @@
 #include "commands/Intake/Suck.h"
 #include "commands/Intake/DontSuck.h"
 #include "commands/Intake/DeployIntake.h"
-#include "commands/Intake/IntakeDefaultState.h"
+#include "commands/Intake/RetractIntake.h"
 #include "commands/Intake/DeployAndSuck.h"
 
 #include "commands/Lift/RetractLift.h"
@@ -26,28 +26,31 @@
 #include "commands/Lift/ShortenWinch.h"
 #include "commands/Lift/LiftDefaultState.h"
 
+#include "frc2\command\button\JoystickButton.h"
+
+#include "commands/test.h"
+
+
 #include "Constants.h"
 
 class RobotContainer
 {
 public:
   RobotContainer();
-
+ 
+  Intake& intake_ = Intake::GetInstance();
 private:
   Shooter& shooter_ = Shooter::GetInstance();
   Serializer& serializer_ = Serializer::GetInstance();
-  Intake& intake_ = Intake::GetInstance();
+
   Lift& lift_ = Lift::GetInstance();
   Drivetrain& drivetrain_ = Drivetrain::GetInstance();
   ControlPanelManipulator& control_panel_manipulator_ = ControlPanelManipulator::GetInstance();
 
   frc::XboxController controller_ { constants::oi::kDriverXboxControllerPort };
 
-  frc2::JoystickButton IntakeButton { &controller_, 0 };
-
-  frc2::JoystickButton ToggleLiftExtensionButton { &controller_, 2 };
-  frc2::JoystickButton LengthenWinchButton { &controller_, 3 };
-  frc2::JoystickButton ShortenWinchButton { &controller_, 4 };
+  frc2::JoystickButton suckIntakeButton { &controller_, 1 };
+  frc2::JoystickButton retractIntakeButton { &controller_, 2 };
 
 
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions

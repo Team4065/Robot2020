@@ -31,13 +31,18 @@ class Lift : public frc2::SubsystemBase {
   void LengthenWinch();
   void StopWinch();
 
+  void MoveLeft();
+  void MoveRight();
+  void DontMove();
+
  private:
   Lift() = default;
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  frc::DoubleSolenoid left { constants::lift::kLeftSolenoidPorts[0], constants::lift::kLeftSolenoidPorts[1] };
-  frc::DoubleSolenoid right { constants::lift::kRightSolenoidPorts[0], constants::lift::kRightSolenoidPorts[1] };
+  frc::DoubleSolenoid leftPiston { constants::lift::kLeftSolenoidPorts[0], constants::lift::kLeftSolenoidPorts[1] };
+  frc::DoubleSolenoid rightPiston { constants::lift::kRightSolenoidPorts[0], constants::lift::kRightSolenoidPorts[1] };
   
-  rev::CANSparkMax motor { kMotorPorts[0], rev::CANSparkMax::}
+  rev::CANSparkMax winchMotor { kMotorPorts[0], rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANSparkMax adjustorMotor { kMotorPorts[1] , rev::CANSparkMax::MotorType::kBrushless };
 };

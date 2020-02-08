@@ -5,26 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Lift/LengthenWinch.h"
+#include "commands/Lift/AdjustRight.h"
+#include <iostream>
 
-LengthenWinch::LengthenWinch(Lift& lift) {
+AdjustRight::AdjustRight(Lift& lift) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({&lift});
 }
 
 // Called when the command is initially scheduled.
-void LengthenWinch::Initialize() {}
+void AdjustRight::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void LengthenWinch::Execute() {
-  std::cout << "Lengten Winch" << std::endl;
-  //Lift::GetInstance().LengthenWinch();
+void AdjustRight::Execute() {
+  std::cout << "Adjusting Right Lift" << std::endl;
+  //Lift::GetInstance().MoveRight();
 }
 
 // Called once the command ends or is interrupted.
-void LengthenWinch::End(bool interrupted) {
-  //Lift::GetInstance().StopWinch();
+void AdjustRight::End(bool interrupted) {
+  //Lift::GetInstance().DontMove();
 }
 
 // Returns true when the command should end.
-bool LengthenWinch::IsFinished() { return false; }
+bool AdjustRight::IsFinished() { return false; }

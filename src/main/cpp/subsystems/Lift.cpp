@@ -17,23 +17,35 @@ Lift& Lift::GetInstance(){
 void Lift::Periodic() {}
 
 void Lift::Extend(){
-    left.Set(frc::DoubleSolenoid::kForward);
-    right.Set(frc::DoubleSolenoid::kForward);
+    leftPiston.Set(frc::DoubleSolenoid::kForward);
+    rightPiston.Set(frc::DoubleSolenoid::kForward);
 }
 
 void Lift::Retract(){
-    left.Set(frc::DoubleSolenoid::kReverse);
-    right.Set(frc::DoubleSolenoid::kReverse);
+    leftPiston.Set(frc::DoubleSolenoid::kReverse);
+    rightPiston.Set(frc::DoubleSolenoid::kReverse);
 }
 
 void Lift::ShortenWinch(){
-    motor.Set(-1);
+    winchMotor.Set(-1);
 }
 
 void Lift::LengthenWinch(){
-    motor.Set(1);
+    winchMotor.Set(1);
 }
 
 void Lift::StopWinch(){
-    motor.Set(0);
+    winchMotor.Set(0);
+}
+
+void Lift::MoveLeft(){
+    adjustorMotor.Set(1);
+}
+
+void Lift::MoveRight(){
+    adjustorMotor.Set(-1);
+}
+
+void Lift::DontMove(){
+    adjustorMotor.Set(0);
 }

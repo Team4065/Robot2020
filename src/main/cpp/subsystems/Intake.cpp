@@ -19,13 +19,11 @@ void Intake::DontSuck(){
 }
 
 void Intake::Retract(){
-    isDeployed = false;
     leftSolenoid.Set(frc::DoubleSolenoid::kForward);
     rightSolenoid.Set(frc::DoubleSolenoid::kForward);
 }
 
 void Intake::Extend(){
-    isDeployed = true;
     leftSolenoid.Set(frc::DoubleSolenoid::kReverse);
     rightSolenoid.Set(frc::DoubleSolenoid::kReverse);
 }
