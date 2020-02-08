@@ -5,27 +5,26 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/TankDrive.h"
+#include "commands/ArcadeTest.h"
 #include <iostream>
 
-TankDrive::TankDrive(Drivetrain& drivetrain) {
+ArcadeTest::ArcadeTest(Drivetrain& drivetrain) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({&drivetrain});
 }
 
 // Called when the command is initially scheduled.
-void TankDrive::Initialize() {
-  Drivetrain::GetInstance().state.driveMode = Drivetrain::DriveMode::DRIVER;
-}
+void ArcadeTest::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void TankDrive::Execute() {
-  Drivetrain::GetInstance().state.leftSpeedTarget = controller.GetY(frc::XboxController::JoystickHand::kLeftHand);
-  Drivetrain::GetInstance().state.rightSpeedTarget = controller.GetY(frc::XboxController::JoystickHand::kRightHand);
+void ArcadeTest::Execute() {
+  std::cout << controller.GetY(frc::GenericHID::kLeftHand) << std::endl;
+  Drivetrain::GetInstance().left_front_master_.Set(ControlMode::PercentOutput, controller.GetY(frc::GenericHID::kLeftHand) + controller.GetX(frc::GenericHID::kRightHand));
+  Drivetrain::GetInstance().right_front_master_.Set(ControlMode::PercentOutput, controller.GetY(frc::GenericHID::kLeftHand) - controller.GetX(frc::GenericHID::kRightHand));
 }
 
 // Called once the command ends or is interrupted.
-void TankDrive::End(bool interrupted) {}
+void ArcadeTest::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool TankDrive::IsFinished() { return false; }
+bool ArcadeTest::IsFinished() { return false; }

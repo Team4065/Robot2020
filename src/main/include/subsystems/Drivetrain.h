@@ -56,8 +56,6 @@ public:
   void SetTrackingTarget(TrackingTarget);
   void Tracking();
 
-private:
-  
   State state;
 
   TalonSRX left_front_master_ {constants::drivetrain::kLeftFrontMotorPort};
@@ -67,6 +65,12 @@ private:
   TalonSRX right_front_master_ { constants::drivetrain::kRightFrontMotorPort };
   VictorSPX right_middle_ { constants::drivetrain::kRightMiddleMotorPort };
   VictorSPX right_rear_ { constants::drivetrain::kRightRearMotorPort };
+
+private:
+  
+  
+
+
 
   Drivetrain();
 };

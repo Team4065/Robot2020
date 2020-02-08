@@ -3,8 +3,8 @@
 
 RobotContainer::RobotContainer() {
   // Initialize all of your commands and subsystems here
-  
-  Drivetrain::GetInstance().SetDefaultCommand(TankDrive(Drivetrain::GetInstance()));
+    Drivetrain::GetInstance().SetDefaultCommand(ArcadeTest(Drivetrain::GetInstance()));
+    //Drivetrain::GetInstance().SetDefaultCommand(TankDrive(Drivetrain::GetInstance()));
 
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -12,5 +12,6 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here
+  button.WhileHeld(ArcadeTest(Drivetrain::GetInstance()));
 }
 

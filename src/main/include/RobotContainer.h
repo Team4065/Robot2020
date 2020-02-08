@@ -13,6 +13,9 @@
 #include <frc/XboxController.h>
 #include "Constants.h"
 
+#include "frc2/command/button/JoystickButton.h"
+#include "commands/ArcadeTest.h"
+
 /**
  * This class is where the bulk of the robot should be declared.  Since
  * Command-based is a "declarative" paradigm, very little robot logic should
@@ -28,6 +31,7 @@ class RobotContainer {
  private:
 
   frc::XboxController controller {constants::controller::kMainController};
+  frc2::JoystickButton button { &controller, 1 };
 
   void ConfigureButtonBindings();
 };

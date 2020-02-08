@@ -26,6 +26,7 @@ Drivetrain::Drivetrain(){
 
 // This method will be called once per scheduler run
 void Drivetrain::Periodic() {
+    /*
     state.pastTime = state.currentTime;
     state.currentTime = frc::Timer::GetFPGATimestamp();
 
@@ -38,7 +39,7 @@ void Drivetrain::Periodic() {
             right_front_master_.Set(ControlMode::PercentOutput, state.rightSpeedTarget);
             break;
     }
-
+    */
 }
 
 Drivetrain& Drivetrain::GetInstance()
