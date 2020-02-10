@@ -16,4 +16,18 @@ Serializer& Serializer::GetInstance()
 }
 
 // This method will be called once per scheduler run
-void Serializer::Periodic() {}
+void Serializer::Periodic() {
+    conveyorMotor.Set(conveyorSpeed);
+}
+
+void Serializer::Forward(){
+    conveyorSpeed = 1;
+}
+
+void Serializer::Off(){
+    conveyorSpeed = 0;
+}
+
+void Serializer::Reverse(){
+    conveyorSpeed = -1;
+}

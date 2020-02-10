@@ -24,7 +24,6 @@
 #include "commands/Lift/ExtendLift.h"
 #include "commands/Lift/LengthenWinch.h"
 #include "commands/Lift/ShortenWinch.h"
-#include "commands/Lift/LiftDefaultState.h"
 
 #include "frc2\command\button\JoystickButton.h"
 
@@ -41,8 +40,7 @@ public:
   Intake& intake_ = Intake::GetInstance();
 private:
   Shooter& shooter_ = Shooter::GetInstance();
-  Serializer& serializer_ = Serializer::GetInstance();
-
+  Serializer& serializer_ = Serializer::GetInstance();//V-Belt
   Lift& lift_ = Lift::GetInstance();
   Drivetrain& drivetrain_ = Drivetrain::GetInstance();
   ControlPanelManipulator& control_panel_manipulator_ = ControlPanelManipulator::GetInstance();

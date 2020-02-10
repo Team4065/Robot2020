@@ -85,7 +85,7 @@ namespace constants
      
     namespace serializer
     {
-
+        const int kSerializerID = 13;
     }
     namespace control_panel_manipulator
     {
