@@ -17,12 +17,17 @@ namespace constants
     }
     namespace shooter
     {
-        const int kLeftMotorPort = 1;
-        const int kRightMotorPort = 2;
+        const int kLeftMotorPort = 20;//inaccurate
+        const int kRightMotorPort = 21;//inaccurate
+        const int kFeederMotor1Port = 22;//inaccurate
+        const int kFeederMotor2Port = 23;//inaccurate
+
+        const int kAllowableVelocityError = 10;
+
         const units::current::ampere_t kMaxCurrentDraw { 30.0 };
-        const double kP = 0.0;
-        const double kD = 0.0;
-        const double kFF = 0.0;
+        // const double kP = 0.0;
+        // const double kD = 0.0;
+        // const double kFF = 0.0;
         const units::inch_t kWheelDiameter { 6.0 };
         const units::revolutions_per_minute_t kAllowableShootingVelocityError = 45_rpm; // within 30 rpm of target rate
         const units::revolutions_per_minute_t kAllowableSpinupVelocityError = 30_rpm; // within 30 rpm of target rate

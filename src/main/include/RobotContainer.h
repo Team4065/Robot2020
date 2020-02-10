@@ -25,6 +25,8 @@
 #include "commands/Lift/LengthenWinch.h"
 #include "commands/Lift/ShortenWinch.h"
 
+#include "commands/Shooter/SpinUp_and_Shoot.h"
+
 #include "frc2\command\button\JoystickButton.h"
 
 #include "commands/test.h"
@@ -47,8 +49,8 @@ private:
 
   frc::XboxController controller_ { constants::oi::kDriverXboxControllerPort };
 
-  frc2::JoystickButton suckIntakeButton { &controller_, 1 };
-  frc2::JoystickButton retractIntakeButton { &controller_, 2 };
+  frc2::JoystickButton intakeButton { &controller_, 1 };
+  frc2::JoystickButton shootButton { &controller_, 2 };
 
 
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions

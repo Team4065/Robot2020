@@ -12,8 +12,8 @@ RobotContainer::RobotContainer() {
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here 
 
-  suckIntakeButton.WhileHeld(test(intake_));
- // retractIntakeButton.WhenPressed(RetractIntake(intake_));
+  intakeButton.WhileHeld(test(intake_));
+  shooterButton.WhileHeld(SpinUp_and_Shoot(shooter_));
 
 
   //ToggleLiftExtensionButton.ToggleWhenPressed(ExtendLift(lift_));

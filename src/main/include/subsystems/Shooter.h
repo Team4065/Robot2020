@@ -10,6 +10,7 @@
 #include "util/Macros.h"
 
 #include "rev/CANSparkMax.h"
+#include "ctre/phoenix/motorcontrol/can/WPI_TalonFX.h"
 
 /* TODO:
  * - Run numerical analysis on final shooter to get distance -> velocity.
@@ -26,37 +27,48 @@ class Shooter : public frc2::SubsystemBase
 {
 public:
   
+  /*
   enum State
   {
     IDLE, SPINUP, SHOOTING
   };
+  */
 
   static Shooter& GetInstance();
 
   void ShootWithDistanceEstimation(units::foot_t distanceToTarget);
-  void SetShooterVelocity(units::revolutions_per_minute_t angularVelocity);
+  //void SetShooterVelocity(units::revolutions_per_minute_t angularVelocity);
 
-  units::revolutions_per_minute_t GetVelocity() const;
-  units::revolutions_per_minute_t GetDesiredVelocity() const;
-  units::revolutions_per_minute_t GetVelocityError() const;
-  units::current::ampere_t GetCurrentDraw() const;
-  State GetState() const;
+  // units::revolutions_per_minute_t GetVelocity() const;
+  // units::revolutions_per_minute_t GetDesiredVelocity() const;
+  // units::revolutions_per_minute_t GetVelocityError() const;
+  // units::current::ampere_t GetCurrentDraw() const;
+  //State GetState() const;
 
   DISALLOW_COPY_AND_ASSIGN(Shooter);
   void Periodic();
 
+  double GetSensorVelocity();
+
+  double targetVelocity = 0;
+
+  bool isFeeder1On = false;
+  bool isFeeder2On = false;
+
  private:
-  State state_ = State::IDLE;
+  //State state_ = State::IDLE;
 
-  units::revolutions_per_minute_t desired_velocity_ { 0.0 };
+  //units::revolutions_per_minute_t desired_velocity_ { 0.0 };
 
-  rev::CANSparkMax left_ {constants::shooter::kLeftMotorPort, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANSparkMax right_ {constants::shooter::kRightMotorPort, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANEncoder left_encoder_ { left_.GetEncoder() };
-  rev::CANEncoder right_encoder_ { right_.GetEncoder() };
-  rev::CANPIDController left_pid_ = left_.GetPIDController();
-  rev::CANPIDController right_pid_ = right_.GetPIDController();
+  WPI_TalonFX left { constants::shooter::kLeftMotorPort };
+  WPI_TalonFX right { constants::shooter::kRightMotorPort };
 
+  rev::CANSparkMax feederMotor1 { constants::shooter::kFeederMotor1Port };
+  rev::CANSparkMax feederMotor2 { constants::shooter::kFeederMotor2Port };
+
+  double kP = 0;
+  double kD = 0;
+  double kF = 0;
   
 
   Shooter();

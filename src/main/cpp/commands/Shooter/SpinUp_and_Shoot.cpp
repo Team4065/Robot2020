@@ -5,16 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Intake/DeployAndSuck.h"
+#include "commands/Shooter/SpinUp_and_Shoot.h"
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-DeployAndSuck::DeployAndSuck(Intake& intake) {
+SpinUp_and_Shoot::SpinUp_and_Shoot(Shooter& shooter) {
   // Add your commands here, e.g.
   // AddCommands(FooCommand(), BarCommand());
   AddCommands(
-    Suck(intake),
-    DeployIntake(intake)
+    SpinUp(shooter),
+    Shoot(shooter)
   );
 }

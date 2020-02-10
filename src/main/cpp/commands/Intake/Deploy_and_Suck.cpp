@@ -5,17 +5,16 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "commands/Intake/Deploy_and_Suck.h"
 
-#include <frc2/command/CommandHelper.h>
-#include <frc2/command/SequentialCommandGroup.h>
-#include "commands/Intake/DeployIntake.h"
-#include "commands/Intake/DeployAndSuck.h"
-#include "subsystems/Intake.h"
-
-class test
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 test> {
- public:
-  test(Intake& intake);
-};
+// NOTE:  Consider using this command inline, rather than writing a subclass.
+// For more information, see:
+// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
+Deploy_and_Suck::Deploy_and_Suck(Intake& intake) {
+  // Add your commands here, e.g.
+  // AddCommands(FooCommand(), BarCommand());
+  AddCommands(
+    DeployIntake(intake),
+    Suck(intake)
+  );
+}

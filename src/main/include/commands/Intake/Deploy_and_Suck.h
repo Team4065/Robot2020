@@ -5,19 +5,19 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/test.h"
+#pragma once
+
+#include <frc2/command/CommandHelper.h>
+#include <frc2/command/SequentialCommandGroup.h>
+
 #include "commands/Intake/DeployIntake.h"
-#include "commands/Intake/DeployAndSuck.h"
+#include "commands/Intake/Suck.h"
+
 #include "subsystems/Intake.h"
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.
-// For more information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-test::test(Intake& intake) {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
-  AddCommands(
-    DeployIntake(intake),
-        Suck(intake)  
-  );
-}
+class Deploy_and_Suck
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
+                                 Deploy_and_Suck> {
+ public:
+  Deploy_and_Suck(Intake& intake);
+};

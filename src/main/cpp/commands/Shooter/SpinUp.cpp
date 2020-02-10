@@ -5,26 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Intake/Suck.h"
+#include "commands/Shooter/SpinUp.h"
 
-Suck::Suck(Intake& intake) {
+#include <iostream>
+
+SpinUp::SpinUp(Shooter& shooter) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({&intake});
+  AddRequirements({&shooter});
 }
 
 // Called when the command is initially scheduled.
-void Suck::Initialize() {}
+void SpinUp::Initialize() {
+  //Shooter::GetInstance().targetVelocity = value to be calculated or preset
+}
 
 // Called repeatedly when this Command is scheduled to run
-void Suck::Execute() {
-  std::cout << "Suck" << std::endl;
-  //Intake::GetInstance().Suck();
+void SpinUp::Execute() {
+  std::cout << "Shooter spinning up." << std::endl;
 }
 
 // Called once the command ends or is interrupted.
-void Suck::End(bool interrupted) {
-  //Intake::GetInstance().DontSuck();
+void SpinUp::End(bool interrupted) {
+  //Shooter::GetInstance().targetVelocity = 0;
+  //Shooter::GetInstance().isFeeder1On = false;
+  //Shooter::GetInstance().isFeeder2On = false;
 }
 
 // Returns true when the command should end.
-bool Suck::IsFinished() { return false; }
+bool SpinUp::IsFinished() { return constants::shooter::kAllowableVelocityError > abs(Shooter::GetInstance().GetSensorVelocity() - Shooter::GetInstance().targetVelocity); }
