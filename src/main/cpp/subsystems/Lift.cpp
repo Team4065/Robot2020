@@ -14,7 +14,10 @@ Lift& Lift::GetInstance(){
 }
 
 // This method will be called once per scheduler run
-void Lift::Periodic() {}
+void Lift::Periodic() {
+    winchMotor.Set(winchMotorSpeed);
+    adjustorMotor.Set(adjustorMotorSpeed);
+}
 
 void Lift::Extend(){
     leftPiston.Set(frc::DoubleSolenoid::kForward);
@@ -27,25 +30,25 @@ void Lift::Retract(){
 }
 
 void Lift::ShortenWinch(){
-    winchMotor.Set(-1);
+    winchMotorSpeed = -1;
 }
 
 void Lift::LengthenWinch(){
-    winchMotor.Set(1);
+    winchMotorSpeed = 1;
 }
 
 void Lift::StopWinch(){
-    winchMotor.Set(0);
+    winchMotorSpeed = 0;
 }
 
 void Lift::MoveLeft(){
-    adjustorMotor.Set(1);
+    adjustorMotorSpeed = 1;
 }
 
 void Lift::MoveRight(){
-    adjustorMotor.Set(-1);
+    adjustorMotorSpeed = -1;
 }
 
 void Lift::DontMove(){
-    adjustorMotor.Set(0);
+    adjustorMotorSpeed = 0;
 }

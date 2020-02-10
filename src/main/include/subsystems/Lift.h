@@ -44,5 +44,8 @@ class Lift : public frc2::SubsystemBase {
   frc::DoubleSolenoid rightPiston { constants::lift::kRightSolenoidPorts[0], constants::lift::kRightSolenoidPorts[1] };
   
   rev::CANSparkMax winchMotor { kMotorPorts[0], rev::CANSparkMax::MotorType::kBrushless };
+  double winchMotorSpeed = 0;
+
   rev::CANSparkMax adjustorMotor { kMotorPorts[1] , rev::CANSparkMax::MotorType::kBrushless };
+  double adjustorMotorSpeed = 0;
 };

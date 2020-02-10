@@ -1,7 +1,9 @@
 #include "subsystems/Intake.h"
 
 // This method will be called once per scheduler run
-void Intake::Periodic() {}
+void Intake::Periodic() {
+    motor.Set(motorSpeed);
+}
 
 Intake& Intake::GetInstance()
 {
@@ -11,11 +13,11 @@ Intake& Intake::GetInstance()
 }
 
 void Intake::Suck(){
-    motor.Set(kMotorOperatingPercentage);
+    motorSpeed = kMotorOperatingPercentage;
 }
 
 void Intake::DontSuck(){
-    motor.Set(0);
+    motorSpeed = 0;
 }
 
 void Intake::Retract(){
