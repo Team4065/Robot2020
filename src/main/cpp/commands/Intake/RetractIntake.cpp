@@ -15,7 +15,6 @@ RetractIntake::RetractIntake(Intake& intake) {
 // Called when the command is initially scheduled.
 void RetractIntake::Initialize() {
   //Intake::GetInstance().isDeployed = false;
-  //Intake::GetInstance().Retract();
 }
 
 // Called repeatedly when this Command is scheduled to run

@@ -5,27 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Intake/Suck.h"
+#include "commands/Shooter/IdleShooter.h"
 
-Suck::Suck(Intake& intake) {
+#include <iostream>
+
+IdleShooter::IdleShooter(Shooter& shooter) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({&intake});
+  AddRequirements({&shooter});
 }
 
 // Called when the command is initially scheduled.
-void Suck::Initialize() {
-  //Intake::GetInstance().Suck();
+void IdleShooter::Initialize() {
+  // Shooter::GetInstance().targetVelocity = 0;
+  // Shooter::GetInstance().isFeeder1On = false;
+  // Shooter::GetInstance().isFeeder2On = false;
 }
 
 // Called repeatedly when this Command is scheduled to run
-void Suck::Execute() {
-  std::cout << "Suck" << std::endl;
+void IdleShooter::Execute() {
+  std::cout << "Shooter is idle." << std::endl;
 }
 
 // Called once the command ends or is interrupted.
-void Suck::End(bool interrupted) {
-  //Intake::GetInstance().DontSuck();
-}
+void IdleShooter::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool Suck::IsFinished() { return false; }
+bool IdleShooter::IsFinished() { return false; }

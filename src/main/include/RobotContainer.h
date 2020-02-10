@@ -19,17 +19,21 @@
 #include "commands/Intake/DeployIntake.h"
 #include "commands/Intake/RetractIntake.h"
 #include "commands/Intake/DeployAndSuck.h"
+#include "commands/Intake/Retract_and_DontSuck.h"
 
 #include "commands/Lift/RetractLift.h"
 #include "commands/Lift/ExtendLift.h"
 #include "commands/Lift/LengthenWinch.h"
 #include "commands/Lift/ShortenWinch.h"
 
+#include "commands/Serializer/VBeltOff.h"
+
 #include "commands/Shooter/SpinUp_and_Shoot.h"
+#include "commands/Shooter/IdleShooter.h"
 
 #include "frc2\command\button\JoystickButton.h"
 
-#include "commands/test.h"
+#include "commands/CollectBalls.h"
 
 
 #include "Constants.h"

@@ -5,27 +5,29 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Intake/Suck.h"
+#include "commands/Shooter/Preload.h"
 
-Suck::Suck(Intake& intake) {
+#include <iostream>
+
+Preload::Preload(Shooter& shooter) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({&intake});
+  AddRequirements({&shooter});
 }
 
 // Called when the command is initially scheduled.
-void Suck::Initialize() {
-  //Intake::GetInstance().Suck();
+void Preload::Initialize() {
+  //Shooter::GetInstance().isFeeder1On = true;
 }
 
 // Called repeatedly when this Command is scheduled to run
-void Suck::Execute() {
-  std::cout << "Suck" << std::endl;
+void Preload::Execute() {
+  std::cout << "Shooter is preloading" << std::endl;
 }
 
 // Called once the command ends or is interrupted.
-void Suck::End(bool interrupted) {
-  //Intake::GetInstance().DontSuck();
+void Preload::End(bool interrupted) {
+  Shooter::GetInstance().isFeeder1On = false;
 }
 
 // Returns true when the command should end.
-bool Suck::IsFinished() { return false; }
+bool Preload::IsFinished() { return false; }

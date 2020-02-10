@@ -3,7 +3,9 @@
 RobotContainer::RobotContainer() {
 
   //drivetrain_.SetDefaultCommand(TankDrive(drivetrain_));
-  //intake_.SetDefaultCommand(IntakeDefaultState(intake_));
+  intake_.SetDefaultCommand(Retract_and_DontSuck(intake_));
+  serializer_.SetDefaultCommand(VBeltOff);
+  shooter_.SetDefaultCommand(IdleShooter(shooter_));
   //lift_.SetDefaultCommand(LiftDefaultState(lift_));
 
   ConfigureButtonBindings();
@@ -12,7 +14,7 @@ RobotContainer::RobotContainer() {
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here 
 
-  intakeButton.WhileHeld(test(intake_));
+  intakeButton.WhileHeld(CollectBalls(intake_, serializer_, shooter_));
   shooterButton.WhileHeld(SpinUp_and_Shoot(shooter_));
 
 

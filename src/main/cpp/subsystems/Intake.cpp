@@ -3,6 +3,10 @@
 // This method will be called once per scheduler run
 void Intake::Periodic() {
     motor.Set(motorSpeed);
+    if(isDeployed)
+        Extend();
+    else
+        Retract();
 }
 
 Intake& Intake::GetInstance()
