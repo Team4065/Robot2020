@@ -88,7 +88,13 @@ namespace constants
     }
     namespace control_panel_manipulator
     {
+       const units::volt_t ControlPanelCounterClockwiseVoltage=1_V;
+       const units::volt_t ControlPanelClockwiseVoltage = -1_V;
 
+       const double Rotations =3.5;
+
+       const double DiameterOfControlePanel = 32; 
+       const double DiameterOfDriverWheel = 4;
     }
     namespace limelight
     {

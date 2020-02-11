@@ -11,6 +11,7 @@ RobotContainer::RobotContainer() {
 
 void RobotContainer::ConfigureButtonBindings() {
   // Configure your button bindings here 
+  SpinControlPanelButton.WhenPressed(SpinControlPanel(control_panel_manipulator_));
   SuckButton.WhenHeld(Suck(intake_));
   ToggleIntakeDeploymentStateButton.WhenPressed(DeployIntake(intake_));
 }

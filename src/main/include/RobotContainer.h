@@ -22,6 +22,7 @@
 #include "commands/Lift/ExtendLift.h"
 #include "commands/Lift/LengthenWinch.h"
 #include "commands/Lift/ShortenWinch.h"
+#include "commands/ControlPanel/SpinControlPanel.h"
 
 #include "Constants.h"
 
@@ -42,6 +43,8 @@ private:
 
   frc2::JoystickButton SuckButton { &controller_, 0 };
   frc2::JoystickButton ToggleIntakeDeploymentStateButton { &controller_, 1 };
+  frc2::JoystickButton SpinControlPanelButton { &controller_, 2 };
+  //frc2::JoystickButton SpinControlPanelButton { &controller_, 2 };
 
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions
 
