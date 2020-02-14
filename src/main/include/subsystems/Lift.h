@@ -40,8 +40,8 @@ class Lift : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  frc::DoubleSolenoid leftPiston { constants::lift::kLeftSolenoidPorts[0], constants::lift::kLeftSolenoidPorts[1] };
-  frc::DoubleSolenoid rightPiston { constants::lift::kRightSolenoidPorts[0], constants::lift::kRightSolenoidPorts[1] };
+  frc::DoubleSolenoid solenoid { constants::lift::kSolenoidPorts[0], constants::lift::kSolenoidPorts[1] };
+  //frc::DoubleSolenoid rightPiston { constants::lift::kRightSolenoidPorts[0], constants::lift::kRightSolenoidPorts[1] };
   
   rev::CANSparkMax winchMotor { kMotorPorts[0], rev::CANSparkMax::MotorType::kBrushless };
   double winchMotorSpeed = 0;

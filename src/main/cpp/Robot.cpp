@@ -14,7 +14,7 @@ void Robot::RobotPeriodic()
     frc4065::ReferencedTunable::UpdateAll();
     frc2::CommandScheduler::GetInstance().Run(); 
 
-    std::cout << std::boolalpha << m_container.intake_.isDeployed << std::endl;
+    //std::cout << std::boolalpha << m_container.intake_.isDeployed << std::endl;
 }
 void Robot::DisabledInit() {}
 void Robot::DisabledPeriodic() {}

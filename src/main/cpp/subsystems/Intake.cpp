@@ -25,11 +25,11 @@ void Intake::DontSuck(){
 }
 
 void Intake::Retract(){
-    leftSolenoid.Set(frc::DoubleSolenoid::kForward);
-    rightSolenoid.Set(frc::DoubleSolenoid::kForward);
+    solenoid.Set(frc::DoubleSolenoid::kForward);
+    //rightSolenoid.Set(frc::DoubleSolenoid::kForward);
 }
 
 void Intake::Extend(){
-    leftSolenoid.Set(frc::DoubleSolenoid::kReverse);
-    rightSolenoid.Set(frc::DoubleSolenoid::kReverse);
+    solenoid.Set(frc::DoubleSolenoid::kReverse);
+    //rightSolenoid.Set(frc::DoubleSolenoid::kReverse);
 }

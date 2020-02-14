@@ -10,7 +10,8 @@
 #include "util/Macros.h"
 
 #include "rev/CANSparkMax.h"
-#include "ctre/phoenix/motorcontrol/can/WPI_TalonFX.h"
+//#include "ctre/phoenix/motorcontrol/can/WPI_TalonFX.h"
+#include "ctre/Phoenix.h"
 
 /* TODO:
  * - Run numerical analysis on final shooter to get distance -> velocity.
@@ -63,8 +64,8 @@ public:
   WPI_TalonFX left { constants::shooter::kLeftMotorPort };
   WPI_TalonFX right { constants::shooter::kRightMotorPort };
 
-  rev::CANSparkMax feederMotor1 { constants::shooter::kFeederMotor1Port };
-  rev::CANSparkMax feederMotor2 { constants::shooter::kFeederMotor2Port };
+  rev::CANSparkMax feederMotor1 { constants::shooter::kFeederMotor1Port, rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANSparkMax feederMotor2 { constants::shooter::kFeederMotor2Port, rev::CANSparkMax::MotorType::kBrushless };
 
   double kP = 0;
   double kD = 0;

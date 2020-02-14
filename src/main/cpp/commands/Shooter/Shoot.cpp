@@ -20,7 +20,9 @@ void Shoot::Initialize() {
 }
 
 // Called repeatedly when this Command is scheduled to run
-void Shoot::Execute() {}
+void Shoot::Execute() {
+  std::cout << "Is shooting." << std::endl;
+}
 
 // Called once the command ends or is interrupted.
 void Shoot::End(bool interrupted) {

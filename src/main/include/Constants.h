@@ -5,6 +5,23 @@
 #include <frc/trajectory/TrajectoryConfig.h>
 #include <cmath>
 
+/*
+CAN IDs:
+1-4 drivetrain
+5-8 shooter
+9 intake
+
+11-12 lift
+13 serializer
+14-... control panel manipulator
+*/
+
+/*
+Pneumatic IDs:
+x,x intake
+x,x lift
+*/
+
 namespace constants
 {
     using Velocity     = units::compound_unit<units::length::feet, units::inverse<units::seconds>>;
@@ -15,33 +32,14 @@ namespace constants
     {
         constexpr int kDriverXboxControllerPort = 0;
     }
-    namespace shooter
-    {
-        const int kLeftMotorPort = 20;//inaccurate
-        const int kRightMotorPort = 21;//inaccurate
-        const int kFeederMotor1Port = 22;//inaccurate
-        const int kFeederMotor2Port = 23;//inaccurate
-
-        const int kAllowableVelocityError = 10;
-
-        const units::current::ampere_t kMaxCurrentDraw { 30.0 };
-        // const double kP = 0.0;
-        // const double kD = 0.0;
-        // const double kFF = 0.0;
-        const units::inch_t kWheelDiameter { 6.0 };
-        const units::revolutions_per_minute_t kAllowableShootingVelocityError = 45_rpm; // within 30 rpm of target rate
-        const units::revolutions_per_minute_t kAllowableSpinupVelocityError = 30_rpm; // within 30 rpm of target rate
-        const units::foot_t kDistanceLowerBound { 10 }; // 10 feet away
-        const units::foot_t kDistanceUpperBound { 30 }; // 30 feet away
-    }
+    
     namespace drivetrain
     {
-        const int kLeftFrontMotorPort = 3;
-        const int kLeftMiddleMotorPort = 4; 
-        //const int kLeftRearMotorPort = 5; // Inaccurate!
         const int kRightFrontMotorPort = 1; 
-        const int kRightMiddleMotorPort = 2; 
-        //const int kRightRearMotorPort = 8; // Inaccurate!
+        const int kRightMiddleMotorPort = 2;
+        const int kLeftFrontMotorPort = 3;
+        const int kLeftMiddleMotorPort = 4;
+
         const bool kGyroReversed = false; // Inaccurate!
         const units::current::ampere_t kMaxCurrentDraw { 30.0 };
         const units::inch_t kWheelDiameter { 6.0 };
@@ -72,18 +70,38 @@ namespace constants
             constexpr double kRamseteZeta = 0.7;
         }
     }
+
+    namespace shooter
+    {
+        const int kLeftMotorPort = 5;
+        const int kRightMotorPort = 6;
+        const int kFeederMotor1Port = 7;
+        const int kFeederMotor2Port = 8;
+
+        const int kAllowableVelocityError = 10;
+
+        const units::current::ampere_t kMaxCurrentDraw { 30.0 };
+        // const double kP = 0.0;
+        // const double kD = 0.0;
+        // const double kFF = 0.0;
+        const units::inch_t kWheelDiameter { 6.0 };
+        const units::revolutions_per_minute_t kAllowableShootingVelocityError = 45_rpm; // within 30 rpm of target rate
+        const units::revolutions_per_minute_t kAllowableSpinupVelocityError = 30_rpm; // within 30 rpm of target rate
+        const units::foot_t kDistanceLowerBound { 10 }; // 10 feet away
+        const units::foot_t kDistanceUpperBound { 30 }; // 30 feet away
+    }
+
     namespace intake
     {
-        constexpr int kIntakeMotorID = 10; // Inaccurate!
-        constexpr int kLeftSolenoidPorts[2] = { 0, 1 }; // Inaccurate!
-        constexpr int kRightSolenoidPorts[2] = { 2, 3 }; // Inaccurate!
+        constexpr int kIntakeMotorID = 9;
+        constexpr int kSolenoidPorts[2] = { 0, 1 }; // Inaccurate!
         constexpr units::current::ampere_t kMaxCurrentDraw { 25.0 };
         constexpr float kMotorOperatingPercentage = 0.8f; // 
     }
+
     namespace lift
     {
-        const int kLeftSolenoidPorts[2] = { 4, 5 };
-        const int kRightSolenoidPorts[2] = { 6, 7 };
+        const int kSolenoidPorts[2] = { 4, 5 };
 
         const int kMotorPorts[2] = { 11 , 12 };//winch, adjustor
     } // namespace lift
@@ -92,14 +110,17 @@ namespace constants
     {
         const int kSerializerID = 13;
     }
+
     namespace control_panel_manipulator
     {
 
     }
+
     namespace limelight
     {
         constexpr units::degree_t kCameraPitch { 30.0 };
     }
+
     namespace joy_deadband
     {
         inline float deadband(float joyValue)
@@ -108,4 +129,5 @@ namespace constants
             return (std::abs(joyValue) > 0.15f) ? joyValue : 0.0f;
         }
     }
+
 }

@@ -2,9 +2,9 @@
 
 RobotContainer::RobotContainer() {
 
-  //drivetrain_.SetDefaultCommand(TankDrive(drivetrain_));
+  drivetrain_.SetDefaultCommand(TankDrive(drivetrain_));
   intake_.SetDefaultCommand(Retract_and_DontSuck(intake_));
-  serializer_.SetDefaultCommand(VBeltOff);
+  serializer_.SetDefaultCommand(VBeltOff(serializer_));
   shooter_.SetDefaultCommand(IdleShooter(shooter_));
   //lift_.SetDefaultCommand(LiftDefaultState(lift_));
 

@@ -5,12 +5,12 @@ Shooter::Shooter()
     right.Follow(left);
     right.SetInverted(ctre::phoenix::motorcontrol::InvertType::OpposeMaster);
 
-    left.Config_kP(kP);
-    left.Config_kI(0);
-    left.Config_kD(kD);
-    left.Config_kF(kF);
+    // left.Config_kP(kP);
+    // left.Config_kI(0);
+    // left.Config_kD(kD);
+    // left.Config_kF(kF);
 
-    left.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::TalonFXFeedbackDevice::IntegratedSensor, 0, 0);
+    //left.ConfigSelectedFeedbackSensor(ctre::phoenix::motorcontrol::TalonFXFeedbackDevice::IntegratedSensor, 0, 0);
 }
 
 double Shooter::GetSensorVelocity(){

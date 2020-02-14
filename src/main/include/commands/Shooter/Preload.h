@@ -22,7 +22,7 @@
 class Preload
     : public frc2::CommandHelper<frc2::CommandBase, Preload> {
  public:
-  Preload(Serializer& serializer);
+  Preload(Shooter& Shooter);
 
   void Initialize() override;
 

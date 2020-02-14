@@ -30,8 +30,8 @@ private:
   WPI_TalonSRX motor { kIntakeMotorID };
   double motorSpeed = 0;
 
-  frc::DoubleSolenoid leftSolenoid { kLeftSolenoidPorts[0], kLeftSolenoidPorts[1] };
-  frc::DoubleSolenoid rightSolenoid { kRightSolenoidPorts[0], kRightSolenoidPorts[1] };
+  frc::DoubleSolenoid solenoid { kSolenoidPorts[0], kSolenoidPorts[1] };
+  //frc::DoubleSolenoid rightSolenoid { kRightSolenoidPorts[0], kRightSolenoidPorts[1] };
 
 
 };
