@@ -17,8 +17,10 @@ void RobotContainer::ConfigureButtonBindings() {
   intakeButton.WhileHeld(CollectBalls(intake_, serializer_, shooter_));
   shooterButton.WhileHeld(SpinUp_and_Shoot(shooter_));
 
-
   //ToggleLiftExtensionButton.ToggleWhenPressed(ExtendLift(lift_));
   //LengthenWinchButton.WhenHeld(ShortenWinch(lift_));
   //ShortenWinchButton.WhenHeld(LengthenWinch(lift_));
+  SpinControlPanelButton.WhenPressed(SpinControlPanel(control_panel_manipulator_));
+  SuckButton.WhenHeld(Suck(intake_));
+  ToggleIntakeDeploymentStateButton.WhenPressed(DeployIntake(intake_));
 }
