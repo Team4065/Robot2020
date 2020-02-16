@@ -57,7 +57,6 @@ private:
   frc2::JoystickButton shooterButton { &controller_, 2 };
   frc2::JoystickButton liftButton { &controller_, 3 };
 
-
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions
 
   void ConfigureButtonBindings();
