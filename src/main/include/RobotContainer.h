@@ -59,7 +59,7 @@ private:
   frc::XboxController controller_ { constants::oi::kDriverXboxControllerPort };
 
   //Button Mapping(s)
-  frc2::JoystickButton retractIntakeButton_ { &controller_, (int)XboxController::Button::kX };
+  frc2::JoystickButton toggleIntakeDeploymentStateButton_ { &controller_, (int)XboxController::Button::kX };
   frc2::JoystickButton collectBallsButton_ { &controller_, (int)XboxController::Button::kBumperRight };   //Deploy (if not deployed / Suck balls / Move ball to shooter)
 
   //sfs: Limelight drivetrain control (hold down button)
