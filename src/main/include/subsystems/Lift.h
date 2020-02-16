@@ -17,6 +17,8 @@
 #include "util/Macros.h"
 #include <Constants.h>
 
+#include "util/ReferencedTunable.h"
+
 using namespace constants::lift;
 
 class Lift : public frc2::SubsystemBase {
@@ -32,8 +34,8 @@ class Lift : public frc2::SubsystemBase {
   void MoveRight();
   void DontMove();
 
-
-  //void
+  void ExtendLift();
+  void RetractLift();
 
  private:
   Lift();
@@ -48,6 +50,8 @@ class Lift : public frc2::SubsystemBase {
   rev::CANPIDController heightMotorLeftPID = heightMotorLeft.GetPIDController();
   rev::CANPIDController heightMotorRightPID = heightMotorRight.GetPIDController();
   double liftTargetHeight = 0;
+  double klP, klI, klD, klFF;
+  double krP, krI, krD, krFF;
 
   rev::CANSparkMax adjustorMotor { kMotorPorts[2] , rev::CANSparkMax::MotorType::kBrushless };
   double adjustorMotorSpeed = 0;

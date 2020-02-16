@@ -11,9 +11,9 @@ CAN IDs:
 5-8 shooter
 9 intake
 
-11-12 lift
-13 serializer
-14-... control panel manipulator
+11-13 lift
+14 serializer
+15-... control panel manipulator
 */
 
 /*
@@ -103,7 +103,7 @@ namespace constants
     {
         const int kSolenoidPorts[2] = { 4, 5 };
 
-        const int kMotorPorts[3] = { 11, 12, 13 };//winch, adjustor
+        const int kMotorPorts[3] = { 11, 12, 13 };//left, right, adjustor
     } // namespace lift
      
     namespace serializer
