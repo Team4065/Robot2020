@@ -7,6 +7,26 @@
 
 #include "subsystems/Lift.h"
 
+Lift::Lift(){
+    heightMotorLeftPID.SetSmartMotionMaxVelocity(1);
+    heightMotorRightPID.SetSmartMotionMaxVelocity(1);
+
+    heightMotorLeftPID.SetSmartMotionMaxAccel(1);
+    heightMotorRightPID.SetSmartMotionMaxAccel(1);
+
+    heightMotorLeftPID.SetP(1);
+    heightMotorRightPID.SetP(1);
+
+    heightMotorLeftPID.SetI(0);
+    heightMotorRightPID.SetI(0);
+
+    heightMotorLeftPID.SetD(0);
+    heightMotorRightPID.SetD(0);
+
+    heightMotorLeftPID.SetFF(0);
+    heightMotorRightPID.SetFF(0);
+}
+
 Lift& Lift::GetInstance(){
     static Lift instance;  // Guaranteed to be destroyed.
                                     // Instantiated on first use.
@@ -15,8 +35,9 @@ Lift& Lift::GetInstance(){
 
 // This method will be called once per scheduler run
 void Lift::Periodic() {
-    winchMotor.Set(winchMotorSpeed);
-    adjustorMotor.Set(adjustorMotorSpeed);
+    heightMotorLeftPID.SetReference(liftTargetHeight, rev::kSmartMotion);
+    heightMotorRightPID.SetReference(liftTargetHeight, rev::kSmartMotion);
+    //adjustorMotor.Set(adjustorMotorSpeed);
 }
 
 void Lift::Extend(){
@@ -25,18 +46,6 @@ void Lift::Extend(){
 
 void Lift::Retract(){
     solenoid.Set(frc::DoubleSolenoid::kReverse);
-}
-
-void Lift::ShortenWinch(){
-    winchMotorSpeed = -1;
-}
-
-void Lift::LengthenWinch(){
-    winchMotorSpeed = 1;
-}
-
-void Lift::StopWinch(){
-    winchMotorSpeed = 0;
 }
 
 void Lift::MoveLeft(){

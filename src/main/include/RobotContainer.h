@@ -21,11 +21,6 @@
 #include "commands/Intake/Deploy_And_Suck.h"
 #include "commands/Intake/Retract_and_DontSuck.h"
 
-#include "commands/Lift/RetractLift.h"
-#include "commands/Lift/ExtendLift.h"
-#include "commands/Lift/LengthenWinch.h"
-#include "commands/Lift/ShortenWinch.h"
-
 #include "commands/Serializer/VBeltOff.h"
 
 #include "commands/Shooter/SpinUp_and_Shoot.h"
@@ -45,17 +40,19 @@ public:
  
   Intake& intake_ = Intake::GetInstance();
 private:
-  Shooter& shooter_ = Shooter::GetInstance();
-  Serializer& serializer_ = Serializer::GetInstance();//V-Belt
+  // Shooter& shooter_ = Shooter::GetInstance();
+  // Serializer& serializer_ = Serializer::GetInstance();//V-Belt
   Lift& lift_ = Lift::GetInstance();
-  Drivetrain& drivetrain_ = Drivetrain::GetInstance();
-  ControlPanelManipulator& control_panel_manipulator_ = ControlPanelManipulator::GetInstance();
+  // Drivetrain& drivetrain_ = Drivetrain::GetInstance();
+  // ControlPanelManipulator& control_panel_manipulator_ = ControlPanelManipulator::GetInstance();
 
   frc::XboxController controller_ { constants::oi::kDriverXboxControllerPort };
 
-  frc2::JoystickButton intakeButton { &controller_, 1 };
-  frc2::JoystickButton shooterButton { &controller_, 2 };
-  frc2::JoystickButton liftButton { &controller_, 3 };
+  // frc2::JoystickButton intakeButton { &controller_, 1 };
+  // frc2::JoystickButton shooterButton { &controller_, 2 };
+  frc2::JoystickButton liftUpButton { &controller_, 1 };
+  frc2::JoystickButton liftDownButton { &controller_, 2 };
+
 
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions
 

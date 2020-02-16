@@ -103,12 +103,12 @@ namespace constants
     {
         const int kSolenoidPorts[2] = { 4, 5 };
 
-        const int kMotorPorts[2] = { 11 , 12 };//winch, adjustor
+        const int kMotorPorts[3] = { 11, 12, 13 };//winch, adjustor
     } // namespace lift
      
     namespace serializer
     {
-        const int kSerializerID = 13;
+        const int kSerializerID = 14;
     }
 
     namespace control_panel_manipulator

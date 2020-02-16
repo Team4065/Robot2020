@@ -11,6 +11,7 @@
 
 #include <frc/DoubleSolenoid.h>
 #include <rev/CANSparkMax.h>
+#include <rev/CANPIDController.h>
 
 
 #include "util/Macros.h"
@@ -27,25 +28,24 @@ class Lift : public frc2::SubsystemBase {
   void Extend();
   void Retract();
 
-  void ShortenWinch();
-  void LengthenWinch();
-  void StopWinch();
-
   void MoveLeft();
   void MoveRight();
   void DontMove();
 
  private:
-  Lift() = default;
+  Lift();
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
   frc::DoubleSolenoid solenoid { constants::lift::kSolenoidPorts[0], constants::lift::kSolenoidPorts[1] };
   //frc::DoubleSolenoid rightPiston { constants::lift::kRightSolenoidPorts[0], constants::lift::kRightSolenoidPorts[1] };
   
-  rev::CANSparkMax winchMotor { kMotorPorts[0], rev::CANSparkMax::MotorType::kBrushless };
-  double winchMotorSpeed = 0;
+  rev::CANSparkMax heightMotorLeft { kMotorPorts[0], rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANSparkMax heightMotorRight { kMotorPorts[1], rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANPIDController heightMotorLeftPID = heightMotorLeft.GetPIDController();
+  rev::CANPIDController heightMotorRightPID = heightMotorRight.GetPIDController();
+  double liftTargetHeight = 0;
 
-  rev::CANSparkMax adjustorMotor { kMotorPorts[1] , rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANSparkMax adjustorMotor { kMotorPorts[2] , rev::CANSparkMax::MotorType::kBrushless };
   double adjustorMotorSpeed = 0;
 };
