@@ -32,6 +32,9 @@ class Lift : public frc2::SubsystemBase {
   void MoveRight();
   void DontMove();
 
+
+  //void
+
  private:
   Lift();
   // Components (e.g. motor controllers and sensors) should generally be
