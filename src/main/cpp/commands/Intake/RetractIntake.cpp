@@ -14,12 +14,14 @@ RetractIntake::RetractIntake(Intake& intake) {
 
 // Called when the command is initially scheduled.
 void RetractIntake::Initialize() {
-  //Intake::GetInstance().isDeployed = false;
+  //Intake will get deployed in Intake periodic
+  // Intake::GetInstance().isDeployed = false;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void RetractIntake::Execute() {
-  std::cout << "Retract Intake" << std::endl;
+  Intake::GetInstance().Retract();
+  // std::cout << "Retract Intake" << std::endl;
 }
 
 // Called once the command ends or is interrupted.

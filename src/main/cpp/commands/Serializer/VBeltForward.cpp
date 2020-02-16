@@ -15,12 +15,14 @@ VBeltForward::VBeltForward(Serializer& serializer) {
 }
 
 // Called when the command is initially scheduled.
-void VBeltForward::Initialize() {}
+void VBeltForward::Initialize() {
+  // Serializer::GetInstance().Forward();
+}
 
 // Called repeatedly when this Command is scheduled to run
 void VBeltForward::Execute() {
-  //Serializer::GetInstance().Forward();
-  std::cout << "V-Belt forward." << std::endl;
+  Serializer::GetInstance().Forward();
+  // std::cout << "V-Belt forward." << std::endl;
 }
 
 // Called once the command ends or is interrupted.
@@ -29,4 +31,4 @@ void VBeltForward::End(bool interrupted) {
 }
 
 // Returns true when the command should end.
-bool VBeltForward::IsFinished() { return false; }
+bool VBeltForward::IsFinished() { return true; }

@@ -19,11 +19,12 @@ void DontSuck::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void DontSuck::Execute() {
-  std::cout << "Dont Suck" << std::endl;
+  Intake::GetInstance().DontSuck();
+  // std::cout << "Dont Suck" << std::endl;
 }
 
 // Called once the command ends or is interrupted.
 void DontSuck::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool DontSuck::IsFinished() { return false; }
+bool DontSuck::IsFinished() { return true; }

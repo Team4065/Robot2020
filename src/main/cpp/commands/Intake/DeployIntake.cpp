@@ -14,12 +14,14 @@ DeployIntake::DeployIntake(Intake& intake) {
 
 // Called when the command is initially scheduled.
 void DeployIntake::Initialize() {
-  //Intake::GetInstance().isDeployed = true;
+  // Intake::GetInstance().Extend();
+  // Intake::GetInstance().isDeployed = true;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void DeployIntake::Execute() {
-  std::cout << "Deploy Intake" << std::endl;
+  Intake::GetInstance().Extend();
+  // std::cout << "Deploy Intake" << std::endl;
 }
 
 // Called once the command ends or is interrupted.

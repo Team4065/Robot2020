@@ -5,6 +5,9 @@
 #include <frc/trajectory/TrajectoryConfig.h>
 #include <cmath>
 
+//Abbreviations
+//CPM = Control Panel Maniupulator
+
 /*
 CAN IDs:
 1-4 drivetrain

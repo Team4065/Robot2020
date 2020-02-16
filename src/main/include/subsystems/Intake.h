@@ -22,15 +22,16 @@ public:
 
   void Retract();
   void Extend();
-
-  bool isDeployed = false;
+ 
 private:
+  bool isDeployed_ = false;
+
   Intake() = default;
 
-  WPI_TalonSRX motor { kIntakeMotorID };
-  double motorSpeed = 0;
+  WPI_TalonSRX motor_ { kIntakeMotorID };
+  double motorSpeed_ = 0;
 
-  frc::DoubleSolenoid solenoid { kSolenoidPorts[0], kSolenoidPorts[1] };
+  frc::DoubleSolenoid solenoid_ { kSolenoidPorts[0], kSolenoidPorts[1] };
   //frc::DoubleSolenoid rightSolenoid { kRightSolenoidPorts[0], kRightSolenoidPorts[1] };
 
 

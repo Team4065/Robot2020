@@ -17,17 +17,20 @@ Serializer& Serializer::GetInstance()
 
 // This method will be called once per scheduler run
 void Serializer::Periodic() {
-    conveyorMotor.Set(conveyorSpeed);
+    conveyorMotor.Set(conveyorSpeed);       //Run in peeriodic loop so that the watchdog timer doesn't reset
 }
 
 void Serializer::Forward(){
     conveyorSpeed = 1;
+    std::cout << "Set Serializer to forward" << std::endl;
 }
 
 void Serializer::Off(){
     conveyorSpeed = 0;
+    std::cout << "Set Serializer to off" << std::endl;
 }
 
 void Serializer::Reverse(){
     conveyorSpeed = -1;
+    std::cout << "Set Serializer to reverse" << std::endl;
 }

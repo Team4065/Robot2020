@@ -14,12 +14,13 @@ Suck::Suck(Intake& intake) {
 
 // Called when the command is initially scheduled.
 void Suck::Initialize() {
-  //Intake::GetInstance().Suck();
+  // Intake::GetInstance().Suck();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void Suck::Execute() {
-  std::cout << "Suck" << std::endl;
+  Intake::GetInstance().Suck();
+  // std::cout << "Suck" << std::endl;
 }
 
 // Called once the command ends or is interrupted.
@@ -28,4 +29,4 @@ void Suck::End(bool interrupted) {
 }
 
 // Returns true when the command should end.
-bool Suck::IsFinished() { return false; }
+bool Suck::IsFinished() { return true; }
