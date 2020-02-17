@@ -59,18 +59,13 @@ private:
   frc::XboxController controller_ { constants::oi::kDriverXboxControllerPort };
 
   //Button Mapping(s)
-  frc2::JoystickButton toggleIntakeDeploymentStateButton_ { &controller_, (int)XboxController::Button::kX };
+  frc2::JoystickButton retractIntakeButton_ { &controller_, (int)XboxController::Button::kX };
   frc2::JoystickButton collectBallsButton_ { &controller_, (int)XboxController::Button::kBumperRight };   //Deploy (if not deployed / Suck balls / Move ball to shooter)
 
   //sfs: Limelight drivetrain control (hold down button)
   //sfs: Add toggle button for low speed drivetrain for lining up shot
   frc2::JoystickButton shootBallsButton_ { &controller_, (int)XboxController::Button::kBumperLeft };
   //sfs: adjust shooter speed based on distance or with manual control
-
-  //sfs: Use B to Deploy Lift / Stow Lift
-  frc2::JoystickButton toggleLiftDeploymentButton_ { &controller_, (int)XboxController::Button::kB };
-  //sfs: POV Up extends Lift, POV down retracts
-  //sfs: POV right & left to move robot balancer wheel
   
   frc2::JoystickButton toggleCPMDeploymentButton_ { &controller_, (int)XboxController::Button::kY };
   frc2::JoystickButton spinControlPanelButton_ { &controller_, (int)XboxController::Button::kA };
@@ -78,6 +73,11 @@ private:
   //right trigger = clockwise
   //left trigger = counter clockwise
   //sfs: automatically move to color, need button
+  
+  //sfs: Use B to Deploy Lift / Stow Lift
+  frc2::JoystickButton toggleLiftDeploymentButton_ { &controller_, (int)XboxController::Button::kB };
+  //sfs: POV Up extends Lift, POV down retracts
+  //sfs: POV right & left to move robot balancer wheel
 
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions
 

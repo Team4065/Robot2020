@@ -23,6 +23,8 @@ public:
 
   // void move_motor_clockwise();
   // void move_motor_counterclockwise();
+
+  void DeployCPM();
   
   double read_encoder_position();
 
@@ -31,9 +33,12 @@ public:
 
 private:
   ControlPanelManipulator() = default;
-  rev::CANSparkMax motor_ {0, rev::CANSparkMax::MotorType::kBrushless};
+  bool isDeployed_ = false;
+  WPI_TalonSRX deployMotor_ { kCPMDeployMotorID };
+  rev::CANSparkMax motor_ {kCPMSpinMotorID, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANPIDController motor_pid_ { motor_.GetPIDController() };
   rev::CANEncoder encoder_ {motor_.GetEncoder()};
+   
   // rev::ColorSensorV3 color_sensor_ { frc::I2CLLPort::kOnboard };
   // rev::ColorMatch color_matcher_;
   // static constexpr frc::Color kBlueTarget = frc::Color(0.143, 0.427, 0.429);

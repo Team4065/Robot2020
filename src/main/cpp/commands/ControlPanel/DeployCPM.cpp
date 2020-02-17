@@ -5,29 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ControlPanel/SpinControlPanel.h"
+#include "commands/ControlPanel/DeployCPM.h"
 using namespace constants::control_panel_manipulator;
 
-SpinControlPanel::SpinControlPanel(ControlPanelManipulator& controlPanelManipulator) {
+DeployCPM::DeployCPM(ControlPanelManipulator& controlPanelManipulator) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({&controlPanelManipulator});
 }
 
 // Called when the command is initially scheduled.
-void SpinControlPanel::Initialize() {
+void DeployCPM::Initialize() {
 }
 // Called repeatedly when this Command is scheduled to run
-void SpinControlPanel::Execute() {
-    double currentPosition = ControlPanelManipulator::GetInstance().read_encoder_position();
-    double desiredMotorRotations = Stage2Rotations * DiameterOfControlePanel/DiameterOfDriverWheel;
-
-    double FinalPosition = currentPosition + desiredMotorRotations;
-
-    ControlPanelManipulator::GetInstance().setPosition(FinalPosition);
+void DeployCPM::Execute() {
+    ControlPanelManipulator::GetInstance().setPosition(DeployPosition);
 }
 
 // Called once the command ends or is interrupted.
-void SpinControlPanel::End(bool interrupted) {}
+void DeployCPM::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool SpinControlPanel::IsFinished() { return true; }
+bool DeployCPM::IsFinished() { return true; }

@@ -7,6 +7,8 @@
 
 #include "subsystems/ControlPanelManipulator.h"
 
+using namespace constants;
+
 ControlPanelManipulator& ControlPanelManipulator::GetInstance()
 {
     static ControlPanelManipulator instance;
@@ -15,6 +17,7 @@ ControlPanelManipulator& ControlPanelManipulator::GetInstance()
 
 // This method will be called once per scheduler run
 void ControlPanelManipulator::Periodic() {
+
 
 }
 
@@ -44,6 +47,14 @@ ControlPanelManipulator::ControlPanelManipulator() {
 // void ControlPanelManipulator::move_motor_counterclockwise() {
 //     motor_.SetVoltage(constants::control_panel_manipulator::ControlPanelCounterClockwiseVoltage);
 // }
+
+void DeployCPM() {
+    deployMotorPID_.SetReference(control_panel_manipulator.DeployPosition, rev::ControlType::kPosition, 0, 0);
+}
+
+void RetractCPM() {
+    deployMotorPID_.SetReference(control_panel_manipulator.StowPosition, rev::ControlType::kPosition, 0, 0);
+}
 
 double ControlPanelManipulator::read_encoder_position() {
     return(encoder_.GetPosition());

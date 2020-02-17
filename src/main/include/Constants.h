@@ -119,10 +119,16 @@ namespace constants
        const units::volt_t ControlPanelCounterClockwiseVoltage=1_V;
        const units::volt_t ControlPanelClockwiseVoltage = -1_V;
 
-       const double Rotations =3.5;
+       const int kCPMDeployMotorID = -1;    //TODO: set appropriate motor id
+       const int DeployPosition = -1;       //TODO: set deploy position
+       const int StowPosition = -1;         //TODO: set stow position
 
-       const double DiameterOfControlePanel = 32; 
-       const double DiameterOfDriverWheel = 4;
+       const int kCPMSpinMotorID = -1;      //TODO: set appropriate motor id
+
+       const double Stage2Rotations = 3.5;
+
+       const double DiameterOfControlePanel = 32;   //[in]
+       const double DiameterOfDriverWheel = 4;      //[in]
     }
 
     namespace limelight

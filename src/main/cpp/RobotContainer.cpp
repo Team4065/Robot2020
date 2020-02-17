@@ -3,11 +3,6 @@
 RobotContainer::RobotContainer() {
 
   drivetrain_.SetDefaultCommand(TankDrive(drivetrain_));
-  //intake_.SetDefaultCommand(Retract_and_DontSuck(intake_));
-  // intake_.SetDefaultCommand(DontSuck(intake_));
-  serializer_.SetDefaultCommand(VBeltOff(serializer_));
-  shooter_.SetDefaultCommand(IdleShooter(shooter_));
-  //lift_.SetDefaultCommand(LiftDefaultState(lift_));
 
   ConfigureButtonBindings();
 }
@@ -24,18 +19,12 @@ void RobotContainer::ConfigureButtonBindings() {
   collectBallsButton_.WhenReleased(DontSuck(intake_));
   retractIntakeButton_.WhenPressed(RetractIntake(intake_));
 
-  toggleIntakeDeploymentStateButton_.WhenPressed(DeployIntake(intake_));
-
-  suckButton_.WhenHeld(Suck(intake_));
-
-  intakeButton_.WhileHeld(CollectBalls(intake_, serializer_, shooter_));    //sfs: I don't think you want the operator to have to hold down the button to keep the intake deployed and/or spinning.
-
-  shooterButton_.WhileHeld(SpinUp_and_Shoot(shooter_));   //sfs: You probably do want to force the operator to hold down the button to shoot so this is correct.
+  shooterButton_.WhileHeld(SpinUp_and_Shoot(shooter_));
   //sfs: Do you want a way to adjust the shooter speed?
 
   //Spin Control Panel
   //sfs: Need a command to deploy control panel manipulator
-  spinControlPanelButton_.WhenPressed(SpinControlPanel(controlPanelManipulator_));
+  toggleCPMDeploymentButton_.WhenPressed(SpinControlPanel(controlPanelManipulator_));
   //sfs: Need manual control of the control panel spinning, this is in addition to the fixed revolutions control.
   //sfs: Do we want to have an automatic mode to move the control panel to a particular color?
 

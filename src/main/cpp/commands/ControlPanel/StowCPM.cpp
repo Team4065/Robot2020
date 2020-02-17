@@ -5,29 +5,24 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ControlPanel/SpinControlPanel.h"
-using namespace constants::control_panel_manipulator;
+#include "commands/ControlPanel/StowCPM.h"
+using namespace constants::control_panel_manipulator::control_panel_manipulator;
 
-SpinControlPanel::SpinControlPanel(ControlPanelManipulator& controlPanelManipulator) {
+StowCPM::StowCPM(ControlPanelManipulator& controlPanelManipulator) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({&controlPanelManipulator});
 }
 
 // Called when the command is initially scheduled.
-void SpinControlPanel::Initialize() {
+void StowCPM::Initialize() {
 }
 // Called repeatedly when this Command is scheduled to run
-void SpinControlPanel::Execute() {
-    double currentPosition = ControlPanelManipulator::GetInstance().read_encoder_position();
-    double desiredMotorRotations = Stage2Rotations * DiameterOfControlePanel/DiameterOfDriverWheel;
-
-    double FinalPosition = currentPosition + desiredMotorRotations;
-
-    ControlPanelManipulator::GetInstance().setPosition(FinalPosition);
+void StowCPM::Execute() {
+    ControlPanelManipulator::GetInstance().setPosition(StowPosition);
 }
 
 // Called once the command ends or is interrupted.
-void SpinControlPanel::End(bool interrupted) {}
+void StowCPM::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool SpinControlPanel::IsFinished() { return true; }
+bool StowCPM::IsFinished() { return true; }
