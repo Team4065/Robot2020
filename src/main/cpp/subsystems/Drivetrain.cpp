@@ -32,36 +32,36 @@ Drivetrain::Drivetrain()
 // This method will be called once per scheduler run
 void Drivetrain::Periodic()
 {
-    state.pastTime = state.currentTime;
-    state.currentTime = frc::Timer::GetFPGATimestamp();
-    state.deltaTime = state.currentTime - state.pastTime;
+    // state.pastTime = state.currentTime;
+    // state.currentTime = frc::Timer::GetFPGATimestamp();
+    // state.deltaTime = state.currentTime - state.pastTime;
 
     odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
 
     int PIDPortSelected = 0;
-    switch(state.outputMode)
-    {
-        case rev::ControlType::kVelocity:
-            PIDPortSelected = constants::drivetrain::kVelocityPIDPort;
-            break;
-        case rev::ControlType::kPosition:
-            PIDPortSelected = constants::drivetrain::kPositionPIDPort;
-            break;
-        case rev::ControlType::kSmartVelocity:
-            PIDPortSelected = constants::drivetrain::kVelocityPIDPort;
-            break;
-        case rev::ControlType::kSmartMotion:
-            PIDPortSelected = constants::drivetrain::kPositionPIDPort;
-            break;
-        default:
-            PIDPortSelected = constants::drivetrain::kVelocityPIDPort;
-            break;
-    }
+    // switch(state.outputMode)
+    // {
+    //     case rev::ControlType::kVelocity:
+    //         PIDPortSelected = constants::drivetrain::kVelocityPIDPort;
+    //         break;
+    //     case rev::ControlType::kPosition:
+    //         PIDPortSelected = constants::drivetrain::kPositionPIDPort;
+    //         break;
+    //     case rev::ControlType::kSmartVelocity:
+    //         PIDPortSelected = constants::drivetrain::kVelocityPIDPort;
+    //         break;
+    //     case rev::ControlType::kSmartMotion:
+    //         PIDPortSelected = constants::drivetrain::kPositionPIDPort;
+    //         break;
+    //     default:
+    //         PIDPortSelected = constants::drivetrain::kVelocityPIDPort;
+    //         break;
+    // }
 
-    Tracking();
+   // Tracking();
 
-    left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected);
-    right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected);
+//     left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected);
+//     right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected);
     
 }
 
@@ -135,28 +135,28 @@ Drivetrain &Drivetrain::GetInstance()
     return instance;
 }
 
-void Drivetrain::Tracking(){
-    limelight->PutNumber("pipeline", state.trackingMode);
+// void Drivetrain::Tracking(){
+    // limelight->PutNumber("pipeline", state.trackingMode);
 
-    double tx = limelight->GetNumber("tx", 0.0);
+    // double tx = limelight->GetNumber("tx", 0.0);
     
-    double error = -tx;// 0 - tx // 0 is always the target
-    static double pastError;
-    double deltaError = (pastError - error) / state.deltaTime;
+    // double error = -tx;// 0 - tx // 0 is always the target
+    // static double pastError;
+    // double deltaError = (pastError - error) / state.deltaTime;
 
-    double leftOutput = error * state.kP_tracking + deltaError * state.kD_tracking + (abs(error) / error) * state.kF_tracking;
+    // double leftOutput = error * state.kP_tracking + deltaError * state.kD_tracking + (abs(error) / error) * state.kF_tracking;
 
-    //may need to be put in a conditional to prevent tracking when it isn't supposed to be (the pipline shouldn't find a target during no tracking)
-    state.leftTarget += leftOutput;
-    state.rightTarget -= leftOutput;
+    // //may need to be put in a conditional to prevent tracking when it isn't supposed to be (the pipline shouldn't find a target during no tracking)
+    // state.leftTarget += leftOutput;
+    // state.rightTarget -= leftOutput;
 
-    pastError = error;
-}
+    // pastError = error;
+// }
 
-void Drivetrain::SetLeft(double value){
-    Drivetrain::GetInstance().state.leftTarget;
-}
+// void Drivetrain::SetLeft(double value){
+//     Drivetrain::GetInstance().state.leftTarget;
+// }
 
-void Drivetrain::SetRight(double value){
-    Drivetrain::GetInstance().state.rightTarget;
-}
+// void Drivetrain::SetRight(double value){
+//     Drivetrain::GetInstance().state.rightTarget;
+// }
