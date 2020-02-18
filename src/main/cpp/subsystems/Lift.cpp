@@ -8,6 +8,9 @@
 #include "subsystems/Lift.h"
 
 Lift::Lift(){
+    heightMotorLeft.RestoreFactoryDefaults();
+    heightMotorRight.RestoreFactoryDefaults();
+
     heightMotorLeftPID.SetSmartMotionMaxVelocity(1);
     heightMotorRightPID.SetSmartMotionMaxVelocity(1);
 
@@ -25,6 +28,23 @@ Lift::Lift(){
 
     heightMotorLeftPID.SetFF(0);
     heightMotorRightPID.SetFF(0);
+
+    frc4065::ReferencedTunable::Register("kP left", klP);
+    frc4065::ReferencedTunable::Register("kP right", krP);
+
+    frc4065::ReferencedTunable::Register("kI left", klI);
+    frc4065::ReferencedTunable::Register("kI right", krI);
+
+    frc4065::ReferencedTunable::Register("kD left", klD);
+    frc4065::ReferencedTunable::Register("kD right", krD);
+
+    frc4065::ReferencedTunable::Register("kFF left", klFF);
+    frc4065::ReferencedTunable::Register("kFF right", krFF);
+
+    frc4065::ReferencedTunable::Register("Left height", leftHeight);
+    frc4065::ReferencedTunable::Register("Right height", rightHeight);
+
+    frc4065::ReferencedTunable::Register("Target height", liftTargetHeight);
 }
 
 Lift& Lift::GetInstance(){
@@ -35,8 +55,31 @@ Lift& Lift::GetInstance(){
 
 // This method will be called once per scheduler run
 void Lift::Periodic() {
-    heightMotorLeftPID.SetReference(liftTargetHeight, rev::kSmartMotion);
-    heightMotorRightPID.SetReference(liftTargetHeight, rev::kSmartMotion);
+    leftHeight = heightMotorLeft.GetEncoder().GetPosition();
+    rightHeight = heightMotorRight.GetEncoder().GetPosition();
+
+    heightMotorLeftPID.SetSmartMotionMaxVelocity(maxVelocity);
+    heightMotorRightPID.SetSmartMotionMaxVelocity(maxVelocity);
+
+    heightMotorLeftPID.SetSmartMotionMaxAccel(maxAccel);
+    heightMotorRightPID.SetSmartMotionMaxAccel(maxAccel);
+
+    heightMotorLeftPID.SetP(klP);
+    heightMotorRightPID.SetP(krP);
+
+    heightMotorLeftPID.SetI(klI);
+    heightMotorRightPID.SetI(krI);
+
+    heightMotorLeftPID.SetD(klD);
+    heightMotorRightPID.SetD(krD);
+
+    heightMotorLeftPID.SetFF(klFF);
+    heightMotorRightPID.SetFF(krFF);
+
+    //heightMotorLeftPID.SetReference(liftTargetHeight, rev::kSmartMotion);
+    //heightMotorRightPID.SetReference(liftTargetHeight, rev::kSmartMotion);
+    heightMotorLeft.Set(liftTargetHeight);
+    heightMotorRight.Set(liftTargetHeight);
     //adjustorMotor.Set(adjustorMotorSpeed);
 }
 
