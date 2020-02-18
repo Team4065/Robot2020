@@ -14,9 +14,8 @@ Shoot::Shoot(Shooter& shooter) {
 
 // Called when the command is initially scheduled.
 void Shoot::Initialize() {
-  //Shooter::GetInstance().targetVelocity = value to be computed or preset;
-  //Shooter::GetInstance().isFeeder1On = true;
-  //Shooter::GetInstance().isFeeder2On = true;
+  Shooter::GetInstance().SetVelocity();
+  Shooter::GetInstance().SetFeeder(true);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -26,9 +25,9 @@ void Shoot::Execute() {
 
 // Called once the command ends or is interrupted.
 void Shoot::End(bool interrupted) {
-  //Shooter::GetInstance().targetVelocity = 0;
-  //Shooter::GetInstance().isFeeder1On = false;
-  //Shooter::GetInstance().isFeeder2On = false;
+  Shooter::GetInstance().SetVelocity(0);
+  Shooter::GetInstance().SetFeeder();
+  Shooter::GetInstance().SetKicker();
 }
 
 // Returns true when the command should end.

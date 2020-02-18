@@ -9,14 +9,16 @@
 
 #include <iostream>
 
-SpinUp::SpinUp(Shooter& shooter) {
+SpinUp::SpinUp(Shooter& shooter, units::revolutions_per_minute_t rpm): rpm_(rpm) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({&shooter});
 }
 
 // Called when the command is initially scheduled.
 void SpinUp::Initialize() {
-  //Shooter::GetInstance().targetVelocity = value to be calculated or preset
+  Shooter::GetInstance().SetVelocity(rpm_);
+  Shooter::GetInstance().SetFeeder(true);
+  Shooter::GetInstance().SetKicker(false);
 }
 
 // Called repeatedly when this Command is scheduled to run
@@ -26,10 +28,10 @@ void SpinUp::Execute() {
 
 // Called once the command ends or is interrupted.
 void SpinUp::End(bool interrupted) {
-  //Shooter::GetInstance().targetVelocity = 0;
-  //Shooter::GetInstance().isFeeder1On = false;
-  //Shooter::GetInstance().isFeeder2On = false;
+  // Shooter::GetInstance().SetVelocity(0);
+  // Shooter::GetInstance().SetFeeder(false);
+  // Shooter::GetInstance().SetKicker(false);
 }
 
 // Returns true when the command should end.
-bool SpinUp::IsFinished() { return constants::shooter::kAllowableVelocityError > abs(Shooter::GetInstance().GetSensorVelocity() - Shooter::GetInstance().targetVelocity); }
+bool SpinUp::IsFinished() { return Shooter::GetInstance().GetVelocity < constants::shooter::kAllowableSpinupVelocityError; }

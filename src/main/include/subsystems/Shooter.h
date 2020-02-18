@@ -38,13 +38,13 @@ public:
   static Shooter& GetInstance();
 
   void ShootWithDistanceEstimation(units::foot_t distanceToTarget);
-  //void SetShooterVelocity(units::revolutions_per_minute_t angularVelocity);
+  void SetShooterVelocity(units::revolutions_per_minute_t angularVelocity);
 
-  // units::revolutions_per_minute_t GetVelocity() const;
-  // units::revolutions_per_minute_t GetDesiredVelocity() const;
-  // units::revolutions_per_minute_t GetVelocityError() const;
-  // units::current::ampere_t GetCurrentDraw() const;
-  //State GetState() const;
+  units::revolutions_per_minute_t GetVelocity() const;
+  units::revolutions_per_minute_t GetDesiredVelocity() const;
+  units::revolutions_per_minute_t GetVelocityError() const;
+  units::current::ampere_t GetCurrentDraw() const;
+  State GetState() const;
 
   DISALLOW_COPY_AND_ASSIGN(Shooter);
   void Periodic();
@@ -53,21 +53,21 @@ public:
 
   double targetVelocity = 0;
 
-  bool isFeeder1On = false;
-  bool isFeeder2On = false;
+  bool feeder_on_ = false;
+  bool kicker_wheel_ = false;
 
  private:
-  //State state_ = State::IDLE;
+  State state_ = State::IDLE;
 
-  //units::revolutions_per_minute_t desired_velocity_ { 0.0 };
+  units::revolutions_per_minute_t desired_velocity_ { 0.0 };
 
-  WPI_TalonFX left { constants::shooter::kLeftMotorPort };
-  WPI_TalonFX right { constants::shooter::kRightMotorPort };
+  WPI_TalonFX left_master_ { constants::shooter::kLeftMotorPort };
+  WPI_TalonFX right_slave_ { constants::shooter::kRightMotorPort };
 
-  rev::CANSparkMax feederMotor1 { constants::shooter::kFeederMotor1Port, rev::CANSparkMax::MotorType::kBrushless };
-  rev::CANSparkMax feederMotor2 { constants::shooter::kFeederMotor2Port, rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANSparkMax feeder_motor_ { constants::shooter::kFeederMotor1Port, rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANSparkMax kicker_motor_ { constants::shooter::kFeederMotor2Port, rev::CANSparkMax::MotorType::kBrushless };
 
-  double kP = 0;
+  double kP = 0.1;
   double kD = 0;
   double kF = 0;
   

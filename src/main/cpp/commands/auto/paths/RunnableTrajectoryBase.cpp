@@ -19,6 +19,8 @@ void RunnableTrajectoryBase::Run()
         std::move(ramsete_command_),
         frc2::InstantCommand([&] { Drivetrain::GetInstance().TankDriveVolts(0_V, 0_V); })
     );
+
+    command_->Schedule();
 }
 
 bool RunnableTrajectoryBase::Done() const
