@@ -1,4 +1,5 @@
 #include "subsystems/Drivetrain.h"
+#include <frc/controller/PIDController.h>
 
 Drivetrain::Drivetrain()
     : odometry_(frc::Rotation2d(GetHeading()))
@@ -32,38 +33,7 @@ Drivetrain::Drivetrain()
 // This method will be called once per scheduler run
 void Drivetrain::Periodic()
 {
-    state.pastTime = state.currentTime;
-    state.currentTime = frc::Timer::GetFPGATimestamp();
-    state.deltaTime = state.currentTime - state.pastTime;
-
     odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
-
-    int PIDPortSelected = 0;
-    switch(state.outputMode)
-    {
-        case rev::ControlType::kVelocity:
-            PIDPortSelected = constants::drivetrain::kVelocityPIDPort;
-            break;
-        case rev::ControlType::kPosition:
-            PIDPortSelected = constants::drivetrain::kPositionPIDPort;
-            break;
-        case rev::ControlType::kSmartVelocity:
-            PIDPortSelected = constants::drivetrain::kVelocityPIDPort;
-            break;
-        case rev::ControlType::kSmartMotion:
-            PIDPortSelected = constants::drivetrain::kPositionPIDPort;
-            break;
-        default:
-            PIDPortSelected = constants::drivetrain::kVelocityPIDPort;
-            break;
-    }
-
-    Tracking();
-
-    std::cout << "left: " << state.leftTarget << " right: " << state.rightTarget << std::endl;
-    left_pid_.SetReference(state.leftTarget, state.outputMode, PIDPortSelected);
-    right_pid_.SetReference(state.rightTarget, state.outputMode, PIDPortSelected);
-    
 }
 
 void Drivetrain::ArcadeDrive(double fwd, double rot) {}
@@ -134,30 +104,4 @@ Drivetrain &Drivetrain::GetInstance()
 {
     static Drivetrain instance; // Guaranteed to be destroyed. Instantiated on first use.
     return instance;
-}
-
-void Drivetrain::Tracking(){
-    limelight->PutNumber("pipeline", state.trackingMode);
-
-    double tx = limelight->GetNumber("tx", 0.0);
-    
-    double error = -tx;// 0 - tx // 0 is always the target
-    static double pastError;
-    double deltaError = (pastError - error) / state.deltaTime;
-
-    double leftOutput = error * state.kP_tracking + deltaError * state.kD_tracking + (abs(error) / error) * state.kF_tracking;
-
-    //may need to be put in a conditional to prevent tracking when it isn't supposed to be (the pipline shouldn't find a target during no tracking)
-    state.leftTarget += leftOutput;
-    state.rightTarget -= leftOutput;
-
-    pastError = error;
-}
-
-void Drivetrain::SetLeft(double value){
-    Drivetrain::GetInstance().state.leftTarget = value;
-}
-
-void Drivetrain::SetRight(double value){
-    Drivetrain::GetInstance().state.rightTarget = value;
 }

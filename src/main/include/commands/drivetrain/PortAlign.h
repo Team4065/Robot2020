@@ -7,23 +7,13 @@
 
 #pragma once
 
-#include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/XboxController.h>
-#include <Constants.h>
+#include <frc2/command/PIDCommand.h>
 
-#include "subsystems/Drivetrain.h"
+class PortAlign
+    : public frc2::CommandHelper<frc2::PIDCommand, PortAlign> {
+ public:
+  PortAlign();
 
-/**
- * NOTE: This class is NOT finished.
- */
-
-class TankDrive
-    : public frc2::CommandHelper<frc2::CommandBase, TankDrive> {
-public:
-  TankDrive(Drivetrain&);
-  void Initialize() override;
-  void Execute() override;
-  void End(bool interrupted) override;
   bool IsFinished() override;
 };

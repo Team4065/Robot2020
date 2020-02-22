@@ -21,27 +21,7 @@ class Drivetrain : public frc2::SubsystemBase
 {
 public:
 
-  enum TrackingMode
-  {
-    NONE,
-    TAPE,
-    BALL
-  };
-
-  struct State
-  {
-    rev::ControlType outputMode = rev::ControlType::kVelocity;
-    float leftTarget = 0;
-    float rightTarget = 0;
-
-    TrackingMode trackingMode = TrackingMode::NONE;
-    double kP_tracking = 0;
-    double kD_tracking = 0;
-    double kF_tracking = 0;
-    double currentTime = 0;
-    double pastTime = 0;
-    double deltaTime = 0;
-  };
+  enum Mode { DRIVERCONTROL, TARGETING, IDLE };
 
   void ArcadeDrive(double fwd, double rot);
   void TankDriveVolts(units::volt_t left, units::volt_t right);
@@ -65,9 +45,8 @@ public:
   static void SetRight(double value);
 
 private:
+  Mode mode_ = Mode::IDLE;
 
-  State state;
-  
   rev::CANSparkMax left_front_master_ { constants::drivetrain::kLeftFrontMotorPort, rev::CANSparkMax::MotorType::kBrushless };
   rev::CANSparkMax left_middle_slave_ { constants::drivetrain::kLeftMiddleMotorPort, rev::CANSparkMax::MotorType::kBrushless };
   rev::CANSparkMax left_rear_slave_   { constants::drivetrain::kLeftRearMotorPort, rev::CANSparkMax::MotorType::kBrushless };
@@ -83,8 +62,6 @@ private:
   AHRS gyro_ { frc::SPI::Port::kMXP };
 
   frc::DifferentialDriveOdometry odometry_;
-
-  std::shared_ptr<NetworkTable> limelight = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
 
   Drivetrain();
 
