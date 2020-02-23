@@ -15,24 +15,15 @@
 #include "subsystems/Drivetrain.h"
 
 /**
- * An example command.
- *
- * <p>Note that this extends CommandHelper, rather extending CommandBase
- * directly; this is crucially important, or else the decorator functions in
- * Command will *not* work!
+ * NOTE: This class is NOT finished.
  */
+
 class TankDrive
     : public frc2::CommandHelper<frc2::CommandBase, TankDrive> {
- public:
+public:
   TankDrive(Drivetrain&);
-
   void Initialize() override;
-
   void Execute() override;
-
   void End(bool interrupted) override;
-
   bool IsFinished() override;
-
-  frc::XboxController controller {constants::oi::kDriverXboxControllerPort};
 };

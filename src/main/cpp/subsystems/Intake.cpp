@@ -1,35 +1,44 @@
 #include "subsystems/Intake.h"
 
 // This method will be called once per scheduler run
-void Intake::Periodic() {
-    motor.Set(motorSpeed);
-    if(isDeployed)
-        Extend();
-    else
-        Retract();
-}
+void Intake::Periodic() {}
 
 Intake& Intake::GetInstance()
 {
-    static Intake instance;  // Guaranteed to be destroyed.
-                                    // Instantiated on first use.
+    static Intake instance;
     return instance;
 }
 
-void Intake::Suck(){
-    motorSpeed = kMotorOperatingPercentage;
+void Intake::Suck()
+{
+    is_active_ = true;
+    motor_.Set(ControlMode::PercentOutput, constants::intake::kMotorOperatingPercentage);
 }
 
-void Intake::DontSuck(){
-    motorSpeed = 0;
+void Intake::Idle()
+{
+    is_active_ = false;
+    motor_.Set(ControlMode::PercentOutput, 0.0);
 }
 
-void Intake::Retract(){
-    solenoid.Set(frc::DoubleSolenoid::kForward);
-    //rightSolenoid.Set(frc::DoubleSolenoid::kForward);
+void Intake::Retract()
+{
+    is_deployed_ = false;
+    solenoid_.Set(frc::DoubleSolenoid::kForward);
 }
 
-void Intake::Extend(){
-    solenoid.Set(frc::DoubleSolenoid::kReverse);
-    //rightSolenoid.Set(frc::DoubleSolenoid::kReverse);
+void Intake::Extend()
+{
+    is_deployed_ = true;
+    solenoid_.Set(frc::DoubleSolenoid::kReverse);
+}
+
+bool Intake::IsActive() const
+{
+    return is_active_;
+}
+
+bool Intake::IsDeployed() const
+{
+    return is_deployed_;
 }

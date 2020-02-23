@@ -5,19 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "subsystems/Vision.h"
 
-#include <frc2/command/CommandHelper.h>
-#include <frc2/command/SequentialCommandGroup.h>
+Vision::Vision() {}
 
-#include "commands/Intake/RetractIntake.h"
-#include "commands/Intake/DontSuck.h"
-
-#include "subsystems/Intake.h"
-
-class Retract_and_DontSuck
-    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
-                                 Retract_and_DontSuck> {
- public:
-  Retract_and_DontSuck(Intake& intake);
-};
+// This method will be called once per scheduler run
+void Vision::Periodic() {}

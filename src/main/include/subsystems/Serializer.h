@@ -14,14 +14,12 @@ public:
   static Serializer& GetInstance();
   DISALLOW_COPY_AND_ASSIGN(Serializer);
   void Periodic();
-
   void Forward();
-  void Off();
+  void Idle();
   void Reverse();
 
 private:
   Serializer();
 
-  rev::CANSparkMax conveyorMotor { constants::serializer::kSerializerID, rev::CANSparkMax::MotorType::kBrushless };
-  double conveyorSpeed = 0;
+  rev::CANSparkMax motor_ { constants::serializer::kSerializerID, rev::CANSparkMax::MotorType::kBrushless };
 };

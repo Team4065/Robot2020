@@ -6,7 +6,7 @@
 #include <ctre/Phoenix.h>
 #include <frc/DoubleSolenoid.h>
 
-#include <Constants.h>
+#include "Constants.h"
 
 using namespace constants::intake;
 
@@ -18,20 +18,18 @@ public:
   void Periodic();
 
   void Suck();
-  void DontSuck();
-
+  void Idle();
   void Retract();
   void Extend();
 
-  bool isDeployed = false;
+  bool IsActive() const;
+  bool IsDeployed() const;
+
+  bool is_active_ = false;
+  bool is_deployed_ = false;
 private:
   Intake() = default;
 
-  WPI_TalonSRX motor { kIntakeMotorID };
-  double motorSpeed = 0;
-
-  frc::DoubleSolenoid solenoid { kSolenoidPorts[0], kSolenoidPorts[1] };
-  //frc::DoubleSolenoid rightSolenoid { kRightSolenoidPorts[0], kRightSolenoidPorts[1] };
-
-
+  TalonSRX motor_ { kIntakeMotorID };
+  frc::DoubleSolenoid solenoid_ { kSolenoidPorts[0], kSolenoidPorts[1] };
 };

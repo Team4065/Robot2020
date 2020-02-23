@@ -8,19 +8,12 @@
 #pragma once
 
 #include <frc2/command/CommandHelper.h>
-#include <frc2/command/ParallelCommandGroup.h>
+#include <frc2/command/PIDCommand.h>
 
-#include "subsystems/Intake.h"
-#include "subsystems/Serializer.h"
-#include "subsystems/Shooter.h"
-
-#include "commands/Intake/Deploy_and_Suck.h"
-#include "commands/Serializer/VBeltForward.h"
-#include "commands/Shooter/Preload.h"
-
-class CollectBalls
-    : public frc2::CommandHelper<frc2::ParallelCommandGroup,
-                                 CollectBalls> {
+class PortAlign
+    : public frc2::CommandHelper<frc2::PIDCommand, PortAlign> {
  public:
-  CollectBalls(Intake& intake, Serializer& serializer, Shooter& shooter);
+  PortAlign();
+
+  bool IsFinished() override;
 };

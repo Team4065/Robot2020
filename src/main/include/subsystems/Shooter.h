@@ -4,13 +4,13 @@
 #include <iostream>
 
 #include <frc2/command/SubsystemBase.h>
-#include <units/units.h>
+#include i<units/units.h>
 
 #include "Constants.h"
 #include "util/Macros.h"
 
 #include "rev/CANSparkMax.h"
-//#include "ctre/phoenix/motorcontrol/can/WPI_TalonFX.h"
+
 #include "ctre/Phoenix.h"
 
 /* TODO:
@@ -27,13 +27,6 @@
 class Shooter : public frc2::SubsystemBase
 {
 public:
-  
-  /*
-  enum State
-  {
-    IDLE, SPINUP, SHOOTING
-  };
-  */
 
   static Shooter& GetInstance();
 
@@ -44,20 +37,20 @@ public:
   units::revolutions_per_minute_t GetDesiredVelocity() const;
   units::revolutions_per_minute_t GetVelocityError() const;
   units::current::ampere_t GetCurrentDraw() const;
-  State GetState() const;
 
   DISALLOW_COPY_AND_ASSIGN(Shooter);
   void Periodic();
 
   double GetSensorVelocity();
 
-  double targetVelocity = 0;
-
   bool feeder_on_ = false;
   bool kicker_wheel_ = false;
 
  private:
+<<<<<<< HEAD
  // State state_ = State::IDLE;
+=======
+>>>>>>> 40ae35e9137c6650a448476cf7f1c0f7383ce2c0
 
   units::revolutions_per_minute_t desired_velocity_ { 0.0 };
 

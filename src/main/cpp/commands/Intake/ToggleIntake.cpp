@@ -5,16 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Intake/Deploy_and_Suck.h"
+#include "commands/Intake/ToggleIntake.h"
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-Deploy_and_Suck::Deploy_and_Suck(Intake& intake) {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
-  AddCommands(
-    DeployIntake(intake),
-    Suck(intake)
-  );
+ToggleIntake::ToggleIntake(Intake& intake)
+{
+  AddRequirements(&intake);
+}
+
+// Called when the command is initially scheduled.
+void ToggleIntake::Initialize()
+{
+  static Intake& instance_ = Intake::GetInstance();
+  if (instance_.IsDeployed())
+  {
+    instance_.Retract();
+    instance_.Idle();
+  }
+  else
+  {
+    instance_.Extend();
+    instance_.Suck();
+  }
 }

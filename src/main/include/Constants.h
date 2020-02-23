@@ -108,7 +108,9 @@ namespace constants
      
     namespace serializer
     {
-        const int kSerializerID = 13;
+        constexpr int kSerializerID = 13;
+        constexpr double kIndexingSpeed = 0.5;
+        constexpr double kAntiJamSpeed = 0.1;
     }
 
     namespace control_panel_manipulator
@@ -120,14 +122,4 @@ namespace constants
     {
         constexpr units::degree_t kCameraPitch { 30.0 };
     }
-
-    namespace joy_deadband
-    {
-        inline float deadband(float joyValue)
-        {
-            
-            return (std::abs(joyValue) > 0.15f) ? joyValue : 0.0f;
-        }
-    }
-
 }
