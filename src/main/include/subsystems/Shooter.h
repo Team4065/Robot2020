@@ -57,7 +57,7 @@ public:
   bool kicker_wheel_ = false;
 
  private:
-  State state_ = State::IDLE;
+ // State state_ = State::IDLE;
 
   units::revolutions_per_minute_t desired_velocity_ { 0.0 };
 
