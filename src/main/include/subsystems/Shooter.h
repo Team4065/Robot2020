@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include <frc2/command/SubsystemBase.h>
-#include i<units/units.h>
+#include <units/units.h>
 
 #include "Constants.h"
 #include "util/Macros.h"
@@ -47,10 +47,6 @@ public:
   bool kicker_wheel_ = false;
 
  private:
-<<<<<<< HEAD
- // State state_ = State::IDLE;
-=======
->>>>>>> 40ae35e9137c6650a448476cf7f1c0f7383ce2c0
 
   units::revolutions_per_minute_t desired_velocity_ { 0.0 };
 
