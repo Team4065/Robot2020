@@ -5,7 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Constants.h"
+#pragma once
 
-const frc::DifferentialDriveKinematics DriveConstants::kDriveKinematics(
-    kTrackwidth);
+#include <frc2/command/CommandHelper.h>
+#include <frc2/command/SequentialCommandGroup.h>
+#include "subsystems/DriveSubsystem.h"
+
+class SixBallsRoutine
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
+                                 SixBallsRoutine> {
+ public:
+  SixBallsRoutine(DriveSubsystem* driveSub);
+  private: 
+  DriveSubsystem* m_drive;
+};

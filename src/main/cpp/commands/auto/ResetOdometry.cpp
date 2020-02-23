@@ -5,7 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "Constants.h"
+#include "commands/auto/ResetOdometry.h"
 
-const frc::DifferentialDriveKinematics DriveConstants::kDriveKinematics(
-    kTrackwidth);
+ResetOdometry::ResetOdometry(DriveSubsystem* driveSub, const frc::Pose2d& pose, const frc::Rotation2d& angle) : m_drive(driveSub), m_pose(pose), m_angle(angle) {
+  // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements(m_drive);
+}
+
+// Called when the command is initially scheduled.
+void ResetOdometry::Initialize() {
+
+  m_drive->ResetOdometry(m_pose, m_angle);
+}

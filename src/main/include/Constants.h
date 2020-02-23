@@ -1,93 +1,70 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+#include <frc/kinematics/DifferentialDriveKinematics.h>
+#include <frc/trajectory/constraint/DifferentialDriveKinematicsConstraint.h>
+#include <frc/trajectory/TrajectoryConfig.h>
+#include <units/units.h>
+#include <wpi/math>
+
 #pragma once
 
-#include <units/units.h>
-#include <frc/kinematics/DifferentialDriveKinematics.h>
-#include <frc/trajectory/TrajectoryConfig.h>
+/**
+ * The Constants header provides a convenient place for teams to hold robot-wide
+ * numerical or bool constants.  This should not be used for any other purpose.
+ *
+ * It is generally a good idea to place constants into subsystem- or
+ * command-specific namespaces within this header, which can then be used where
+ * they are needed.
+ */
 
-namespace constants
-{
-    using Velocity     = units::compound_unit<units::length::feet, units::inverse<units::seconds>>;
-    using Acceleration = units::compound_unit<Velocity,            units::inverse<units::seconds>>;
-    using kv           = units::compound_unit<units::volts,        units::inverse<Velocity>>;
-    using ka           = units::compound_unit<units::volts,        units::inverse<Acceleration>>;
-    namespace oi
-    {
-        constexpr int kDriverXboxControllerPort = 0;
-    }
-    namespace shooter
-    {
-        const int kLeftMotorPort = 1;
-        const int kRightMotorPort = 2;
-        const units::current::ampere_t kMaxCurrentDraw { 30.0 };
-        const double kP = 0.0;
-        const double kD = 0.0;
-        const double kFF = 0.0;
-        const units::inch_t kWheelDiameter { 6.0 };
-        const units::revolutions_per_minute_t kAllowableShootingVelocityError = 45_rpm; // within 30 rpm of target rate
-        const units::revolutions_per_minute_t kAllowableSpinupVelocityError = 30_rpm; // within 30 rpm of target rate
-        const units::foot_t kDistanceLowerBound { 10 }; // 10 feet away
-        const units::foot_t kDistanceUpperBound { 30 }; // 30 feet away
-    }
-    namespace drivetrain
-    {
-        const int kLeftFrontMotorPort = 3; // Inaccurate!
-        const int kLeftMiddleMotorPort = 4; // Inaccurate!
-        const int kLeftRearMotorPort = 5; // Inaccurate!
-        const int kRightFrontMotorPort = 6; // Inaccurate!
-        const int kRightMiddleMotorPort = 7; // Inaccurate!
-        const int kRightRearMotorPort = 8; // Inaccurate!
-        const bool kGyroReversed = false; // Inaccurate!
-        const units::current::ampere_t kMaxCurrentDraw { 30.0 };
-        const units::inch_t kWheelDiameter { 6.0 };
-        const units::inch_t kTrackWidth { 28.0 }; // Maybe 
-        const units::volt_t kS { 0.0 }; // Inaccurate!
-        const units::unit_t<kv> kV { 0.0 }; // Inaccurate!
-        const units::unit_t<ka> kA { 0.0 }; // Inaccurate!
-        const double kPDriveVel = 0.0;
-        extern const frc::DifferentialDriveKinematics kDriveKinematics;
-        extern const frc::TrajectoryConfig kAutoConfig;
+namespace DriveConstants {
+constexpr int kLeftMotor1Port = 1;
+constexpr int kLeftMotor2Port = 2;
+constexpr int kRightMotor1Port = 3;
+constexpr int kRightMotor2Port = 4;
 
-        const int kVelocityPIDPort = 0;
-        const float kP_Velocity = 0;
-        const float kD_Velocity = 0;
-        const float kF_Velocity = 0.1;
+constexpr auto kTrackwidth = 0.6096_m;
 
-        constexpr int kPositionPIDPort = 1;
+extern const frc::DifferentialDriveKinematics kDriveKinematics;
 
-        namespace auto_mode
-        {
-            constexpr units::feet_per_second_t kMaxVelocity { 10.0 };
-            constexpr units::feet_per_second_squared_t kMaxAcceleration { 6.0 };
-            constexpr double kRamseteB = 2.0;
-            constexpr double kRamseteZeta = 0.7;
-        }
-    }
-    namespace intake
-    {
-        constexpr int kIntakeMotorPort = 0; // Inaccurate!
-        constexpr int kLeftSolenoidPorts[2] = { 0, 0 }; // Inaccurate!
-        constexpr int kRightSolenoidPorts[2] = { 0, 0 }; // Inaccurate!
-        constexpr units::current::ampere_t kMaxCurrentDraw { 25.0 };
-        constexpr float kMotorOperatingPercentage = 0.8f; // 
-    }
-    namespace serializer
-    {
+constexpr int kEncoderCPR = 4096;//ticks_per_rev
+constexpr double kWheelDiameterMeters = 0.1524;//wheel size in meters
+constexpr double kEncoderDistancePerPulse =
+    // Assumes the encoders are directly mounted on the wheel shafts
+    (kWheelDiameterMeters * wpi::math::pi) / static_cast<double>(kEncoderCPR);
 
-    }
-    namespace control_panel_manipulator
-    {
+constexpr bool kGyroReversed = true;
 
-    }
-    namespace limelight
-    {
-        constexpr units::degree_t kCameraPitch { 30.0 };
-    }
-    namespace joy_deadband
-    {
-    inline float deadband(float joyValue)
-    {
-        
-        return (std::abs(joyValue) > 0.15f) ? joyValue : 0.0f;
-    }
-    }
-}
+// These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
+// These characterization values MUST be determined either experimentally or
+// theoretically for *your* robot's drive. The Robot Characterization
+// Toolsuite provides a convenient tool for obtaining these values for your
+// robot.
+constexpr auto ks = 0.86_V;
+constexpr auto kv = 3.26 * 1_V * 1_s / 1_m;
+constexpr auto ka = 0.687 * 1_V * 1_s * 1_s / 1_m;
+
+// Example value only - as above, this must be tuned for your drive!
+constexpr double kPDriveVel = 0.000666;
+constexpr double kIDriveVel = 0.0;
+constexpr double kDDriveVel = 0.000316;
+}  // namespace DriveConstants
+
+namespace AutoConstants {
+constexpr auto kMaxSpeed = 3_mps;
+constexpr auto kMaxAcceleration = 3_mps_sq;
+
+// Reasonable baseline values for a RAMSETE follower in units of meters and
+// seconds
+constexpr double kRamseteB = 2.0;
+constexpr double kRamseteZeta = 0.7;
+}  // namespace AutoConstants
+
+namespace OIConstants {
+constexpr int kDriverControllerPort = 0;
+}  // namespace OIConstants
