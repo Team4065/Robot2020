@@ -24,5 +24,4 @@ class RamseteFollower
   const std::vector<frc::Translation2d>& m_translationPos;
   const frc::Pose2d& m_endingPos;
   DriveSubsystem* m_drivetrain;
-  void resetPose();
 };
