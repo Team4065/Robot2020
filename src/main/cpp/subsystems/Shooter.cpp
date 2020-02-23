@@ -2,26 +2,31 @@
 
 Shooter::Shooter()
 {
-    left_.RestoreFactoryDefaults();
-    right_.RestoreFactoryDefaults();
+    right_slave_.Follow(left_master_);
+    left_master_.SetInverted(ctre::phoenix::motorcontrol::InvertType::None);
+    right_slave_.SetInverted(ctre::phoenix::motorcontrol::InvertType::OpposeMaster);
 
-    left_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-    right_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+    left_master_.Config_kP(0, kP);
+    left_master_.Config_kI(0, 0);
+    left_master_.Config_kD(0, kD);
+    left_master_.Config_kF(0, kF);
 
-    left_.Follow(right_, true);
+    right_slave_.Config_kP(0, kP);
+    right_slave_.Config_kI(0, 0);
+    right_slave_.Config_kD(0, kD);
+    right_slave_.Config_kF(0, kF);
 
-    left_.SetSmartCurrentLimit(constants::shooter::kMaxCurrentDraw.to<unsigned int>()); 
-    right_.SetSmartCurrentLimit(constants::shooter::kMaxCurrentDraw.to<unsigned int>()); 
-    left_pid_.SetP(constants::shooter::kP);
-    left_pid_.SetI(0.0); // Disable
-    left_pid_.SetD(constants::shooter::kD);
-    left_pid_.SetFF(constants::shooter::kFF);
+    left_master_.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 0);
+    right_slave_.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 0);
+}
 
-
+double Shooter::GetSensorVelocity(){
+    return left_master_.GetSelectedSensorVelocity();
 }
 
 void Shooter::ShootWithDistanceEstimation(units::foot_t distanceToTarget)
-{
+{   
+    /*
     // 1. Turn a distance into a velocity using numerical analysis.
     // 2. Set shooter to that velocity.
     if (distanceToTarget > constants::shooter::kDistanceUpperBound || distanceToTarget < constants::shooter::kDistanceLowerBound)
@@ -30,23 +35,13 @@ void Shooter::ShootWithDistanceEstimation(units::foot_t distanceToTarget)
     units::revolutions_per_minute_t rpm_estimation = 0_rpm;
 
     SetShooterVelocity(rpm_estimation);
+    */
 }
 
 void Shooter::SetShooterVelocity(units::revolutions_per_minute_t angularVelocity)
 {
-    if(angularVelocity == 0_rpm)
-        state_ = State::IDLE;
-    else
-        state_ = State::SPINUP;
-
     // 1. Calculate motor velocity from rpm and wheel radius.
     desired_velocity_ = angularVelocity;
-}
-
-
-Shooter::State Shooter::GetState() const
-{
-    return state_;
 }
 
 units::revolutions_per_minute_t Shooter::GetVelocityError() const
@@ -67,21 +62,6 @@ units::revolutions_per_minute_t Shooter::GetDesiredVelocity() const
 void Shooter::Periodic()
 {
 
-    switch(state_){
-        case State::SPINUP:
-            // Poll velocity so when we get up to speed we can start shooting.
-            if (GetVelocityError() < constants::shooter::kAllowableSpinupVelocityError)
-                state_ = State::SHOOTING;
-            break;
-        case State::SHOOTING:
-            // Makes sure while shooting we aren't below the allowable velocity error
-            if (GetVelocityError() > constants::shooter::kAllowableShootingVelocityError)
-                state_ = State::SPINUP;
-            break;
-        case State::IDLE:
-            break;
-
-    }
 }
 
 Shooter& Shooter::GetInstance()

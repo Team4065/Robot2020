@@ -1,38 +1,83 @@
 #include "subsystems/Drivetrain.h"
 #include <frc/controller/PIDController.h>
 
+/*
+double kP_Velocity = 0;//2.31 / 100;
+double kD_Velocity = 0;
+double kF_Velocity = 0.00125;
+double kArbiFeedForw = 0.130;
+
+double maxAccel = 500;
+double maxVelocity = 100;
+*/
+
 Drivetrain::Drivetrain()
     : odometry_(frc::Rotation2d(GetHeading()))
 {
     left_front_master_.RestoreFactoryDefaults();
     left_middle_slave_.RestoreFactoryDefaults();
-    left_rear_slave_.RestoreFactoryDefaults();
+    //left_rear_slave_.RestoreFactoryDefaults();
     right_front_master_.RestoreFactoryDefaults();
     right_middle_slave_.RestoreFactoryDefaults();
-    right_rear_slave_.RestoreFactoryDefaults();
+    //right_rear_slave_.RestoreFactoryDefaults();
 
     left_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
     left_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    left_rear_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    //left_rear_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
 
     right_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
     right_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    right_rear_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+   // right_rear_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+
+    left_front_master_.SetInverted(true);
 
     left_middle_slave_.Follow(left_front_master_, false);
-    left_rear_slave_.Follow(left_front_master_, false);
+    //left_rear_slave_.Follow(left_front_master_, false);
 
     right_middle_slave_.Follow(right_front_master_, false);
-    right_rear_slave_.Follow(right_front_master_, false);
+    //right_rear_slave_.Follow(right_front_master_, false);
 
     left_pid_.SetP(constants::drivetrain::kP_Velocity, constants::drivetrain::kVelocityPIDPort);
     left_pid_.SetD(constants::drivetrain::kD_Velocity, constants::drivetrain::kVelocityPIDPort);
     left_pid_.SetFF(constants::drivetrain::kF_Velocity, constants::drivetrain::kVelocityPIDPort);
+
+    right_pid_.SetP(constants::drivetrain::kP_Velocity, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetD(constants::drivetrain::kD_Velocity, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetFF(constants::drivetrain::kF_Velocity, constants::drivetrain::kVelocityPIDPort);
+
+    left_pid_.SetSmartMotionMaxAccel(constants::drivetrain::kMaxAccel, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetSmartMotionMaxAccel(constants::drivetrain::kMaxAccel, constants::drivetrain::kVelocityPIDPort);
+    
+    left_pid_.SetSmartMotionMaxVelocity(constants::drivetrain::kMaxVelocity, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetSmartMotionMaxVelocity(constants::drivetrain::kMaxVelocity, constants::drivetrain::kVelocityPIDPort);
+
+
+   /*
+    frc4065::ReferencedTunable::Register("kP", kP_Velocity);
+    frc4065::ReferencedTunable::Register("kD", kD_Velocity);
+    frc4065::ReferencedTunable::Register("kF", kF_Velocity);
+    frc4065::ReferencedTunable::Register("kArbiFeedForw", kArbiFeedForw);
+    frc4065::ReferencedTunable::Register("maxAccel", maxAccel);
+    frc4065::ReferencedTunable::Register("maxVelocity", maxVelocity);
+    */
 }
 
 // This method will be called once per scheduler run
 void Drivetrain::Periodic()
 {
+    /*
+    left_pid_.SetP(kP_Velocity, constants::drivetrain::kVelocityPIDPort);
+    left_pid_.SetD(kD_Velocity, constants::drivetrain::kVelocityPIDPort);
+    left_pid_.SetFF(kF_Velocity, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetP(kP_Velocity, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetD(kD_Velocity, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetFF(kF_Velocity, constants::drivetrain::kVelocityPIDPort);
+    left_pid_.SetSmartMotionMaxVelocity(maxVelocity, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetSmartMotionMaxVelocity(maxVelocity, constants::drivetrain::kVelocityPIDPort);
+    left_pid_.SetSmartMotionMaxAccel(maxAccel, constants::drivetrain::kVelocityPIDPort);
+    right_pid_.SetSmartMotionMaxAccel(maxAccel, constants::drivetrain::kVelocityPIDPort);
+    */
+
     odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
 }
 
@@ -40,8 +85,18 @@ void Drivetrain::ArcadeDrive(double fwd, double rot) {}
 
 void Drivetrain::TankDriveVolts(units::volt_t left, units::volt_t right)
 {
+    DEBUG_LOG(((std::abs(left.to<double>()) > 1.0 || std::abs(left.to<double>()) < 0.0)
+                ? "Attempting to apply voltage to left side out of bounds!" : ""));
+    DEBUG_LOG(((std::abs(right.to<double>()) > 1.0 || std::abs(right.to<double>()) < 0.0) 
+                ? "Attempting to apply voltage to right side out of bounds!" : ""));
     left_front_master_.SetVoltage(left);
     right_front_master_.SetVoltage(right);
+}
+
+void Drivetrain::TankDrivePercent(double left, double right)
+{
+    left_front_master_.Set(left);
+    left_front_master_.Set(right);
 }
 
 frc::DifferentialDriveWheelSpeeds Drivetrain::GetWheelSpeeds()
@@ -77,28 +132,12 @@ void Drivetrain::ResetOdometry(frc::Pose2d pose)
     ResetEncoders();
     odometry_.ResetPosition(pose, frc::Rotation2d(GetHeading()));
 }
-void Drivetrain::NeutralMode(bool isEnable)
+void Drivetrain::NeutralMode(bool isEnabled)
 {
-  if (isEnable)
-  {
-    left_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-    left_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-    left_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-
-    right_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-    right_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-    right_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
-  }
-  else
-  {
-    left_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-    left_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-    left_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-
-    right_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-    right_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-    right_rear_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-  }
+    left_front_master_.SetIdleMode(isEnabled ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast);
+    left_middle_slave_.SetIdleMode(isEnabled ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast);
+    right_front_master_.SetIdleMode(isEnabled ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast);
+    right_middle_slave_.SetIdleMode(isEnabled ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast);
 }
 Drivetrain &Drivetrain::GetInstance()
 {
