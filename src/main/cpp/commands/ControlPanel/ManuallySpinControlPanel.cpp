@@ -5,27 +5,33 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ControlPanel/StowCPM.h"
+#include "commands/ControlPanel/ManuallySpinControlPanel.h"
 using namespace constants::control_panel_manipulator;
 
-StowCPM::StowCPM(ControlPanelManipulator& controlPanelManipulator) {
+ManuallySpinControlPanel::ManuallySpinControlPanel(ControlPanelManipulator& controlPanelManipulator, frc::XboxController& controller) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({&controlPanelManipulator});
+  m_controller = &controller;
 }
 
 // Called when the command is initially scheduled.
-void StowCPM::Initialize() {}
-
+void ManuallySpinControlPanel::Initialize() {
+}
 // Called repeatedly when this Command is scheduled to run
-void StowCPM::Execute() {
+void ManuallySpinControlPanel::Execute() {
 #ifdef DISPLAY_COMMAND_MESSAGES
-  std::cout << "StowCPM Command Executing" << std::endl;
+  std::cout << "ManuallySpinControlPanel Command Executing" << std::endl;
 #endif 
-  ControlPanelManipulator::GetInstance().setPosition(StowPosition);
+    double currentPosition = ControlPanelManipulator::GetInstance().read_encoder_position();
+    double desiredMotorRotations = Stage2Rotations * DiameterOfControlePanel/DiameterOfDriverWheel;
+
+    double FinalPosition = currentPosition + desiredMotorRotations;
+
+    ControlPanelManipulator::GetInstance().setPosition(FinalPosition);
 }
 
 // Called once the command ends or is interrupted.
-void StowCPM::End(bool interrupted) {}
+void ManuallySpinControlPanel::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool StowCPM::IsFinished() { return true; }
+bool ManuallySpinControlPanel::IsFinished() { return true; }

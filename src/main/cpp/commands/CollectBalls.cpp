@@ -11,11 +11,17 @@
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 CollectBalls::CollectBalls(Intake& intake, Serializer& serializer, Shooter& shooter) {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
   AddCommands(
     Deploy_and_Suck(intake),
     VBeltForward(serializer),
     Preload(shooter)
+  );
+}
+
+CollectBalls::CollectBalls(DeployIntake& deployIntakeCommand, Suck& suckComand, VBeltForward& vBeltForwardCommand, Preload& preloadCommand) {
+  AddCommands(
+    Deploy_and_Suck(deployIntakeCommand, suckComand),
+    vBeltForwardCommand,
+    preloadCommand
   );
 }

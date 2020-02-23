@@ -18,13 +18,14 @@ void AdjustLeft::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void AdjustLeft::Execute() {
-  std::cout << "Adjusting Left Lift" << std::endl;
+#ifdef DISPLAY_COMMAND_MESSAGES
+  std::cout << "AdjustLeft Command Executing" << std::endl;
+#endif   
   //Lift::GetInstance().MoveLeft();
 }
 
 // Called once the command ends or is interrupted.
 void AdjustLeft::End(bool interrupted) {
-  //Lift::GetInstance().DontMove();
 }
 
 // Returns true when the command should end.

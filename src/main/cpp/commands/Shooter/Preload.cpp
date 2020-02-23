@@ -15,19 +15,18 @@ Preload::Preload(Shooter& shooter) {
 }
 
 // Called when the command is initially scheduled.
-void Preload::Initialize() {
-  //Shooter::GetInstance().isFeeder1On = true;
-}
+void Preload::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void Preload::Execute() {
-  std::cout << "Shooter is preloading" << std::endl;
+#ifdef DISPLAY_COMMAND_MESSAGES
+  std::cout << "Preload Command Executing" << std::endl;
+#endif
+  //Shooter::GetInstance().isFeeder1On = true;
 }
 
 // Called once the command ends or is interrupted.
-void Preload::End(bool interrupted) {
-  Shooter::GetInstance().isFeeder1On = false;
-}
+void Preload::End(bool interrupted) {}
 
 // Returns true when the command should end.
 bool Preload::IsFinished() { return false; }

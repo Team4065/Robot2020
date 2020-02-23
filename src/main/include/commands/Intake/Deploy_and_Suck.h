@@ -19,5 +19,6 @@ class Deploy_and_Suck
     : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  Deploy_and_Suck> {
  public:
-  Deploy_and_Suck(Intake& intake);
+    Deploy_and_Suck(Intake& intake);
+    Deploy_and_Suck(DeployIntake& deployIntake, Suck& suck);
 };

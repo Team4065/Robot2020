@@ -11,10 +11,16 @@
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 SpinUp_and_Shoot::SpinUp_and_Shoot(Shooter& shooter) {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
   AddCommands(
     SpinUp(shooter),
     Shoot(shooter)
   );
 }
+
+SpinUp_and_Shoot::SpinUp_and_Shoot(SpinUp& spinUp, Shoot& shoot) {
+  AddCommands(
+    spinUp,
+    shoot
+  );
+}
+

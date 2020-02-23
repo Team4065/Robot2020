@@ -21,8 +21,10 @@ void VBeltForward::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void VBeltForward::Execute() {
+#ifdef DISPLAY_COMMAND_MESSAGES
+  std::cout << "VBeltForward Command Executing" << std::endl;
+#endif 
   Serializer::GetInstance().Forward();
-  // std::cout << "V-Belt forward." << std::endl;
 }
 
 // Called once the command ends or is interrupted.

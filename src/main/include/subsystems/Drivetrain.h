@@ -12,6 +12,7 @@
 #include "networktables/NetworkTableInstance.h"
 #include <AHRS.h>
 
+#include "util/typedefs.h"
 #include "Constants.h"
 #include "util/Macros.h"
 #include <iostream>
@@ -20,7 +21,7 @@
 #include "rev/CANSparkMax.h"
 
 
-
+using namespace constants::drivetrain;
 
 class Drivetrain : public frc2::SubsystemBase
 {
@@ -72,6 +73,9 @@ public:
   static double GetLeft();
   static double GetRight();
 
+  //Properties
+  property <DriveTrainMode_t> DriveTrainMode;
+
 private:
 
   State state;
@@ -90,7 +94,7 @@ private:
 
   AHRS gyro_ { frc::SPI::Port::kMXP };
 
-  frc::DifferentialDriveOdometry odometry_;
+  frc::DifferentialDriveOdometry m_odometer;
 
   std::shared_ptr<NetworkTable> limelight = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
 

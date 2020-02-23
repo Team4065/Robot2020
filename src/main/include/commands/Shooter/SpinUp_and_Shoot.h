@@ -20,4 +20,5 @@ class SpinUp_and_Shoot
                                  SpinUp_and_Shoot> {
  public:
   SpinUp_and_Shoot(Shooter& shooter);
+  SpinUp_and_Shoot(SpinUp& spinUp, Shoot& shoot);
 };

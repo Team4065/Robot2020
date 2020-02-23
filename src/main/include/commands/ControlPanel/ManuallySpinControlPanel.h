@@ -9,7 +9,9 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "Constants.h"
+#include <frc/XboxController.h>
+#include <Constants.h>
+
 #include "subsystems/ControlPanelManipulator.h"
 
 /**
@@ -19,10 +21,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class StowCPM
-     : public frc2::CommandHelper<frc2::CommandBase, StowCPM> {
+class ManuallySpinControlPanel
+     : public frc2::CommandHelper<frc2::CommandBase, ManuallySpinControlPanel> {
  public:
-  StowCPM(ControlPanelManipulator&);
+  ManuallySpinControlPanel(ControlPanelManipulator& controlPanelManipulator, frc::XboxController& controller);
 
   void Initialize() override;
 
@@ -33,5 +35,6 @@ class StowCPM
   bool IsFinished() override;
 
  private:
+    frc::XboxController* m_controller;
     
 };

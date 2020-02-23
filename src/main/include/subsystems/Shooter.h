@@ -53,13 +53,13 @@ public:
 
   double targetVelocity = 0;
 
-  bool isFeeder1On = false;
-  bool isFeeder2On = false;
-
  private:
   //State state_ = State::IDLE;
 
   //units::revolutions_per_minute_t desired_velocity_ { 0.0 };
+
+  bool isFeeder1On = false;
+  bool isFeeder2On = false;
 
   WPI_TalonFX left { constants::shooter::kLeftMotorPort };
   WPI_TalonFX right { constants::shooter::kRightMotorPort };

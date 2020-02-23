@@ -11,7 +11,7 @@ double maxVelocity = 100;
 */
 
 Drivetrain::Drivetrain()
-    : odometry_(frc::Rotation2d(GetHeading()))
+    : m_odometer(frc::Rotation2d(GetHeading()))
 {
     left_front_master_.RestoreFactoryDefaults();
     left_middle_slave_.RestoreFactoryDefaults();
@@ -50,6 +50,7 @@ Drivetrain::Drivetrain()
     left_pid_.SetSmartMotionMaxVelocity(constants::drivetrain::kMaxVelocity, constants::drivetrain::kVelocityPIDPort);
     right_pid_.SetSmartMotionMaxVelocity(constants::drivetrain::kMaxVelocity, constants::drivetrain::kVelocityPIDPort);
 
+    DriveTrainMode = NORMAL;
 
    /*
     frc4065::ReferencedTunable::Register("kP", kP_Velocity);
@@ -84,7 +85,7 @@ void Drivetrain::Periodic()
     state.currentTime = frc::Timer::GetFPGATimestamp();
     state.deltaTime = state.currentTime - state.pastTime;
 
-    odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
+    m_odometer.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
 
     int PIDPortSelected = 0;
     switch(state.outputMode)
@@ -138,7 +139,7 @@ frc::DifferentialDriveWheelSpeeds Drivetrain::GetWheelSpeeds()
 }
 frc::Pose2d Drivetrain::GetPose() const
 {
-    return odometry_.GetPose();
+    return m_odometer.GetPose();
 }
 units::degree_t Drivetrain::GetHeading()
 {
@@ -146,9 +147,11 @@ units::degree_t Drivetrain::GetHeading()
 }
 units::foot_t Drivetrain::GetLeftEncoderDistance() const
 {
+    return((units::foot_t)0);       //Placeholder
 }
 units::foot_t Drivetrain::GetRightEncoderDistance() const
 {
+    return((units::foot_t)0);       //Placeholder
 }
 
 void Drivetrain::ResetEncoders()
@@ -160,7 +163,7 @@ void Drivetrain::ResetEncoders()
 void Drivetrain::ResetOdometry(frc::Pose2d pose)
 {
     ResetEncoders();
-    odometry_.ResetPosition(pose, frc::Rotation2d(GetHeading()));
+    m_odometer.ResetPosition(pose, frc::Rotation2d(GetHeading()));
 }
 void Drivetrain::NeutralMode(bool isEnable)
 {

@@ -1,15 +1,18 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include <ctre/Phoenix.h>
 
-#include "rev/ControlType.h" 
+#include <rev/ControlType.h>
 #include "rev/CANSparkMax.h"
 #include "rev/ColorSensorV3.h"
 #include "rev/ColorMatch.h"
 #include "util/Macros.h"
-#include <utility>
-#include "Constants.h"
 #include <frc/util/color.h>
+#include "Constants.h"
+#include "utility"
+
+using namespace constants::control_panel_manipulator;
 
 class ControlPanelManipulator : public frc2::SubsystemBase 
 {
@@ -25,19 +28,24 @@ public:
   // void move_motor_counterclockwise();
 
   void DeployCPM();
+  void StowCPM();
   
   double read_encoder_position();
 
   void setPosition(double position);
-  
+
+  bool IsDeployed(){return m_isDeployed;}
+  CPMMode_t GetMode(){return m_mode;}
 
 private:
-  ControlPanelManipulator() = default;
-  bool isDeployed_ = false;
-  WPI_TalonSRX deployMotor_ { kCPMDeployMotorID };
-  rev::CANSparkMax motor_ {kCPMSpinMotorID, rev::CANSparkMax::MotorType::kBrushless};
-  rev::CANPIDController motor_pid_ { motor_.GetPIDController() };
-  rev::CANEncoder encoder_ {motor_.GetEncoder()};
+  ControlPanelManipulator();    //The constructor is a private method because this class is intended to be used only as a singleton instance.
+  bool m_isDeployed = false;
+  CPMMode_t m_mode = MANUAL;
+  WPI_TalonSRX m_deploym_motor { kCPMDeployMotorID };
+  // rev::CANPIDController m_deployMotorPID_ { m_deploym_motor.GetPIDController() };
+  rev::CANSparkMax m_motor {kCPMSpinMotorID, rev::CANSparkMax::MotorType::kBrushless};
+  rev::CANPIDController m_motorpid { m_motor.GetPIDController() };
+  rev::CANEncoder m_encoder {m_motor.GetEncoder()};
    
   // rev::ColorSensorV3 color_sensor_ { frc::I2CLLPort::kOnboard };
   // rev::ColorMatch color_matcher_;

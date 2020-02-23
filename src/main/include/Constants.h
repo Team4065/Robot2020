@@ -1,4 +1,23 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 #pragma once
+
+#define DISPLAY_COMMAND_MESSAGES 1        //Comment this line out when you don't want to display the messages when each command runs
+
+/**
+ * The Constants header provides a convenient place for teams to hold robot-wide
+ * numerical or boolean constants.  This should not be used for any other
+ * purpose.
+ *
+ * It is generally a good idea to place constants into subsystem- or
+ * command-specific namespaces within this header, which can then be used where
+ * they are needed.
+ */
 
 #include <units/units.h>
 #include <frc/kinematics/DifferentialDriveKinematics.h>
@@ -33,7 +52,8 @@ namespace constants
     using ka           = units::compound_unit<units::volts,        units::inverse<Acceleration>>;
     namespace oi
     {
-        constexpr int kDriverXboxControllerPort = 0;
+        constexpr int kDriverXboxControllerPort0 = 0;
+        constexpr int kDriverXboxControllerPort1 = 1;
     }
     
     namespace drivetrain
@@ -64,6 +84,12 @@ namespace constants
         const float kMaxVelocity = 100;
 
         constexpr int kPositionPIDPort = 1;
+
+        enum DriveTrainMode_t
+        {
+            NORMAL
+        ,   PRECISION
+        };
 
         namespace auto_mode
         {
@@ -116,19 +142,26 @@ namespace constants
 
     namespace control_panel_manipulator
     {
-       const units::volt_t ControlPanelCounterClockwiseVoltage=1_V;
-       const units::volt_t ControlPanelClockwiseVoltage = -1_V;
+        const units::volt_t ControlPanelCounterClockwiseVoltage=1_V;
+        const units::volt_t ControlPanelClockwiseVoltage = -1_V;
 
-       const int kCPMDeployMotorID = -1;    //TODO: set appropriate motor id
-       const int DeployPosition = -1;       //TODO: set deploy position
-       const int StowPosition = -1;         //TODO: set stow position
+        const int kCPMDeployMotorID = -1;    //TODO: set appropriate motor id
+        const int DeployPosition = -1;       //TODO: set deploy position
+        const int StowPosition = -1;         //TODO: set stow position
 
-       const int kCPMSpinMotorID = -1;      //TODO: set appropriate motor id
+        const int kCPMSpinMotorID = -1;      //TODO: set appropriate motor id
 
-       const double Stage2Rotations = 3.5;
+        const double Stage2Rotations = 3.5;
 
-       const double DiameterOfControlePanel = 32;   //[in]
-       const double DiameterOfDriverWheel = 4;      //[in]
+        const double DiameterOfControlePanel = 32;   //[in]
+        const double DiameterOfDriverWheel = 4;      //[in]
+
+        enum CPMMode_t
+        {
+            MANUAL
+        ,   AUTO_SPIN
+        ,   AUTO_COLOR
+        };
     }
 
     namespace limelight

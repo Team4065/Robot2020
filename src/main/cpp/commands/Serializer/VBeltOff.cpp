@@ -19,8 +19,10 @@ void VBeltOff::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void VBeltOff::Execute() {
+#ifdef DISPLAY_COMMAND_MESSAGES
+  std::cout << "VBeltOff Command Executing" << std::endl;
+#endif 
   //Serializer::GetInstance().Off();
-  std::cout << "V-Belt off." << std::endl;
 }
 
 // Called once the command ends or is interrupted.

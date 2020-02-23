@@ -9,10 +9,8 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/XboxController.h>
-#include <Constants.h>
 
-#include "subsystems/ControlPanelManipulator.h"
+#include "subsystems/Lift.h"
 
 /**
  * An example command.
@@ -21,10 +19,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class SpinControlPanel
-     : public frc2::CommandHelper<frc2::CommandBase, ControlPanelManipulator> {
+class BalanceOnLift
+    : public frc2::CommandHelper<frc2::CommandBase, BalanceOnLift> {
  public:
-  SpinControlPanel(ControlPanelManipulator& controlPanelManipulator);
+  BalanceOnLift(Lift& lift);
 
   void Initialize() override;
 
@@ -33,8 +31,4 @@ class SpinControlPanel
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
- private:
-    double initialPosition_;
-    
 };

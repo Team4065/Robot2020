@@ -5,32 +5,28 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Shooter/SpinUp.h"
-
+#include "commands/Lift/BalanceOnLift.h"
 #include <iostream>
 
-SpinUp::SpinUp(Shooter& shooter) {
+BalanceOnLift::BalanceOnLift(Lift& lift) {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({&shooter});
+  AddRequirements({&lift});
 }
 
 // Called when the command is initially scheduled.
-void SpinUp::Initialize() {}
+void BalanceOnLift::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void SpinUp::Execute() {
+void BalanceOnLift::Execute() {
 #ifdef DISPLAY_COMMAND_MESSAGES
-  std::cout << "SpinUp Command Executing" << std::endl;
+  std::cout << "BalanceOnLift Command Executing" << std::endl;
 #endif
-  //Shooter::GetInstance().targetVelocity = value to be calculated or preset
+  //TODO: DO Somthing
 }
 
 // Called once the command ends or is interrupted.
-void SpinUp::End(bool interrupted) {
-  //Shooter::GetInstance().targetVelocity = 0;
-  //Shooter::GetInstance().isFeeder1On = false;
-  //Shooter::GetInstance().isFeeder2On = false;
+void BalanceOnLift::End(bool interrupted) {
 }
 
 // Returns true when the command should end.
-bool SpinUp::IsFinished() { return constants::shooter::kAllowableVelocityError > abs(Shooter::GetInstance().GetSensorVelocity() - Shooter::GetInstance().targetVelocity); }
+bool BalanceOnLift::IsFinished() { return false; }

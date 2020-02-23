@@ -5,29 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ControlPanel/SpinControlPanel.h"
+#include "commands/ControlPanel/AutomaticallySpinControlPanel.h"
 using namespace constants::control_panel_manipulator;
 
-SpinControlPanel::SpinControlPanel(ControlPanelManipulator& controlPanelManipulator) {
+AutomaticallySpinControlPanel::AutomaticallySpinControlPanel(ControlPanelManipulator& controlPanelManipulator) {
   // Use addRequirements() here to declare subsystem dependencies.
   AddRequirements({&controlPanelManipulator});
 }
 
 // Called when the command is initially scheduled.
-void SpinControlPanel::Initialize() {
+void AutomaticallySpinControlPanel::Initialize() {
 }
 // Called repeatedly when this Command is scheduled to run
-void SpinControlPanel::Execute() {
-    double currentPosition = ControlPanelManipulator::GetInstance().read_encoder_position();
-    double desiredMotorRotations = Stage2Rotations * DiameterOfControlePanel/DiameterOfDriverWheel;
+void AutomaticallySpinControlPanel::Execute() {
+#ifdef DISPLAY_COMMAND_MESSAGES
+  std::cout << "AutomaticallySpinControlPanel Command Executing" << std::endl;
+#endif
+  double currentPosition = ControlPanelManipulator::GetInstance().read_encoder_position();
+  double desiredMotorRotations = Stage2Rotations * DiameterOfControlePanel/DiameterOfDriverWheel;
 
-    double FinalPosition = currentPosition + desiredMotorRotations;
+  double FinalPosition = currentPosition + desiredMotorRotations;
 
-    ControlPanelManipulator::GetInstance().setPosition(FinalPosition);
+  ControlPanelManipulator::GetInstance().setPosition(FinalPosition);
 }
 
 // Called once the command ends or is interrupted.
-void SpinControlPanel::End(bool interrupted) {}
+void AutomaticallySpinControlPanel::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool SpinControlPanel::IsFinished() { return true; }
+bool AutomaticallySpinControlPanel::IsFinished() { return true; }

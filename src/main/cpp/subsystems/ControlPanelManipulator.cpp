@@ -7,7 +7,6 @@
 
 #include "subsystems/ControlPanelManipulator.h"
 
-using namespace constants;
 
 ControlPanelManipulator& ControlPanelManipulator::GetInstance()
 {
@@ -35,31 +34,35 @@ ControlPanelManipulator::ControlPanelManipulator() {
     // color_matcher_.AddColorMatch(kYellowTarget);
     // color_matcher_.AddColorMatch(kRedTarget);
     // color_matcher_.AddColorMatch(kGreenTarget);
-    motor_pid_.SetD(0.0, 0);
-    motor_pid_.SetI(0.0, 0);
-    motor_pid_.SetP(1.0, 0);
+    m_motorpid.SetD(0.0, 0);
+    m_motorpid.SetI(0.0, 0);
+    m_motorpid.SetP(1.0, 0);
+
+    m_isDeployed = false;
 }
 
-// void ControlPanelManipulator::move_motor_clockwise() {
-//     motor_.SetVoltage(constants::control_panel_manipulator::ControlPanelClockwiseVoltage);
+// void ControlPanelManipulator::move_m_motorclockwise() {
+//     m_motor.SetVoltage(constants::control_panel_manipulator::ControlPanelClockwiseVoltage);
 // }
 
-// void ControlPanelManipulator::move_motor_counterclockwise() {
-//     motor_.SetVoltage(constants::control_panel_manipulator::ControlPanelCounterClockwiseVoltage);
+// void ControlPanelManipulator::move_m_motorcounterclockwise() {
+//     m_motor.SetVoltage(constants::control_panel_manipulator::ControlPanelCounterClockwiseVoltage);
 // }
 
-void DeployCPM() {
-    deployMotorPID_.SetReference(control_panel_manipulator.DeployPosition, rev::ControlType::kPosition, 0, 0);
+void ControlPanelManipulator::DeployCPM() {
+    // deployMotorPID_.SetReference(control_panel_manipulator.DeployPosition, rev::ControlType::kPosition, 0, 0);
+    m_isDeployed = true;
 }
 
-void RetractCPM() {
-    deployMotorPID_.SetReference(control_panel_manipulator.StowPosition, rev::ControlType::kPosition, 0, 0);
+void ControlPanelManipulator::StowCPM() {
+    // deployMotorPID_.SetReference(control_panel_manipulator.StowPosition, rev::ControlType::kPosition, 0, 0);
+    m_isDeployed = false;
 }
 
 double ControlPanelManipulator::read_encoder_position() {
-    return(encoder_.GetPosition());
+    return(m_encoder.GetPosition());
 }
 
 void ControlPanelManipulator::setPosition(double position) {
-    motor_pid_.SetReference(position, rev::ControlType::kPosition, 0, 0);
+    m_motorpid.SetReference(position, rev::ControlType::kPosition, 0, 0);
 }

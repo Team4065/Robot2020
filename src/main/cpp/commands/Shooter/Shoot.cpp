@@ -13,15 +13,16 @@ Shoot::Shoot(Shooter& shooter) {
 }
 
 // Called when the command is initially scheduled.
-void Shoot::Initialize() {
-  //Shooter::GetInstance().targetVelocity = value to be computed or preset;
-  //Shooter::GetInstance().isFeeder1On = true;
-  //Shooter::GetInstance().isFeeder2On = true;
-}
+void Shoot::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void Shoot::Execute() {
-  std::cout << "Is shooting." << std::endl;
+#ifdef DISPLAY_COMMAND_MESSAGES
+  std::cout << "Shoot Command Executing" << std::endl;
+#endif
+  //Shooter::GetInstance().targetVelocity = value to be computed or preset;
+  //Shooter::GetInstance().isFeeder1On = true;
+  //Shooter::GetInstance().isFeeder2On = true;
 }
 
 // Called once the command ends or is interrupted.

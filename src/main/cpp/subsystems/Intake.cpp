@@ -2,7 +2,7 @@
 
 // This method will be called once per scheduler run
 void Intake::Periodic() {
-    motor.Set(motorSpeed);       //Run in peeriodic loop so that the watchdog timer doesn't reset
+    m_motor.Set(m_motorSpeed);       //Run in peeriodic loop so that the watchdog timer doesn't reset
 }
 
 Intake& Intake::GetInstance()
@@ -13,25 +13,25 @@ Intake& Intake::GetInstance()
 }
 
 void Intake::Suck(){
-    motorSpeed = kMotorOperatingPercentage;
+    m_motorSpeed = kMotorOperatingPercentage;
     std::cout << "Suck" << std::endl;
 }
 
 void Intake::DontSuck(){
-    motorSpeed = 0;
+    m_motorSpeed = 0;
     std::cout << "Don't Suck" << std::endl;
 }
 
 void Intake::Retract(){
-    solenoid.Set(frc::DoubleSolenoid::kForward);
-    isDeployed_ = false;
+    m_solenoid.Set(frc::DoubleSolenoid::kForward);
+    m_isDeployed = false;
     //rightSolenoid.Set(frc::DoubleSolenoid::kForward);
     std::cout << "Deploy Intake" << std::endl;
 }
 
 void Intake::Extend(){
-    solenoid.Set(frc::DoubleSolenoid::kReverse);
-    isDeployed_ = true;
+    m_solenoid.Set(frc::DoubleSolenoid::kReverse);
+    m_isDeployed = true;
     //rightSolenoid.Set(frc::DoubleSolenoid::kReverse);
     std::cout << "Retract Intake" << std::endl;
 }

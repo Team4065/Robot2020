@@ -11,10 +11,15 @@
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 Deploy_and_Suck::Deploy_and_Suck(Intake& intake) {
-  // Add your commands here, e.g.
-  // AddCommands(FooCommand(), BarCommand());
   AddCommands(
     DeployIntake(intake),
     Suck(intake)
   );
 }
+Deploy_and_Suck::Deploy_and_Suck(DeployIntake& deployIntake, Suck& suck) {
+  AddCommands(
+    deployIntake,
+    suck
+  );
+}
+

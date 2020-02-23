@@ -18,7 +18,10 @@ void DeployCPM::Initialize() {
 }
 // Called repeatedly when this Command is scheduled to run
 void DeployCPM::Execute() {
-    ControlPanelManipulator::GetInstance().setPosition(DeployPosition);
+#ifdef DISPLAY_COMMAND_MESSAGES
+  std::cout << "DeployCPM Command Executing" << std::endl;
+#endif    
+  ControlPanelManipulator::GetInstance().setPosition(DeployPosition);
 }
 
 // Called once the command ends or is interrupted.

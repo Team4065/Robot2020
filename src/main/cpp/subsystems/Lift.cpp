@@ -20,11 +20,11 @@ void Lift::Periodic() {
 }
 
 void Lift::Extend(){
-    solenoid.Set(frc::DoubleSolenoid::kForward);
+    m_solenoid.Set(frc::DoubleSolenoid::kForward);
 }
 
 void Lift::Retract(){
-    solenoid.Set(frc::DoubleSolenoid::kReverse);
+    m_solenoid.Set(frc::DoubleSolenoid::kReverse);
 }
 
 void Lift::ShortenWinch(){

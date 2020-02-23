@@ -13,14 +13,14 @@ DontSuck::DontSuck(Intake& intake) {
 }
 
 // Called when the command is initially scheduled.
-void DontSuck::Initialize() {
-  //Intake::GetInstance().DontSuck();
-}
+void DontSuck::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void DontSuck::Execute() {
+#ifdef DISPLAY_COMMAND_MESSAGES
+  std::cout << "DontSuck Command Executing" << std::endl;
+#endif 
   Intake::GetInstance().DontSuck();
-  // std::cout << "Dont Suck" << std::endl;
 }
 
 // Called once the command ends or is interrupted.

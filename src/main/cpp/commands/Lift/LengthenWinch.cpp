@@ -17,7 +17,9 @@ void LengthenWinch::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void LengthenWinch::Execute() {
-  std::cout << "Lengten Winch" << std::endl;
+#ifdef DISPLAY_COMMAND_MESSAGES
+  std::cout << "LengthenWinch Command Executing" << std::endl;
+#endif 
   //Lift::GetInstance().LengthenWinch();
 }
 

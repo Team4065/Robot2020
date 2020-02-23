@@ -35,12 +35,19 @@ class Lift : public frc2::SubsystemBase {
   void MoveRight();
   void DontMove();
 
+  bool IsDeployed(){return m_isDeployed;}
+  bool IsExtended(){return m_isExtended;}
+
  private:
   Lift() = default;
+
+  bool m_isDeployed = false;
+  bool m_isExtended = false;
+
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  frc::DoubleSolenoid solenoid { constants::lift::kSolenoidPorts[0], constants::lift::kSolenoidPorts[1] };
+  frc::DoubleSolenoid m_solenoid { constants::lift::kSolenoidPorts[0], constants::lift::kSolenoidPorts[1] };
   //frc::DoubleSolenoid rightPiston { constants::lift::kRightSolenoidPorts[0], constants::lift::kRightSolenoidPorts[1] };
   
   rev::CANSparkMax winchMotor { kMotorPorts[0], rev::CANSparkMax::MotorType::kBrushless };

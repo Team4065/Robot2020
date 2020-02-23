@@ -20,9 +20,9 @@
  * Command will *not* work!
  */
 class DeployCPM
-     : public frc2::CommandHelper<frc2::CommandBase, ControlPanelManipulator> {
+     : public frc2::CommandHelper<frc2::CommandBase, DeployCPM> {
  public:
-  DeployCPM(ControlPanelManipulator& controlPanelManipulator);
+  DeployCPM(ControlPanelManipulator&);
 
   void Initialize() override;
 

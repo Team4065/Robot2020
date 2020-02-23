@@ -14,13 +14,15 @@
 #include "subsystems/Serializer.h"
 #include "subsystems/Shooter.h"
 
+#include "commands/Intake/DeployIntake.h"
+#include "commands/Intake/Suck.h"
 #include "commands/Intake/Deploy_and_Suck.h"
 #include "commands/Serializer/VBeltForward.h"
 #include "commands/Shooter/Preload.h"
 
 class CollectBalls
-    : public frc2::CommandHelper<frc2::ParallelCommandGroup,
-                                 CollectBalls> {
+    : public frc2::CommandHelper<frc2::ParallelCommandGroup, CollectBalls> {
  public:
   CollectBalls(Intake& intake, Serializer& serializer, Shooter& shooter);
+  CollectBalls(DeployIntake& deployintake, Suck& suck, VBeltForward& vBeltForwardCommand, Preload& preloadCommand);  
 };

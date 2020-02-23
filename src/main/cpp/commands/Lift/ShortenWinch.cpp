@@ -17,7 +17,9 @@ void ShortenWinch::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void ShortenWinch::Execute() {
-  std::cout << "Shorten Winch" << std::endl;
+#ifdef DISPLAY_COMMAND_MESSAGES
+  std::cout << "ShortenWinch Command Executing" << std::endl;
+#endif   
   //Lift::GetInstance().ShortenWinch();
 }
 

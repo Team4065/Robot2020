@@ -19,8 +19,10 @@ void VBeltReverse::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void VBeltReverse::Execute() {
+#ifdef DISPLAY_COMMAND_MESSAGES
+  std::cout << "VBeltReverse Command Executing" << std::endl;
+#endif 
   //Serializer::GetInstance().Reverse();
-  std::cout << "V-Belt reverse." << std::endl;
 }
 
 // Called once the command ends or is interrupted.

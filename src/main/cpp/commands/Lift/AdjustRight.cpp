@@ -18,7 +18,9 @@ void AdjustRight::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
 void AdjustRight::Execute() {
-  std::cout << "Adjusting Right Lift" << std::endl;
+#ifdef DISPLAY_COMMAND_MESSAGES
+  std::cout << "AdjustRight Command Executing" << std::endl;
+#endif
   //Lift::GetInstance().MoveRight();
 }
 
