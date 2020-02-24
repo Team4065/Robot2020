@@ -66,8 +66,8 @@ units::revolutions_per_minute_t Shooter::GetDesiredVelocity() const
 
 void Shooter::Periodic()
 {
-
-    switch(state_){
+    switch(state_)
+    {
         case State::SPINUP:
             // Poll velocity so when we get up to speed we can start shooting.
             if (GetVelocityError() < constants::shooter::kAllowableSpinupVelocityError)
@@ -80,7 +80,6 @@ void Shooter::Periodic()
             break;
         case State::IDLE:
             break;
-
     }
 }
 

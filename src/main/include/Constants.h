@@ -57,10 +57,10 @@ namespace constants
     namespace intake
     {
         constexpr int kIntakeMotorPort = 0; // Inaccurate!
-        constexpr int kLeftSolenoidPorts[2] = { 0, 0 }; // Inaccurate!
-        constexpr int kRightSolenoidPorts[2] = { 0, 0 }; // Inaccurate!
+        constexpr int kSolenoidPorts[2] = { 0, 0 }; // Inaccurate!
         constexpr units::current::ampere_t kMaxCurrentDraw { 25.0 };
         constexpr float kMotorOperatingPercentage = 0.8f; // 
+        constexpr bool kStartSliderReversed = true;
     }
     namespace serializer
     {

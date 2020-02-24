@@ -29,6 +29,7 @@ Drivetrain::Drivetrain()
 void Drivetrain::Periodic()
 {
     odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
+
 }
 
 void Drivetrain::ArcadeDrive(double fwd, double rot) {}
