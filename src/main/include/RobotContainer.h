@@ -18,10 +18,13 @@
 
 #include "commands/Serializer/VBeltOff.h"
 
-#include "frc2\command\button\JoystickButton.h"
+#include "frc2/command/button/JoystickButton.h"
 
 
 #include "Constants.h"
+
+#define GEN_BUTTON(name, controller, btn) frc2::JoystickButton name { &controller, btn }
+#define GEN_BUTTON_MAIN_CONTROLLER(name, btn) GEN_BUTTON(name, controller_, btn)
 
 class RobotContainer
 {
@@ -29,7 +32,6 @@ public:
   RobotContainer();
  
   Intake& intake_ = Intake::GetInstance();
-private:
   Shooter& shooter_ = Shooter::GetInstance();
   Serializer& serializer_ = Serializer::GetInstance();//V-Belt
   Lift& lift_ = Lift::GetInstance();
@@ -38,11 +40,9 @@ private:
 
   frc::XboxController controller_ { constants::oi::kDriverXboxControllerPort };
 
-  frc2::JoystickButton intakeButton { &controller_, 1 };
-  frc2::JoystickButton shooterButton { &controller_, 2 };
-  frc2::JoystickButton liftButton { &controller_, 3 };
+  GEN_BUTTON_MAIN_CONTROLLER(intake_button_, 1);
 
-
+private:
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions
 
   void ConfigureButtonBindings();

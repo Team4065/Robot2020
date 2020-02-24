@@ -42,20 +42,22 @@ namespace constants
 
         const bool kGyroReversed = false; // Inaccurate!
         const units::current::ampere_t kMaxCurrentDraw { 30.0 };
-        const units::inch_t kWheelDiameter { 6.0 };
-        const units::inch_t kTrackWidth { 28.0 }; // Maybe 
-        const units::volt_t kS { 0.0 }; // Inaccurate!
-        const units::unit_t<kv> kV { 0.0 }; // Inaccurate!
-        const units::unit_t<ka> kA { 0.0 }; // Inaccurate!
+        const units::meter_t kWheelDiameter { 0.1524 };
+        const units::meter_t kTrackWidth { 0.6096 }; // Maybe 
+        const units::volt_t kS { 0.86 }; // Inaccurate!
+        const units::unit_t<kv> kV { 3.26 }; // Inaccurate!
+        const units::unit_t<ka> kA { 0.687 }; // Inaccurate!
         const double kPDriveVel = 0.0;
         extern const frc::DifferentialDriveKinematics kDriveKinematics;
         extern const frc::TrajectoryConfig kAutoConfig;
 
+        constexpr double kGearRatio = 9.47;
+
         const int kVelocityPIDPort = 0;
         const float kVelocityRange = 1000;
-        const float kP_Velocity = 0;
+        const float kP_Velocity = 0.000666;
         const float kD_Velocity = 0;
-        const float kF_Velocity = 0.00125;
+        const float kF_Velocity = 0.000316;
         const float kArbiFeedForw = 0;//units are in volts
         const float kMaxAccel = 500;
         const float kMaxVelocity = 100;
@@ -73,22 +75,24 @@ namespace constants
 
     namespace shooter
     {
-        const int kLeftMotorPort = 5;
-        const int kRightMotorPort = 6;
-        const int kFeederMotor1Port = 7;
-        const int kFeederMotor2Port = 8;
+        constexpr int kLeftMotorPort = 5;
+        constexpr int kRightMotorPort = 6;
+        constexpr int kFeederMotor1Port = 7;
+        constexpr int kFeederMotor2Port = 8;
 
-        const int kAllowableVelocityError = 10;
+        constexpr int kAllowableVelocityError = 10;
+        constexpr double kKickerSpeed = 0.8;
+        constexpr double kFeederSpeed = 0.5;
 
-        const units::current::ampere_t kMaxCurrentDraw { 30.0 };
-        // const double kP = 0.0;
-        // const double kD = 0.0;
-        // const double kFF = 0.0;
-        const units::inch_t kWheelDiameter { 6.0 };
-        const units::revolutions_per_minute_t kAllowableShootingVelocityError = 45_rpm; // within 30 rpm of target rate
-        const units::revolutions_per_minute_t kAllowableSpinupVelocityError = 30_rpm; // within 30 rpm of target rate
-        const units::foot_t kDistanceLowerBound { 10 }; // 10 feet away
-        const units::foot_t kDistanceUpperBound { 30 }; // 30 feet away
+        constexpr units::current::ampere_t kMaxCurrentDraw { 30.0 };
+        constexpr double kP = 0.0;
+        constexpr double kD = 0.0;
+        constexpr double kFF = 0.0;
+        constexpr units::meter_t kWheelDiameter { 0.1524 };
+        constexpr units::revolutions_per_minute_t kAllowableShootingVelocityError = 45_rpm; // within 30 rpm of target rate
+        constexpr units::revolutions_per_minute_t kAllowableSpinupVelocityError = 30_rpm; // within 30 rpm of target rate
+        constexpr units::foot_t kDistanceLowerBound { 10 }; // 10 feet away
+        constexpr units::foot_t kDistanceUpperBound { 30 }; // 30 feet away
     }
 
     namespace intake
@@ -103,7 +107,8 @@ namespace constants
     {
         const int kSolenoidPorts[2] = { 4, 5 };
 
-        const int kMotorPorts[2] = { 11 , 12 };//winch, adjustor
+        constexpr int kMasterPort = 0;
+        constexpr int kSlavePort = 0;
     } // namespace lift
      
     namespace serializer

@@ -1,5 +1,6 @@
 #include "subsystems/Drivetrain.h"
 #include <frc/controller/PIDController.h>
+#include <cmath>
 
 /*
 double kP_Velocity = 0;//2.31 / 100;
@@ -16,26 +17,20 @@ Drivetrain::Drivetrain()
 {
     left_front_master_.RestoreFactoryDefaults();
     left_middle_slave_.RestoreFactoryDefaults();
-    //left_rear_slave_.RestoreFactoryDefaults();
     right_front_master_.RestoreFactoryDefaults();
     right_middle_slave_.RestoreFactoryDefaults();
-    //right_rear_slave_.RestoreFactoryDefaults();
 
     left_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
     left_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    //left_rear_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
 
     right_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
     right_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-   // right_rear_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
 
     left_front_master_.SetInverted(true);
 
     left_middle_slave_.Follow(left_front_master_, false);
-    //left_rear_slave_.Follow(left_front_master_, false);
 
     right_middle_slave_.Follow(right_front_master_, false);
-    //right_rear_slave_.Follow(right_front_master_, false);
 
     left_pid_.SetP(constants::drivetrain::kP_Velocity, constants::drivetrain::kVelocityPIDPort);
     left_pid_.SetD(constants::drivetrain::kD_Velocity, constants::drivetrain::kVelocityPIDPort);
@@ -51,6 +46,12 @@ Drivetrain::Drivetrain()
     left_pid_.SetSmartMotionMaxVelocity(constants::drivetrain::kMaxVelocity, constants::drivetrain::kVelocityPIDPort);
     right_pid_.SetSmartMotionMaxVelocity(constants::drivetrain::kMaxVelocity, constants::drivetrain::kVelocityPIDPort);
 
+
+    left_encoder_.SetPositionConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * constants::drivetrain::kGearRatio * M_PI);
+    right_encoder_.SetPositionConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * constants::drivetrain::kGearRatio * M_PI);
+
+    left_encoder_.SetVelocityConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * constants::drivetrain::kGearRatio * M_PI * 60);
+    right_encoder_.SetVelocityConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * constants::drivetrain::kGearRatio * M_PI * 60);
 
    /*
     frc4065::ReferencedTunable::Register("kP", kP_Velocity);
@@ -102,10 +103,11 @@ void Drivetrain::TankDrivePercent(double left, double right)
 frc::DifferentialDriveWheelSpeeds Drivetrain::GetWheelSpeeds()
 {
     return {
-        units::feet_per_second_t(left_encoder_.GetVelocity()),
-        units::feet_per_second_t(right_encoder_.GetVelocity())
+        units::meters_per_second_t(left_encoder_.GetVelocity()),
+        units::meters_per_second_t(right_encoder_.GetVelocity())
     };
 }
+
 frc::Pose2d Drivetrain::GetPose() const
 {
     return odometry_.GetPose();
@@ -114,11 +116,13 @@ units::degree_t Drivetrain::GetHeading()
 {
     return units::degree_t(std::remainder(gyro_.GetAngle(), 360) * (constants::drivetrain::kGyroReversed ? -1.0 : 1.0));
 }
-units::foot_t Drivetrain::GetLeftEncoderDistance() const
+units::meter_t Drivetrain::GetLeftEncoderDistance()
 {
+    return units::meter_t(left_encoder_.GetPosition());
 }
-units::foot_t Drivetrain::GetRightEncoderDistance() const
+units::meter_t Drivetrain::GetRightEncoderDistance()
 {
+    return units::meter_t(right_encoder_.GetPosition());
 }
 
 void Drivetrain::ResetEncoders()

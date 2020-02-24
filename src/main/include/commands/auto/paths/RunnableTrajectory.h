@@ -14,14 +14,17 @@
 
 #include "Constants.h"
 
-class RunnableTrajectoryBase
+class RunnableTrajectory : public frc2::CommandHelper<frc2::SequentialCommandGroup, RunnableTrajectory>
 {
 public:
-    RunnableTrajectoryBase() = default;
+    RunnableTrajectory(frc::Trajectory& traj);
     void Run();
     bool Done() const;
+    void Initialize() override;
+    void Execute() override {};
+    void End(bool interrupted) override {};
+    bool IsFinished() override;
 protected:
-    virtual frc::Trajectory GetTrajectory() = 0;
-private:
-    frc2::Command* command_;
+    frc::Trajectory traj_;
+    frc2::RamseteCommand* ramsete_command_;
 };

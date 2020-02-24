@@ -26,12 +26,6 @@ class Drivetrain : public frc2::SubsystemBase
 {
 public:
 
-  enum TrackingMode
-  {
-    NONE,
-    TAPE,
-    BALL
-  };
 
   void ArcadeDrive(double fwd, double rot);
   void TankDriveVolts(units::volt_t left, units::volt_t right);
@@ -43,8 +37,8 @@ public:
   frc::DifferentialDriveWheelSpeeds GetWheelSpeeds();
   frc::Pose2d GetPose() const;
   units::degree_t GetHeading();
-  units::foot_t GetLeftEncoderDistance() const;
-  units::foot_t GetRightEncoderDistance() const;
+  units::meter_t GetLeftEncoderDistance();
+  units::meter_t GetRightEncoderDistance();
   
   void ResetEncoders();
   void ResetOdometry(frc::Pose2d pose);

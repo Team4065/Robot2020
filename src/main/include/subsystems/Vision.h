@@ -1,6 +1,7 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+#include "util/Limelight.h"
 
 /**
  * TODO:
@@ -17,4 +18,5 @@ public:
   Vision();
   void Periodic();
 private:
+  frc4065::Limelight limelight_;
 };

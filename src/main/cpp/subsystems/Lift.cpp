@@ -7,6 +7,12 @@
 
 #include "subsystems/Lift.h"
 
+Lift::Lift()
+{
+    // master_encoder_.SetPositionConversionFactor();
+    // slave_encoder_.SetPositionConversionFactor();
+}
+
 Lift& Lift::GetInstance(){
     static Lift instance;  // Guaranteed to be destroyed.
                                     // Instantiated on first use.
@@ -14,39 +20,21 @@ Lift& Lift::GetInstance(){
 }
 
 // This method will be called once per scheduler run
-void Lift::Periodic() {
-    winchMotor.Set(winchMotorSpeed);
-    adjustorMotor.Set(adjustorMotorSpeed);
+void Lift::Periodic()
+{
+    // Add safety check that motors are the same, lead screws can bind and break if they are not within a certain
+    // tolerance.
 }
 
 void Lift::Extend(){
-    solenoid.Set(frc::DoubleSolenoid::kForward);
+    solenoid_.Set(frc::DoubleSolenoid::kForward);
 }
 
 void Lift::Retract(){
-    solenoid.Set(frc::DoubleSolenoid::kReverse);
+    solenoid_.Set(frc::DoubleSolenoid::kReverse);
 }
 
-void Lift::ShortenWinch(){
-    winchMotorSpeed = -1;
-}
-
-void Lift::LengthenWinch(){
-    winchMotorSpeed = 1;
-}
-
-void Lift::StopWinch(){
-    winchMotorSpeed = 0;
-}
-
-void Lift::MoveLeft(){
-    adjustorMotorSpeed = 1;
-}
-
-void Lift::MoveRight(){
-    adjustorMotorSpeed = -1;
-}
-
-void Lift::DontMove(){
-    adjustorMotorSpeed = 0;
+units::foot_t Lift::GetHeight()
+{
+    return units::foot_t(master_encoder_.GetPosition());
 }

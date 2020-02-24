@@ -5,9 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/Vision.h"
+#include "commands/shooter/PreSpinup.h"
 
-Vision::Vision() : limelight_("limelight") {}
+PreSpinup::PreSpinup(units::revolutions_per_minute_t rpm) : rpm_(rpm)
+{
+  AddRequirements({&Shooter::GetInstance()});
+}
 
-// This method will be called once per scheduler run
-void Vision::Periodic() {}
+void PreSpinup::Initialize()
+{
+  Shooter::GetInstance().SetShooterVelocity(rpm_);
+}
+
+void PreSpinup::Execute() {}
+
+void PreSpinup::End(bool interrupted) {}
+
+// Returns true when the command should end.
+bool PreSpinup::IsFinished() { return Shooter::GetInstance().AtDesiredVelocity(); }

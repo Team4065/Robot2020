@@ -1,8 +1,5 @@
 #include "commands/drivetrain/PortAlign.h"
 
-// NOTE:  Consider using this command inline, rather than writing a subclass.
-// For more information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 PortAlign::PortAlign()
     : CommandHelper(frc2::PIDController(0, 0, 0),
                     // This should return the measurement
