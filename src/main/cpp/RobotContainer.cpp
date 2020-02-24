@@ -28,7 +28,7 @@ void RobotContainer::ConfigureButtonBindings() {
   m_toggleDrivetrainModeControlButton.WhenPressed([this] {m_drivetrain.DriveTrainMode = (m_drivetrain.DriveTrainMode==drivetrain::NORMAL) ? drivetrain::PRECISION : drivetrain::NORMAL;});
 
   //Capture & Shoot Balls
-  m_collectBallsButton.WhenPressed(&m_CollectBallsCommands);
+  m_collectBallsButton.WhenPressed(&m_collectBallsCommands);
   m_retractIntakeButton.WhenPressed(m_retractIntake);
   m_shootButton.WhileHeld(&m_spinUpAndShootCommands);
   //sfs: Do you want a way to adjust the shooter speed?

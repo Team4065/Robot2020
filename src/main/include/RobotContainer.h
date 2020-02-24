@@ -92,7 +92,7 @@ class RobotContainer {
   Suck m_suck {m_intake};
   VBeltForward m_vBeltForwardCommand {m_serializer};
   Preload m_preloadCommand {m_shooter};
-  CollectBalls m_CollectBallsCommands {m_intake, m_serializer, m_shooter};   //Parallel Command Group
+  CollectBalls m_collectBallsCommands {m_intake, m_serializer, m_shooter};   //Parallel Command Group
   SpinUp m_spinUp {m_shooter};  
   Shoot m_shoot {m_shooter};
   SpinUp_and_Shoot m_spinUpAndShootCommands {m_spinUp, m_shoot};    //Sequential Command Group
