@@ -6,7 +6,7 @@
 #include <ctre/Phoenix.h>
 #include <frc/DoubleSolenoid.h>
 
-#include <Constants.h>
+#include "Constants.h"
 
 using namespace constants::intake;
 
@@ -19,14 +19,16 @@ public:
 
   void Suck();
   void DontSuck();
-
+  void Idle();
   void Retract();
   void Extend();
 
+  bool IsActive(){return m_isActive;}
   bool IsDeployed(){return m_isDeployed;}
  
 private:
   bool m_isDeployed = false;
+  bool m_isActive = false;
 
   Intake() = default;
 

@@ -49,7 +49,7 @@
 #include "commands/Lift/BalanceOnLift.h"
 
 
-using names pace frc;
+using namespace frc;
 using namespace constants;
 
 /**
