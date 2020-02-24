@@ -11,6 +11,8 @@ Lift::Lift()
 {
     // master_encoder_.SetPositionConversionFactor();
     // slave_encoder_.SetPositionConversionFactor();
+    master_encoder_.SetInverted(false);
+    slave_encoder_.SetInverted(false);
 }
 
 Lift& Lift::GetInstance(){
