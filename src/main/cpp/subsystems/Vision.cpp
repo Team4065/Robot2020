@@ -5,28 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/Serializer.h"
+#include "subsystems/Vision.h"
 
-Serializer::Serializer() {}
+Vision::Vision() : limelight_("limelight") {}
 
-Serializer& Serializer::GetInstance()
-{
-    static Serializer instance;
-    return instance;
-}
-
-void Serializer::Periodic() {}
-
-void Serializer::Forward(){
-    motor_.Set(constants::serializer::kIndexingSpeed);
-}
-
-void Serializer::Idle()
-{
-    motor_.Set(0.0);
-}
-
-void Serializer::Reverse()
-{
-    motor_.Set(constants::serializer::kAntiJamSpeed);
-}
+// This method will be called once per scheduler run
+void Vision::Periodic() {}

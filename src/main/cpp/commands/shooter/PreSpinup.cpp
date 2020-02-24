@@ -5,28 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/Serializer.h"
+#include "commands/shooter/PreSpinup.h"
 
-Serializer::Serializer() {}
-
-Serializer& Serializer::GetInstance()
+PreSpinup::PreSpinup(units::revolutions_per_minute_t rpm) : rpm_(rpm)
 {
-    static Serializer instance;
-    return instance;
+  AddRequirements({&Shooter::GetInstance()});
 }
 
-void Serializer::Periodic() {}
-
-void Serializer::Forward(){
-    motor_.Set(constants::serializer::kIndexingSpeed);
-}
-
-void Serializer::Idle()
+void PreSpinup::Initialize()
 {
-    motor_.Set(0.0);
+  Shooter::GetInstance().SetShooterVelocity(rpm_);
 }
 
-void Serializer::Reverse()
-{
-    motor_.Set(constants::serializer::kAntiJamSpeed);
-}
+void PreSpinup::Execute() {}
+
+void PreSpinup::End(bool interrupted) {}
+
+// Returns true when the command should end.
+bool PreSpinup::IsFinished() { return Shooter::GetInstance().AtDesiredVelocity(); }

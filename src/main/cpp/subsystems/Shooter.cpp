@@ -2,26 +2,31 @@
 
 Shooter::Shooter()
 {
-    left_.RestoreFactoryDefaults();
-    right_.RestoreFactoryDefaults();
+    right_slave_.Follow(left_master_);
+    left_master_.SetInverted(ctre::phoenix::motorcontrol::InvertType::None);
+    right_slave_.SetInverted(ctre::phoenix::motorcontrol::InvertType::OpposeMaster);
 
-    left_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
-    right_.SetIdleMode(rev::CANSparkMax::IdleMode::kCoast);
+    left_master_.Config_kP(0, constants::shooter::kP);
+    left_master_.Config_kI(0, 0);
+    left_master_.Config_kD(0, constants::shooter::kD);
+    left_master_.Config_kF(0, constants::shooter::kFF);
 
-    left_.Follow(right_, true);
+    right_slave_.Config_kP(0, constants::shooter::kP);
+    right_slave_.Config_kI(0, 0);
+    right_slave_.Config_kD(0, constants::shooter::kD);
+    right_slave_.Config_kF(0, constants::shooter::kFF);
 
-    left_.SetSmartCurrentLimit(constants::shooter::kMaxCurrentDraw.to<unsigned int>()); 
-    right_.SetSmartCurrentLimit(constants::shooter::kMaxCurrentDraw.to<unsigned int>()); 
-    left_pid_.SetP(constants::shooter::kP);
-    left_pid_.SetI(0.0); // Disable
-    left_pid_.SetD(constants::shooter::kD);
-    left_pid_.SetFF(constants::shooter::kFF);
+    left_master_.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 0);
+    right_slave_.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 0);
+}
 
-
+double Shooter::GetSensorVelocity(){
+    return left_master_.GetSelectedSensorVelocity();
 }
 
 void Shooter::ShootWithDistanceEstimation(units::foot_t distanceToTarget)
-{
+{   
+    /*
     // 1. Turn a distance into a velocity using numerical analysis.
     // 2. Set shooter to that velocity.
     if (distanceToTarget > constants::shooter::kDistanceUpperBound || distanceToTarget < constants::shooter::kDistanceLowerBound)
@@ -30,23 +35,47 @@ void Shooter::ShootWithDistanceEstimation(units::foot_t distanceToTarget)
     units::revolutions_per_minute_t rpm_estimation = 0_rpm;
 
     SetShooterVelocity(rpm_estimation);
+    */
 }
 
 void Shooter::SetShooterVelocity(units::revolutions_per_minute_t angularVelocity)
 {
-    if(angularVelocity == 0_rpm)
-        state_ = State::IDLE;
-    else
-        state_ = State::SPINUP;
-
     // 1. Calculate motor velocity from rpm and wheel radius.
     desired_velocity_ = angularVelocity;
 }
 
-
-Shooter::State Shooter::GetState() const
+void Shooter::DisableKicker()
 {
-    return state_;
+    kicker_on_ = false;
+    kicker_motor_.Set(0.0);
+}
+
+void Shooter::EngageKicker()
+{
+    kicker_on_ = true;
+    kicker_motor_.Set(constants::shooter::kKickerSpeed);
+}
+
+void Shooter::EngageFeeder()
+{
+    feeder_on_ = true;
+    feeder_motor_.Set(constants::shooter::kFeederSpeed);
+}
+
+void Shooter::DisableFeeder()
+{
+    feeder_on_ = false;
+    feeder_motor_.Set(0.0);
+}
+
+bool Shooter::IsFeederActive() const
+{
+    return feeder_on_;
+}
+
+bool Shooter::IsKickerActive() const
+{
+    return kicker_on_;
 }
 
 units::revolutions_per_minute_t Shooter::GetVelocityError() const
@@ -64,23 +93,18 @@ units::revolutions_per_minute_t Shooter::GetDesiredVelocity() const
     return desired_velocity_;
 }
 
+bool Shooter::AtDesiredVelocity() const
+{
+    return GetVelocityError() < constants::shooter::kAllowableSpinupVelocityError;
+}
+
+bool Shooter::AtDesiredVelocityWithHysteresis() const
+{
+    return GetVelocityError() < constants::shooter::kAllowableShootingVelocityError;
+}
+
 void Shooter::Periodic()
 {
-    switch(state_)
-    {
-        case State::SPINUP:
-            // Poll velocity so when we get up to speed we can start shooting.
-            if (GetVelocityError() < constants::shooter::kAllowableSpinupVelocityError)
-                state_ = State::SHOOTING;
-            break;
-        case State::SHOOTING:
-            // Makes sure while shooting we aren't below the allowable velocity error
-            if (GetVelocityError() > constants::shooter::kAllowableShootingVelocityError)
-                state_ = State::SPINUP;
-            break;
-        case State::IDLE:
-            break;
-    }
 }
 
 Shooter& Shooter::GetInstance()

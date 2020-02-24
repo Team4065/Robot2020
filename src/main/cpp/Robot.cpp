@@ -1,3 +1,6 @@
+//TODO test shaped drivetraindecceleration
+//TODO set up singleton lift
+//TODO make lift commands
 #include "Robot.h"
 
 #include <frc/smartdashboard/SmartDashboard.h>
@@ -6,7 +9,11 @@
 #include <frc/controller/SimpleMotorFeedforward.h>
 
 void Robot::RobotInit() {}
-void Robot::RobotPeriodic() { frc2::CommandScheduler::GetInstance().Run(); }
+void Robot::RobotPeriodic()
+{ 
+    frc4065::ReferencedTunable::UpdateAll();
+    frc2::CommandScheduler::GetInstance().Run(); 
+}
 void Robot::DisabledInit() {}
 void Robot::DisabledPeriodic() {}
 void Robot::AutonomousInit() {}

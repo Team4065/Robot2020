@@ -5,28 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/Serializer.h"
+#pragma once
 
-Serializer::Serializer() {}
+#include <frc2/command/CommandHelper.h>
+#include <frc2/command/InstantCommand.h>
 
-Serializer& Serializer::GetInstance()
-{
-    static Serializer instance;
-    return instance;
-}
+#include "subsystems/Intake.h"
 
-void Serializer::Periodic() {}
-
-void Serializer::Forward(){
-    motor_.Set(constants::serializer::kIndexingSpeed);
-}
-
-void Serializer::Idle()
-{
-    motor_.Set(0.0);
-}
-
-void Serializer::Reverse()
-{
-    motor_.Set(constants::serializer::kAntiJamSpeed);
-}
+class ToggleIntake
+    : public frc2::CommandHelper<frc2::InstantCommand,
+                                 ToggleIntake> {
+public:
+  ToggleIntake(Intake& intake);
+  void Initialize() override;
+};

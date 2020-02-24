@@ -5,28 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/Serializer.h"
+#pragma once
 
-Serializer::Serializer() {}
+#include <frc2/command/CommandBase.h>
+#include <frc2/command/CommandHelper.h>
+#include <frc/XboxController.h>
+#include <Constants.h>
 
-Serializer& Serializer::GetInstance()
-{
-    static Serializer instance;
-    return instance;
-}
+#include "subsystems/Drivetrain.h"
 
-void Serializer::Periodic() {}
+/**
+ * NOTE: This class is NOT finished.
+ */
 
-void Serializer::Forward(){
-    motor_.Set(constants::serializer::kIndexingSpeed);
-}
-
-void Serializer::Idle()
-{
-    motor_.Set(0.0);
-}
-
-void Serializer::Reverse()
-{
-    motor_.Set(constants::serializer::kAntiJamSpeed);
-}
+class TankDrive
+    : public frc2::CommandHelper<frc2::CommandBase, TankDrive> {
+public:
+  TankDrive(Drivetrain&);
+  void Initialize() override;
+  void Execute() override;
+  void End(bool interrupted) override;
+  bool IsFinished() override;
+};

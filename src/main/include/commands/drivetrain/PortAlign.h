@@ -5,28 +5,15 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/Serializer.h"
+#pragma once
 
-Serializer::Serializer() {}
+#include <frc2/command/CommandHelper.h>
+#include <frc2/command/PIDCommand.h>
 
-Serializer& Serializer::GetInstance()
-{
-    static Serializer instance;
-    return instance;
-}
+class PortAlign
+    : public frc2::CommandHelper<frc2::PIDCommand, PortAlign> {
+ public:
+  PortAlign();
 
-void Serializer::Periodic() {}
-
-void Serializer::Forward(){
-    motor_.Set(constants::serializer::kIndexingSpeed);
-}
-
-void Serializer::Idle()
-{
-    motor_.Set(0.0);
-}
-
-void Serializer::Reverse()
-{
-    motor_.Set(constants::serializer::kAntiJamSpeed);
-}
+  bool IsFinished() override;
+};

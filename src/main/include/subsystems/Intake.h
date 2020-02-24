@@ -9,8 +9,13 @@
 #include "Constants.h"
 #include "util/Macros.h"
 
-using namespace ctre::phoenix::motorcontrol::can;
+#include <ctre/Phoenix.h>
+#include <frc/DoubleSolenoid.h>
+
+#include "Constants.h"
+
 using namespace constants::intake;
+
 class Intake : public frc2::SubsystemBase
 {
 public:
@@ -28,13 +33,20 @@ public:
   static Intake& GetInstance();
   DISALLOW_COPY_AND_ASSIGN(Intake);
   void Periodic();
+
+  void Suck();
+  void Idle();
+  void Retract();
+  void Extend();
+
+  bool IsActive() const;
+  bool IsDeployed() const;
+
+  bool is_active_ = false;
+  bool is_deployed_ = false;
 private:
   Intake() = default;
 
-  SliderState slider_state_ = kStartSliderReversed ? REVERSE : FORWARD;
-  RollerState roller_state_ = IDLE;
-
-  frc::DoubleSolenoid slider_solenoid_ { constants::intake::kSolenoidPorts[0], constants::intake::kSolenoidPorts[1] };
-  TalonSRX roller_motor_ { constants::intake::kIntakeMotorPort };
-
+  TalonSRX motor_ { kIntakeMotorID };
+  frc::DoubleSolenoid solenoid_ { kSolenoidPorts[0], kSolenoidPorts[1] };
 };

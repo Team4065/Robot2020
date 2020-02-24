@@ -75,6 +75,10 @@
     "streambuf": "cpp",
     "thread": "cpp",
     "cinttypes": "cpp",
-    "typeinfo": "cpp"
-  }
+    "typeinfo": "cpp",
+    "*.inc": "cpp",
+    "shared_mutex": "cpp",
+    "xutility": "cpp"
+  },
+  "C_Cpp.errorSquiggles": "Disabled"
 }

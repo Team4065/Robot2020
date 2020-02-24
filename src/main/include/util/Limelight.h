@@ -4,6 +4,7 @@
 #include <networktables/NetworkTableEntry.h>
 #include <networktables/NetworkTableInstance.h>
 #include <memory>
+#include <units/units.h>
 
 namespace frc4065
 {
@@ -18,6 +19,12 @@ public:
     void SetCamMode(CamMode mode);
     void IsProcessing() const;
     void GetLEDMode() const;
+    double GetHorizontalOffset();
+    double GetVerticalOffset();
+    double GetTargetArea();
+    bool HasActiveTarget();
+    static units::meter_t EstimateTargetDistance(units::degree_t camera_mounting_angle, units::degree_t y_offset_to_target,
+                                                units::meter_t camera_height, units::meter_t target_height);
 private:
     LEDMode led_mode_ = LEDMode::OFF;
     CamMode cam_mode_ = CamMode::PROCESSING;
