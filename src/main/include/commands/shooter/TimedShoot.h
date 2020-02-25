@@ -14,6 +14,7 @@
 #include <frc/Timer.h>
 
 #include "subsystems/Shooter.h"
+#include "subsystems/Serializer.h"
 
 /**
  * Shoots until timer runs out; timer only begins once shooter is spun up.

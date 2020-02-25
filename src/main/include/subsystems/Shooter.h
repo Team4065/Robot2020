@@ -32,6 +32,7 @@ public:
 
   void ShootWithDistanceEstimation(units::foot_t distanceToTarget);
   void SetShooterVelocity(units::revolutions_per_minute_t angularVelocity);
+  void SetShooterPercent(double percent);
   void EngageKicker();
   void DisableKicker();
   void EngageFeeder();

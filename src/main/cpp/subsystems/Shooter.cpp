@@ -6,6 +6,14 @@ Shooter::Shooter()
     left_master_.SetInverted(ctre::phoenix::motorcontrol::InvertType::None);
     right_slave_.SetInverted(ctre::phoenix::motorcontrol::InvertType::InvertMotorOutput);
 
+    motorcontrol::SupplyCurrentLimitConfiguration supply_config_ { true, constants::shooter::kMaxCurrentDraw.to<double>(),
+                                                                   constants::shooter::kMaxCurrentDraw.to<double>(), constants::shooter::kCurrentLimitingTriggerTime.to<double>()  };
+
+    left_master_.ConfigIntegratedSensorInitializationStrategy(ctre::phoenix::sensors::SensorInitializationStrategy::BootToZero);
+    left_master_.ConfigSupplyCurrentLimit(supply_config_);
+    right_slave_.ConfigIntegratedSensorInitializationStrategy(ctre::phoenix::sensors::SensorInitializationStrategy::BootToZero);
+    right_slave_.ConfigSupplyCurrentLimit(supply_config_);
+
     left_master_.ConfigOpenloopRamp(1.2);
     right_slave_.ConfigOpenloopRamp(1.2);
 
@@ -46,6 +54,11 @@ void Shooter::SetShooterVelocity(units::revolutions_per_minute_t angularVelocity
     // 1. Calculate motor velocity from rpm and wheel radius.
     desired_velocity_ = angularVelocity;
     left_master_.Set(ControlMode::Velocity, angularVelocity.to<double>() * 2048 / 60 / 100);
+}
+
+void Shooter::SetShooterPercent(double percent)
+{
+    left_master_.Set(ControlMode::PercentOutput, percent);
 }
 
 void Shooter::DisableKicker()

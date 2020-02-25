@@ -11,3 +11,14 @@ Vision::Vision() : limelight_("limelight") {}
 
 // This method will be called once per scheduler run
 void Vision::Periodic() {}
+
+Vision& Vision::GetInstance()
+{
+    static Vision instance_;
+    return instance_;
+}
+
+frc4065::Limelight& Vision::GetLimelight()
+{
+    return limelight_;
+}

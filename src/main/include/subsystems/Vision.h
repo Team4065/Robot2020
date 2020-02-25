@@ -15,8 +15,10 @@
 class Vision : public frc2::SubsystemBase
 {
 public:
-  Vision();
   void Periodic();
+  frc4065::Limelight& GetLimelight();
+  static Vision& GetInstance();
 private:
+  Vision();
   frc4065::Limelight limelight_;
 };

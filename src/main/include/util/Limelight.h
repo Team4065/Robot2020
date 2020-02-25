@@ -17,8 +17,8 @@ public:
     Limelight(const char* name);
     void SetLEDMode(LEDMode mode);
     void SetCamMode(CamMode mode);
-    void IsProcessing() const;
-    void GetLEDMode() const;
+    bool IsProcessing() const;
+    LEDMode GetLEDMode() const;
     double GetHorizontalOffset();
     double GetVerticalOffset();
     double GetTargetArea();

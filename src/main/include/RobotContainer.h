@@ -49,10 +49,10 @@ public:
 
   frc::XboxController controller_ { constants::oi::kDriverXboxControllerPort };
 
-  GEN_BUTTON_MAIN_CONTROLLER(lift_up_btn_, 4);
-  GEN_BUTTON_MAIN_CONTROLLER(lift_down_btn_, 1);
-  GEN_BUTTON_MAIN_CONTROLLER(spinup_, 3);
-  GEN_BUTTON_MAIN_CONTROLLER(vbelt_, 2);
+  GEN_BUTTON_MAIN_CONTROLLER(y_btn_, 4);
+  GEN_BUTTON_MAIN_CONTROLLER(a_btn_, 1);
+  GEN_BUTTON_MAIN_CONTROLLER(x_btn_, 3);
+  GEN_BUTTON_MAIN_CONTROLLER(b_btn_, 2);
 
 private:
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions

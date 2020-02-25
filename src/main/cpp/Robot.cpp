@@ -19,7 +19,8 @@ void Robot::DisabledPeriodic() {}
 void Robot::AutonomousInit() {}
 void Robot::AutonomousPeriodic() {}
 void Robot::TeleopInit() {}
-void Robot::TeleopPeriodic() {}
+void Robot::TeleopPeriodic()
+{}
 void Robot::TestPeriodic() {}
 
 #ifndef RUNNING_FRC_TESTS

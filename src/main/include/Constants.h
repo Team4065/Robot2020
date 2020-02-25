@@ -51,6 +51,8 @@ namespace constants
         extern const frc::DifferentialDriveKinematics kDriveKinematics;
         extern const frc::TrajectoryConfig kAutoConfig;
 
+        constexpr double kGearRatio = 9.47;
+
         const int kVelocityPIDPort = 0;
         const float kVelocityRange = 1000;
         const float kP_Velocity = 0;
@@ -82,8 +84,10 @@ namespace constants
         constexpr double kKickerSpeed = 0.8;
         constexpr double kFeederSpeed = 0.5;
 
-        constexpr units::current::ampere_t kMaxCurrentDraw { 30.0 };
-        constexpr double kP = 0.0000001;
+        constexpr units::current::ampere_t kMaxCurrentDraw { 35.0 };
+        constexpr units::current::ampere_t kMaxPeakCurrentDraw { 40.0 };
+        constexpr units::time::second_t kCurrentLimitingTriggerTime { 0.01 }; // 10ms
+        constexpr double kP = 0.00001;
         constexpr double kD = 0.0;
         constexpr double kFF = 0.0;
         constexpr units::meter_t kWheelDiameter { 0.1524 };
@@ -126,5 +130,8 @@ namespace constants
     namespace limelight
     {
         constexpr units::degree_t kCameraPitch { 30.0 };
+        constexpr double kAlignKp = 0.001;
+        constexpr double kAlignKi = 0.0;
+        constexpr double kAlignKd = 0.0;
     }
 }

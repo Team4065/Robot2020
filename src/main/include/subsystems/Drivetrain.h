@@ -17,6 +17,8 @@
 #include <iostream>
 #include "util/ReferencedTunable.h"
 
+#include "commands/drivetrain/ArcadeDrive.h"
+
 #include "rev/CANSparkMax.h"
 
 
