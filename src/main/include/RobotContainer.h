@@ -14,9 +14,18 @@
 
 #include "commands/drivetrain/TankDrive.h"
 
+#include "commands/shooter/PreSpinup.h"
+#include "commands/shooter/TimedShoot.h"
+
 #include "commands/Intake/ToggleIntake.h"
 
+#include "commands/Serializer/VBeltForward.h"
+
 #include "commands/Serializer/VBeltOff.h"
+
+#include "commands/lift/IdleLift.h"
+#include "commands/lift/MoveDown.h"
+#include "commands/lift/MoveUp.h"
 
 #include "frc2/command/button/JoystickButton.h"
 
@@ -40,7 +49,10 @@ public:
 
   frc::XboxController controller_ { constants::oi::kDriverXboxControllerPort };
 
-  GEN_BUTTON_MAIN_CONTROLLER(intake_button_, 1);
+  GEN_BUTTON_MAIN_CONTROLLER(lift_up_btn_, 4);
+  GEN_BUTTON_MAIN_CONTROLLER(lift_down_btn_, 1);
+  GEN_BUTTON_MAIN_CONTROLLER(spinup_, 3);
+  GEN_BUTTON_MAIN_CONTROLLER(vbelt_, 2);
 
 private:
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions

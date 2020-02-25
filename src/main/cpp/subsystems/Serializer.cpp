@@ -7,7 +7,9 @@
 
 #include "subsystems/Serializer.h"
 
-Serializer::Serializer() {}
+Serializer::Serializer() {
+    motor_.SetInverted(true);
+}
 
 Serializer& Serializer::GetInstance()
 {

@@ -85,7 +85,7 @@ namespace constants
         constexpr double kFeederSpeed = 0.5;
 
         constexpr units::current::ampere_t kMaxCurrentDraw { 30.0 };
-        constexpr double kP = 0.0;
+        constexpr double kP = 0.0000001;
         constexpr double kD = 0.0;
         constexpr double kFF = 0.0;
         constexpr units::meter_t kWheelDiameter { 0.1524 };
@@ -108,13 +108,14 @@ namespace constants
     {
         const int kSolenoidPorts[2] = { 4, 5 };
 
-        constexpr int kMasterPort = 0;
-        constexpr int kSlavePort = 0;
+        constexpr int kMasterPort = 8;
+        constexpr int kSlavePort = 6;
+        constexpr units::inch_t kHeightTolerance { 0.5 };
     } // namespace lift
      
     namespace serializer
     {
-        constexpr int kSerializerID = 13;
+        constexpr int kSerializerID = 7;
         constexpr double kIndexingSpeed = 0.5;
         constexpr double kAntiJamSpeed = 0.1;
     }

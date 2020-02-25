@@ -22,7 +22,7 @@
 class VBeltReverse
     : public frc2::CommandHelper<frc2::CommandBase, VBeltReverse> {
  public:
-  VBeltReverse(Serializer& serializer);
+  VBeltReverse();
 
   void Initialize() override;
 

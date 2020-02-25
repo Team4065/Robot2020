@@ -10,19 +10,17 @@
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
 
-#include "subsystems/Serializer.h"
+#include "subsystems/Lift.h"
+
+#include <units/units.h>
 
 /**
- * An example command.
- *
- * <p>Note that this extends CommandHelper, rather extending CommandBase
- * directly; this is crucially important, or else the decorator functions in
- * Command will *not* work!
+ * Set lift to height and ends when lift reaches height
  */
-class VBeltForward
-    : public frc2::CommandHelper<frc2::CommandBase, VBeltForward> {
- public:
-  VBeltForward();
+class MoveLiftToHeight
+    : public frc2::CommandHelper<frc2::CommandBase, MoveLiftToHeight> {
+public:
+  MoveLiftToHeight(units::foot_t height);
 
   void Initialize() override;
 
@@ -31,4 +29,6 @@ class VBeltForward
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+private:
+  units::foot_t height_;
 };

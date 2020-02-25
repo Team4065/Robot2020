@@ -11,6 +11,8 @@ Lift::Lift()
 {
     // master_encoder_.SetPositionConversionFactor();
     // slave_encoder_.SetPositionConversionFactor();
+    lift_master_.SetInverted(false);
+    lift_slave_.SetInverted(false);
 }
 
 Lift& Lift::GetInstance(){
@@ -34,7 +36,17 @@ void Lift::Retract(){
     solenoid_.Set(frc::DoubleSolenoid::kReverse);
 }
 
+void Lift::SetHeight(units::foot_t height)
+{
+    
+}
+
 units::foot_t Lift::GetHeight()
 {
     return units::foot_t(master_encoder_.GetPosition());
+}
+
+void Lift::MovePercent(double percent){
+    lift_master_.Set(percent);//idk y it failed, maybe check movelifttoheight
+    lift_slave_.Set(percent);  
 }

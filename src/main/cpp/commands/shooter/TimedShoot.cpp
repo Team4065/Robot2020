@@ -1,4 +1,5 @@
 #include "commands/shooter/TimedShoot.h"
+#include <iostream>
 
 TimedShoot::TimedShoot(units::revolutions_per_minute_t rpm, units::second_t time)
   : rpm_(rpm), time_(time), start_time_(units::second_t(frc::Timer::GetFPGATimestamp()))
@@ -9,6 +10,7 @@ TimedShoot::TimedShoot(units::revolutions_per_minute_t rpm, units::second_t time
 void TimedShoot::Initialize()
 {
   Shooter::GetInstance().SetShooterVelocity(rpm_);
+  std::cout << "Starting!\n";
 }
 
 void TimedShoot::Execute()
@@ -31,6 +33,7 @@ void TimedShoot::End(bool interrupted)
   Shooter::GetInstance().DisableFeeder();
   Shooter::GetInstance().DisableKicker();
   Shooter::GetInstance().SetShooterVelocity(0.0_rpm);
+  std::cout << "Ending!\n";
 }
 
 // Returns true when the command should end.

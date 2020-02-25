@@ -4,7 +4,10 @@ Shooter::Shooter()
 {
     right_slave_.Follow(left_master_);
     left_master_.SetInverted(ctre::phoenix::motorcontrol::InvertType::None);
-    right_slave_.SetInverted(ctre::phoenix::motorcontrol::InvertType::OpposeMaster);
+    right_slave_.SetInverted(ctre::phoenix::motorcontrol::InvertType::InvertMotorOutput);
+
+    left_master_.ConfigOpenloopRamp(1.2);
+    right_slave_.ConfigOpenloopRamp(1.2);
 
     left_master_.Config_kP(0, constants::shooter::kP);
     left_master_.Config_kI(0, 0);
@@ -42,6 +45,7 @@ void Shooter::SetShooterVelocity(units::revolutions_per_minute_t angularVelocity
 {
     // 1. Calculate motor velocity from rpm and wheel radius.
     desired_velocity_ = angularVelocity;
+    left_master_.Set(ControlMode::Velocity, angularVelocity.to<double>() * 2048 / 60 / 100);
 }
 
 void Shooter::DisableKicker()

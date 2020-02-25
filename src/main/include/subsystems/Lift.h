@@ -26,6 +26,7 @@ class Lift : public frc2::SubsystemBase {
   void Periodic();
   void Extend();
   void Retract();
+  void MovePercent(double percent);
   void SetHeight(units::foot_t height);
   units::foot_t GetHeight();
 

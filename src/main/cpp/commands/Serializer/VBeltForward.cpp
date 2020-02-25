@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-VBeltForward::VBeltForward(Serializer& serializer) {
-  AddRequirements({&serializer});
+VBeltForward::VBeltForward() {
+  AddRequirements({&Serializer::GetInstance()});
 }
 
 // Called when the command is initially scheduled.

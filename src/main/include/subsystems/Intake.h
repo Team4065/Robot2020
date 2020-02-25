@@ -19,17 +19,6 @@ using namespace constants::intake;
 class Intake : public frc2::SubsystemBase
 {
 public:
-  enum SliderState { FORWARD, REVERSE };
-  enum RollerState { IDLE, INTAKING };
-
-  void SetSliderState(SliderState state);
-  void SetRollerState(RollerState state);
-
-  SliderState GetSliderState() const;
-  RollerState GetRollerState() const;
-  bool RollerIsActive();
-  bool SliderIsForward() const;
-
   static Intake& GetInstance();
   DISALLOW_COPY_AND_ASSIGN(Intake);
   void Periodic();
@@ -45,7 +34,7 @@ public:
   bool is_active_ = false;
   bool is_deployed_ = false;
 private:
-  Intake() = default;
+  Intake();
 
   TalonSRX motor_ { kIntakeMotorID };
   frc::DoubleSolenoid solenoid_ { kSolenoidPorts[0], kSolenoidPorts[1] };

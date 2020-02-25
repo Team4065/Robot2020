@@ -22,7 +22,7 @@
 class VBeltOff
     : public frc2::CommandHelper<frc2::CommandBase, VBeltOff> {
  public:
-  VBeltOff(Serializer& serializer);
+  VBeltOff();
 
   void Initialize() override;
 

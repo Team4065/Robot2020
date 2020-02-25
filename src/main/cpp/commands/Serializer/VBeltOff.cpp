@@ -9,9 +9,9 @@
 
 #include <iostream>
 
-VBeltOff::VBeltOff(Serializer& serializer) {
+VBeltOff::VBeltOff() {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({&serializer});
+  AddRequirements({&Serializer::GetInstance()});
 }
 
 // Called when the command is initially scheduled.
