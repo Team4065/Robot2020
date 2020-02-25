@@ -42,22 +42,20 @@ namespace constants
 
         const bool kGyroReversed = false; // Inaccurate!
         const units::current::ampere_t kMaxCurrentDraw { 30.0 };
-        const units::meter_t kWheelDiameter { 0.1524 };
-        const units::meter_t kTrackWidth { 0.6096 }; // Maybe 
-        const units::volt_t kS { 0.86 }; // Inaccurate!
-        const units::unit_t<kv> kV { 3.26 }; // Inaccurate!
-        const units::unit_t<ka> kA { 0.687 }; // Inaccurate!
+        const units::inch_t kWheelDiameter { 6.0 };
+        const units::inch_t kTrackWidth { 28.0 }; // Maybe 
+        const units::volt_t kS { 0.0 }; // Inaccurate!
+        const units::unit_t<kv> kV { 0.0 }; // Inaccurate!
+        const units::unit_t<ka> kA { 0.0 }; // Inaccurate!
         const double kPDriveVel = 0.0;
         extern const frc::DifferentialDriveKinematics kDriveKinematics;
         extern const frc::TrajectoryConfig kAutoConfig;
 
-        constexpr double kGearRatio = 9.47;
-
         const int kVelocityPIDPort = 0;
         const float kVelocityRange = 1000;
-        const float kP_Velocity = 0.000666;
+        const float kP_Velocity = 0;
         const float kD_Velocity = 0;
-        const float kF_Velocity = 0.000316;
+        const float kF_Velocity = 0.00125;
         const float kArbiFeedForw = 0;//units are in volts
         const float kMaxAccel = 500;
         const float kMaxVelocity = 100;
