@@ -20,16 +20,16 @@ void Shoot::Execute() {
 #ifdef DISPLAY_COMMAND_MESSAGES
   std::cout << "Shoot Command Executing" << std::endl;
 #endif
-  //Shooter::GetInstance().targetVelocity = value to be computed or preset;
-  //Shooter::GetInstance().isFeeder1On = true;
-  //Shooter::GetInstance().isFeeder2On = true;
+  Shooter::GetInstance().targetVelocity = 0.1;
+  Shooter::GetInstance().isFeederOn = true;
+  Shooter::GetInstance().isKickerOn = true;
 }
 
 // Called once the command ends or is interrupted.
 void Shoot::End(bool interrupted) {
-  //Shooter::GetInstance().targetVelocity = 0;
-  //Shooter::GetInstance().isFeeder1On = false;
-  //Shooter::GetInstance().isFeeder2On = false;
+  Shooter::GetInstance().targetVelocity = 0;
+  Shooter::GetInstance().isFeederOn = true;
+  Shooter::GetInstance().isKickerOn = true;
 }
 
 // Returns true when the command should end.

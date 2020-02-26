@@ -14,7 +14,7 @@ Shooter::Shooter()
 }
 
 double Shooter::GetSensorVelocity(){
-    return left.GetSelectedSensorVelocity();
+    return left.GetSelectedSensorVelocity() / 2048;
 }
 
 void Shooter::ShootWithDistanceEstimation(units::foot_t distanceToTarget)
@@ -66,16 +66,17 @@ units::revolutions_per_minute_t Shooter::GetDesiredVelocity() const
 void Shooter::Periodic()
 {
     left.Set(ctre::phoenix::motorcontrol::ControlMode::Velocity, targetVelocity);
+    //left.Set(ctre::phoenix::motorcontrol::ControlMode::PercentOutput, targetVelocity);
 
-    if(isFeeder1On)
-        feederMotor1.Set(0.1);
+    if(isFeederOn)
+        feederMotor.Set(0.1);
     else
-        feederMotor1.Set(0);
+        feederMotor.Set(0);
 
-    if(isFeeder2On)
-        feederMotor2.Set(0.1);
+    if(isKickerOn)
+        kickerMotor.Set(0.1);
     else
-        feederMotor2.Set(0);
+        kickerMotor.Set(0);
 }
 
 Shooter& Shooter::GetInstance()

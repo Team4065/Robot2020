@@ -22,12 +22,14 @@ void SpinUp::Execute() {
 #ifdef DISPLAY_COMMAND_MESSAGES
   std::cout << "SpinUp Command Executing" << std::endl;
 #endif
-  //Shooter::GetInstance().targetVelocity = value to be calculated or preset
+  Shooter::GetInstance().isFeederOn = true;
+  Shooter::GetInstance().targetVelocity = 0.1;
 }
 
 // Called once the command ends or is interrupted.
 void SpinUp::End(bool interrupted) {
-  //Shooter::GetInstance().targetVelocity = 0;
+  Shooter::GetInstance().targetVelocity = 0.1;
+  Shooter::GetInstance().isFeederOn = true;
   //Shooter::GetInstance().isFeeder1On = false;
   //Shooter::GetInstance().isFeeder2On = false;
 }

@@ -52,20 +52,21 @@ public:
   double GetSensorVelocity();
 
   double targetVelocity = 0;
-
+  bool isFeederOn = false;
+  bool isKickerOn = false;
+  
  private:
   //State state_ = State::IDLE;
 
   //units::revolutions_per_minute_t desired_velocity_ { 0.0 };
 
-  bool isFeeder1On = false;
-  bool isFeeder2On = false;
+
 
   WPI_TalonFX left { constants::shooter::kLeftMotorPort };
   WPI_TalonFX right { constants::shooter::kRightMotorPort };
 
-  rev::CANSparkMax feederMotor1 { constants::shooter::kFeederMotor1Port, rev::CANSparkMax::MotorType::kBrushless };
-  rev::CANSparkMax feederMotor2 { constants::shooter::kFeederMotor2Port, rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANSparkMax feederMotor { constants::shooter::kFeederMotor1Port, rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANSparkMax kickerMotor { constants::shooter::kFeederMotor2Port, rev::CANSparkMax::MotorType::kBrushless };
 
   double kP = 0;
   double kD = 0;
