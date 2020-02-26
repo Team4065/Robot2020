@@ -13,6 +13,14 @@ void RobotContainer::ConfigureButtonBindings() {
   x_btn_.WhenPressed(new VBeltForward()).WhenReleased(new VBeltOff());
   b_btn_.WhenPressed(new TimedShoot(4000_rpm, 5_s));
   rb_btn_.WhenPressed(new ToggleIntake());
+  // lb_btn_.WhenPressed();
+  // sl_btn_.WhenPressed();
+  // sr_btn_.WhenPressed();
+  // start_btn_.WhenPressed();
+  // back_btn_.WhenPressed();
+  // lt_btn_.WhenPressed();
+  // rt_btn_.WhenPressed();
+
 
   Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller_));
 }

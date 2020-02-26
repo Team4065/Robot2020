@@ -7,6 +7,8 @@
 #include "subsystems/Vision.h"
 #include "subsystems/Drivetrain.h"
 
+#include "commands/BlinkVisionTimed.h"
+
 class VisionAlign
     : public frc2::CommandHelper<frc2::CommandBase, VisionAlign>
     {

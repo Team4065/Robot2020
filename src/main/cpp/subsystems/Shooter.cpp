@@ -8,16 +8,22 @@ Shooter::Shooter()
     right_slave_.ConfigFactoryDefault();
 
     right_slave_.Follow(left_master_);
-    left_master_.SetInverted(ctre::phoenix::motorcontrol::InvertType::None);
-    right_slave_.SetInverted(ctre::phoenix::motorcontrol::InvertType::InvertMotorOutput);
+    left_master_.SetInverted(InvertType::None);
+    right_slave_.SetInverted(InvertType::InvertMotorOutput);
 
-    // motorcontrol::SupplyCurrentLimitConfiguration supply_config_ { true, constants::shooter::kMaxCurrentDraw.to<double>(),
-    //                                                                constants::shooter::kMaxCurrentDraw.to<double>(), constants::shooter::kCurrentLimitingTriggerTime.to<double>()  };
+    left_master_.SetNeutralMode(NeutralMode::Coast);
+    right_slave_.SetNeutralMode(NeutralMode::Coast);
 
-    //left_master_.ConfigIntegratedSensorInitializationStrategy(ctre::phoenix::sensors::SensorInitializationStrategy::BootToZero);
-    //left_master_.ConfigSupplyCurrentLimit(supply_config_);
-    //right_slave_.ConfigIntegratedSensorInitializationStrategy(ctre::phoenix::sensors::SensorInitializationStrategy::BootToZero);
-    //right_slave_.ConfigSupplyCurrentLimit(supply_config_);
+    motorcontrol::SupplyCurrentLimitConfiguration supply_config_ {
+        true, constants::shooter::kMaxCurrentDraw.to<double>(),
+        constants::shooter::kMaxCurrentDraw.to<double>(),
+        constants::shooter::kCurrentLimitingTriggerTime.to<double>()
+    };
+
+    left_master_.ConfigIntegratedSensorInitializationStrategy(ctre::phoenix::sensors::SensorInitializationStrategy::BootToZero);
+    left_master_.ConfigSupplyCurrentLimit(supply_config_);
+    right_slave_.ConfigIntegratedSensorInitializationStrategy(ctre::phoenix::sensors::SensorInitializationStrategy::BootToZero);
+    right_slave_.ConfigSupplyCurrentLimit(supply_config_);
 
     left_master_.ConfigOpenloopRamp(1.8);
     right_slave_.ConfigOpenloopRamp(1.8);

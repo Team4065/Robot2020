@@ -102,8 +102,7 @@ namespace constants
         constexpr int kIntakeMotorID = 10;
         constexpr int kSolenoidPorts[2] = { 0, 1 }; // Inaccurate!
         constexpr units::current::ampere_t kMaxCurrentDraw { 25.0 };
-        constexpr float kMotorOperatingPercentage = 0.8f; // 
-        constexpr bool kStartSliderReversed = true;
+        constexpr float kMotorOperatingPercentage = 0.65f; // 
     }
 
     namespace lift
@@ -133,5 +132,6 @@ namespace constants
         constexpr double kAlignKp = 0.001;
         constexpr double kAlignKi = 0.0;
         constexpr double kAlignKd = 0.0;
+        constexpr units::degree_t kOffsetTolerance { 1.5 };
     }
 }

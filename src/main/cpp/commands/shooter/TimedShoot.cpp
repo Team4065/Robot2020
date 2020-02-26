@@ -40,4 +40,8 @@ void TimedShoot::End(bool interrupted)
 }
 
 // Returns true when the command should end.
-bool TimedShoot::IsFinished() { return false; }
+bool TimedShoot::IsFinished()
+{
+  std::cout << (units::second_t(frc::Timer::GetFPGATimestamp()) - start_time_).to<double>() << std::endl;
+  return units::second_t(frc::Timer::GetFPGATimestamp()) - start_time_ >= time_;
+}
