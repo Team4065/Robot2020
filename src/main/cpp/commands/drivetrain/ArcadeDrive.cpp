@@ -13,7 +13,7 @@ void ArcadeDrive::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void ArcadeDrive::Execute()
 {
-  double throttle = controller_->GetY(frc::XboxController::kLeftHand) * 0.7;
+  double throttle = -controller_->GetY(frc::XboxController::kLeftHand) * 0.7;
   double turn = controller_->GetX(frc::XboxController::kRightHand) * 0.4;
 
   Drivetrain::GetInstance().TankDrivePercent(throttle - turn, throttle + turn);

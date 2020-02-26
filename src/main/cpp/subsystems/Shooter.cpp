@@ -1,21 +1,29 @@
 #include "subsystems/Shooter.h"
 
+#include <iostream>
+
 Shooter::Shooter()
 {
+    left_master_.ConfigFactoryDefault();
+    right_slave_.ConfigFactoryDefault();
+
     right_slave_.Follow(left_master_);
     left_master_.SetInverted(ctre::phoenix::motorcontrol::InvertType::None);
     right_slave_.SetInverted(ctre::phoenix::motorcontrol::InvertType::InvertMotorOutput);
 
-    motorcontrol::SupplyCurrentLimitConfiguration supply_config_ { true, constants::shooter::kMaxCurrentDraw.to<double>(),
-                                                                   constants::shooter::kMaxCurrentDraw.to<double>(), constants::shooter::kCurrentLimitingTriggerTime.to<double>()  };
+    // motorcontrol::SupplyCurrentLimitConfiguration supply_config_ { true, constants::shooter::kMaxCurrentDraw.to<double>(),
+    //                                                                constants::shooter::kMaxCurrentDraw.to<double>(), constants::shooter::kCurrentLimitingTriggerTime.to<double>()  };
 
-    left_master_.ConfigIntegratedSensorInitializationStrategy(ctre::phoenix::sensors::SensorInitializationStrategy::BootToZero);
-    left_master_.ConfigSupplyCurrentLimit(supply_config_);
-    right_slave_.ConfigIntegratedSensorInitializationStrategy(ctre::phoenix::sensors::SensorInitializationStrategy::BootToZero);
-    right_slave_.ConfigSupplyCurrentLimit(supply_config_);
+    //left_master_.ConfigIntegratedSensorInitializationStrategy(ctre::phoenix::sensors::SensorInitializationStrategy::BootToZero);
+    //left_master_.ConfigSupplyCurrentLimit(supply_config_);
+    //right_slave_.ConfigIntegratedSensorInitializationStrategy(ctre::phoenix::sensors::SensorInitializationStrategy::BootToZero);
+    //right_slave_.ConfigSupplyCurrentLimit(supply_config_);
 
-    left_master_.ConfigOpenloopRamp(1.2);
-    right_slave_.ConfigOpenloopRamp(1.2);
+    left_master_.ConfigOpenloopRamp(1.8);
+    right_slave_.ConfigOpenloopRamp(1.8);
+
+    left_master_.ConfigClosedloopRamp(1.8);
+    right_slave_.ConfigClosedloopRamp(1.8);
 
     left_master_.Config_kP(0, constants::shooter::kP);
     left_master_.Config_kI(0, 0);
@@ -53,7 +61,7 @@ void Shooter::SetShooterVelocity(units::revolutions_per_minute_t angularVelocity
 {
     // 1. Calculate motor velocity from rpm and wheel radius.
     desired_velocity_ = angularVelocity;
-    left_master_.Set(ControlMode::Velocity, angularVelocity.to<double>() * 2048 / 60 / 100);
+    left_master_.Set(TalonFXControlMode::Velocity, angularVelocity.to<double>() * 2048.0 / 60.0 / 10.0 * 24.0 / 16.0);
 }
 
 void Shooter::SetShooterPercent(double percent)
@@ -95,33 +103,36 @@ bool Shooter::IsKickerActive() const
     return kicker_on_;
 }
 
-units::revolutions_per_minute_t Shooter::GetVelocityError() const
+units::revolutions_per_minute_t Shooter::GetVelocityError()
 {
     return units::revolutions_per_minute_t( std::abs((desired_velocity_ - GetVelocity()).to<double>()) );
 }
 
-units::revolutions_per_minute_t Shooter::GetVelocity() const
+units::revolutions_per_minute_t Shooter::GetVelocity()
 {
-    return 0_rpm;
+    return units::revolutions_per_minute_t(
+        left_master_.GetSelectedSensorVelocity(0) / 2048.0 * 60.0 * 10.0 / 24.0 * 16.0
+    );
 }
 
-units::revolutions_per_minute_t Shooter::GetDesiredVelocity() const
+units::revolutions_per_minute_t Shooter::GetDesiredVelocity()
 {
     return desired_velocity_;
 }
 
-bool Shooter::AtDesiredVelocity() const
+bool Shooter::AtDesiredVelocity() 
 {
     return GetVelocityError() < constants::shooter::kAllowableSpinupVelocityError;
 }
 
-bool Shooter::AtDesiredVelocityWithHysteresis() const
+bool Shooter::AtDesiredVelocityWithHysteresis()
 {
     return GetVelocityError() < constants::shooter::kAllowableShootingVelocityError;
 }
 
 void Shooter::Periodic()
 {
+    std::cout << "Desired: " << GetDesiredVelocity() << " Actual: " << GetVelocity() << std::endl;
 }
 
 Shooter& Shooter::GetInstance()

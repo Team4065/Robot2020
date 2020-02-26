@@ -16,6 +16,6 @@ class ToggleIntake
     : public frc2::CommandHelper<frc2::InstantCommand,
                                  ToggleIntake> {
 public:
-  ToggleIntake(Intake& intake);
+  ToggleIntake();
   void Initialize() override;
 };

@@ -53,6 +53,7 @@ public:
   GEN_BUTTON_MAIN_CONTROLLER(a_btn_, 1);
   GEN_BUTTON_MAIN_CONTROLLER(x_btn_, 3);
   GEN_BUTTON_MAIN_CONTROLLER(b_btn_, 2);
+  GEN_BUTTON_MAIN_CONTROLLER(rb_btn_, 6);
 
 private:
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions

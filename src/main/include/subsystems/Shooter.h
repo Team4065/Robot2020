@@ -41,12 +41,12 @@ public:
   bool IsKickerActive() const;
   bool IsFeederActive() const;
 
-  units::revolutions_per_minute_t GetVelocity() const;
-  units::revolutions_per_minute_t GetDesiredVelocity() const;
-  units::revolutions_per_minute_t GetVelocityError() const;
-  units::current::ampere_t GetCurrentDraw() const;
-  bool AtDesiredVelocity() const;
-  bool AtDesiredVelocityWithHysteresis() const;
+  units::revolutions_per_minute_t GetVelocity();
+  units::revolutions_per_minute_t GetDesiredVelocity();
+  units::revolutions_per_minute_t GetVelocityError();
+  units::current::ampere_t GetCurrentDraw();
+  bool AtDesiredVelocity();
+  bool AtDesiredVelocityWithHysteresis();
 
   DISALLOW_COPY_AND_ASSIGN(Shooter);
   void Periodic();

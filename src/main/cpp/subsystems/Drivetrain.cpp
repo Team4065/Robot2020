@@ -20,11 +20,11 @@ Drivetrain::Drivetrain()
     right_front_master_.RestoreFactoryDefaults();
     right_middle_slave_.RestoreFactoryDefaults();
 
-    left_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    left_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    // left_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    // left_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
 
-    right_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    right_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    // right_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    // right_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
 
     left_front_master_.SetInverted(true);
     right_front_master_.SetInverted(false);
@@ -99,7 +99,7 @@ void Drivetrain::TankDriveVolts(units::volt_t left, units::volt_t right)
 void Drivetrain::TankDrivePercent(double left, double right)
 {
     left_front_master_.Set(left);
-    left_front_master_.Set(right);
+    right_front_master_.Set(right);
 }
 
 frc::DifferentialDriveWheelSpeeds Drivetrain::GetWheelSpeeds()

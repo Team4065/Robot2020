@@ -75,10 +75,10 @@ namespace constants
 
     namespace shooter
     {
-        constexpr int kLeftMotorPort = 5;
-        constexpr int kRightMotorPort = 6;
-        constexpr int kFeederMotor1Port = 7;
-        constexpr int kFeederMotor2Port = 8;
+        constexpr int kLeftMotorPort = 1;
+        constexpr int kRightMotorPort = 2;
+        constexpr int kFeederMotor1Port = 5;
+        constexpr int kFeederMotor2Port = 9;
 
         constexpr int kAllowableVelocityError = 10;
         constexpr double kKickerSpeed = 0.8;
@@ -87,9 +87,9 @@ namespace constants
         constexpr units::current::ampere_t kMaxCurrentDraw { 35.0 };
         constexpr units::current::ampere_t kMaxPeakCurrentDraw { 40.0 };
         constexpr units::time::second_t kCurrentLimitingTriggerTime { 0.01 }; // 10ms
-        constexpr double kP = 0.00001;
+        constexpr double kP = 0.08;
         constexpr double kD = 0.0;
-        constexpr double kFF = 0.0;
+        constexpr double kFF = 0.1;
         constexpr units::meter_t kWheelDiameter { 0.1524 };
         constexpr units::revolutions_per_minute_t kAllowableShootingVelocityError = 45_rpm; // within 30 rpm of target rate
         constexpr units::revolutions_per_minute_t kAllowableSpinupVelocityError = 30_rpm; // within 30 rpm of target rate
@@ -99,7 +99,7 @@ namespace constants
 
     namespace intake
     {
-        constexpr int kIntakeMotorID = 9;
+        constexpr int kIntakeMotorID = 10;
         constexpr int kSolenoidPorts[2] = { 0, 1 }; // Inaccurate!
         constexpr units::current::ampere_t kMaxCurrentDraw { 25.0 };
         constexpr float kMotorOperatingPercentage = 0.8f; // 

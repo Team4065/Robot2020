@@ -18,7 +18,10 @@ void Robot::DisabledInit() {}
 void Robot::DisabledPeriodic() {}
 void Robot::AutonomousInit() {}
 void Robot::AutonomousPeriodic() {}
-void Robot::TeleopInit() {}
+void Robot::TeleopInit() {
+    // m_container.shooter_.EngageKicker();
+    // m_container.shooter_.EngageFeeder();
+}
 void Robot::TeleopPeriodic()
 {}
 void Robot::TestPeriodic() {}

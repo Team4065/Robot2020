@@ -10,9 +10,9 @@
 // NOTE:  Consider using this command inline, rather than writing a subclass.
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
-ToggleIntake::ToggleIntake(Intake& intake)
+ToggleIntake::ToggleIntake()
 {
-  AddRequirements(&intake);
+  AddRequirements({&Intake::GetInstance()});
 }
 
 // Called when the command is initially scheduled.

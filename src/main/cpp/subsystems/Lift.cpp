@@ -9,12 +9,16 @@
 
 Lift::Lift()
 {
+    lift_master_.RestoreFactoryDefaults();
+    lift_master_.ClearFaults();
+    lift_slave_.RestoreFactoryDefaults();
+    lift_slave_.ClearFaults();
     // master_encoder_.SetPositionConversionFactor();
     // slave_encoder_.SetPositionConversionFactor();
     lift_master_.SetInverted(false);
     lift_slave_.SetInverted(false);
-    master_encoder_.SetInverted(false);
-    slave_encoder_.SetInverted(false);
+    // master_encoder_.SetInverted(false);
+    // slave_encoder_.SetInverted(false);
 }
 
 Lift& Lift::GetInstance(){
