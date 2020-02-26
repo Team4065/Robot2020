@@ -11,7 +11,9 @@
 #include "commands/auto/paths/RunnableTrajectory.h"
 #include "commands/auto/paths/Paths.h"
 
-void Robot::RobotInit() {}
+void Robot::RobotInit() {
+    compressor.Start();
+}
 void Robot::RobotPeriodic()
 { 
     frc4065::ReferencedTunable::UpdateAll();
