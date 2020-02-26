@@ -1,7 +1,7 @@
 #include "commands/auto/paths/RunnableTrajectory.h"
 #include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
 
-RunnableTrajectory::RunnableTrajectory(frc::Trajectory& traj) : traj_(std::move(traj))
+RunnableTrajectory::RunnableTrajectory(TrajectoryPoints& traj_pts) : traj_pts_(std::move(traj_pts))
 {
     AddRequirements({&Drivetrain::GetInstance()});
 }
@@ -23,7 +23,7 @@ void RunnableTrajectory::Initialize()
     config.AddConstraint(autoVoltageConstraint);
 
     ramsete_command_ = new frc2::RamseteCommand(
-        traj_, [&]() { return Drivetrain::GetInstance().GetPose(); },
+        traj_pts_.AsGeneratedTrajectory(config), [&]() { return Drivetrain::GetInstance().GetPose(); },
         frc::RamseteController(constants::drivetrain::auto_mode::kRamseteB,
                                constants::drivetrain::auto_mode::kRamseteZeta),
         frc::SimpleMotorFeedforward<units::meters>(

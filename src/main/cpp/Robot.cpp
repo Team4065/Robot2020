@@ -8,6 +8,9 @@
 
 #include <frc/controller/SimpleMotorFeedforward.h>
 
+#include "commands/auto/paths/RunnableTrajectory.h"
+#include "commands/auto/paths/Paths.h"
+
 void Robot::RobotInit() {}
 void Robot::RobotPeriodic()
 { 
@@ -16,7 +19,10 @@ void Robot::RobotPeriodic()
 }
 void Robot::DisabledInit() {}
 void Robot::DisabledPeriodic() {}
-void Robot::AutonomousInit() {}
+void Robot::AutonomousInit()
+{
+    RunnableTrajectory(kStraightLinePath).Schedule();
+}
 void Robot::AutonomousPeriodic() {}
 void Robot::TeleopInit() {
     // m_container.shooter_.EngageKicker();

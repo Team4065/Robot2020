@@ -20,7 +20,7 @@
 using namespace constants::lift;
 
 class Lift : public frc2::SubsystemBase {
- public:
+public:
   static Lift& GetInstance();
   DISALLOW_COPY_AND_ASSIGN(Lift);
   void Periodic();
@@ -30,7 +30,7 @@ class Lift : public frc2::SubsystemBase {
   void SetHeight(units::foot_t height);
   units::foot_t GetHeight();
 
- private:
+private:
   Lift();
 
   frc::DoubleSolenoid solenoid_ { constants::lift::kSolenoidPorts[0], constants::lift::kSolenoidPorts[1] };
