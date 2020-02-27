@@ -10,6 +10,7 @@ TimedShoot::TimedShoot(units::revolutions_per_minute_t rpm, units::second_t time
 void TimedShoot::Initialize()
 {
   Shooter::GetInstance().SetShooterVelocity(rpm_);
+  timer_.Start();
   std::cout << "Starting!\n";
 }
 
@@ -43,5 +44,5 @@ void TimedShoot::End(bool interrupted)
 bool TimedShoot::IsFinished()
 {
   std::cout << (units::second_t(frc::Timer::GetFPGATimestamp()) - start_time_).to<double>() << std::endl;
-  return units::second_t(frc::Timer::GetFPGATimestamp()) - start_time_ >= time_;
+  return timer_.HasPeriodPassed(time_.to<double>());
 }
