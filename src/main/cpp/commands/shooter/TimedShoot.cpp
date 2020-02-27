@@ -12,12 +12,18 @@ void TimedShoot::Initialize()
   Shooter::GetInstance().SetShooterVelocity(rpm_);
   timer_.Start();
   std::cout << "Starting!\n";
+  timer_started_ = false;
 }
 
 void TimedShoot::Execute()
 {
   if (Shooter::GetInstance().AtDesiredVelocity() && !hysteresis_flag_)
   {
+    if (!timer_started_)
+    {
+      timer_.Start();
+      timer_started_ = true;
+    }
     Shooter::GetInstance().EngageFeeder();
     Shooter::GetInstance().EngageKicker();
     Serializer::GetInstance().Forward();
@@ -44,5 +50,6 @@ void TimedShoot::End(bool interrupted)
 bool TimedShoot::IsFinished()
 {
   std::cout << (units::second_t(frc::Timer::GetFPGATimestamp()) - start_time_).to<double>() << std::endl;
+  // return units::second_t(frc::Timer::GetFPGATimestamp()) - start_time_ >= time_;
   return timer_.HasPeriodPassed(time_.to<double>());
 }

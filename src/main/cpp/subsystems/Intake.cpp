@@ -2,6 +2,7 @@
 
 Intake::Intake()
 {
+    solenoid_.Set(frc::DoubleSolenoid::Value::kReverse);
 }
 
 void Intake::Periodic()

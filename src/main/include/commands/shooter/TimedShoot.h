@@ -34,4 +34,5 @@ class TimedShoot
   units::second_t start_time_;
   bool hysteresis_flag_ = false;
   frc::Timer timer_;
+  bool timer_started_ = false;
 };
