@@ -3,6 +3,7 @@
 #include <frc/TimedRobot.h>
 #include <frc2/command/Command.h>
 #include <frc/Compressor.h>
+#include <frc/DoubleSolenoid.h>
 
 #include "RobotContainer.h"
 #include "util/ReferencedTunable.h"
@@ -24,4 +25,6 @@ class Robot : public frc::TimedRobot {
   // doesn't have undefined behavior and potentially crash.
   frc2::Command* m_autonomousCommand = nullptr;
   frc::Compressor compressor;
+  frc::DoubleSolenoid dummy1 { 0, 1 };
+  frc::DoubleSolenoid dummy2 { 4, 5 };
 };

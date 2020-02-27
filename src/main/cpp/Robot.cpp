@@ -13,10 +13,12 @@
 
 void Robot::RobotInit() {
     compressor.Start();
+    dummy1.Set(frc::DoubleSolenoid::kForward);
+    dummy2.Set(frc::DoubleSolenoid::kForward);
 }
 void Robot::RobotPeriodic()
 { 
-    frc4065::ReferencedTunable::UpdateAll();
+    frc4065::ReferencedTunable::UpdateAll();n 
     frc2::CommandScheduler::GetInstance().Run(); 
 }
 void Robot::DisabledInit() {}
