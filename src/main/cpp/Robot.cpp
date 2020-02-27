@@ -18,7 +18,7 @@ void Robot::RobotInit() {
 }
 void Robot::RobotPeriodic()
 { 
-    frc4065::ReferencedTunable::UpdateAll();n 
+    frc4065::ReferencedTunable::UpdateAll();
     frc2::CommandScheduler::GetInstance().Run(); 
 }
 void Robot::DisabledInit() {}
