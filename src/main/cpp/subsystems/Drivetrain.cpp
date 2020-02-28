@@ -20,11 +20,16 @@ Drivetrain::Drivetrain()
     right_front_master_.RestoreFactoryDefaults();
     right_middle_slave_.RestoreFactoryDefaults();
 
-    // left_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    // left_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    left_front_master_.EnableVoltageCompensation(constants::drivetrain::kNominalVoltage.to<double>());
+    left_middle_slave_.EnableVoltageCompensation(constants::drivetrain::kNominalVoltage.to<double>());
+    right_front_master_.EnableVoltageCompensation(constants::drivetrain::kNominalVoltage.to<double>());
+    right_middle_slave_.EnableVoltageCompensation(constants::drivetrain::kNominalVoltage.to<double>());
 
-    // right_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    // right_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    left_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    left_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+
+    right_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    right_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
 
     left_front_master_.SetInverted(true);
     right_front_master_.SetInverted(false);
@@ -48,11 +53,11 @@ Drivetrain::Drivetrain()
     right_pid_.SetSmartMotionMaxVelocity(constants::drivetrain::kMaxVelocity, constants::drivetrain::kVelocityPIDPort);
 
 
-    left_encoder_.SetPositionConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * constants::drivetrain::kGearRatio * M_PI);
-    right_encoder_.SetPositionConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * constants::drivetrain::kGearRatio * M_PI);
+    left_encoder_.SetPositionConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * M_PI / constants::drivetrain::kGearRatio);
+    right_encoder_.SetPositionConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * M_PI / constants::drivetrain::kGearRatio);
 
-    left_encoder_.SetVelocityConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * constants::drivetrain::kGearRatio * M_PI * 60);
-    right_encoder_.SetVelocityConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * constants::drivetrain::kGearRatio * M_PI * 60);
+    left_encoder_.SetVelocityConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * M_PI / constants::drivetrain::kGearRatio / 60);
+    right_encoder_.SetVelocityConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * M_PI / constants::drivetrain::kGearRatio / 60);
 
    /*
     frc4065::ReferencedTunable::Register("kP", kP_Velocity);
@@ -138,6 +143,12 @@ void Drivetrain::ResetOdometry(frc::Pose2d pose)
     ResetEncoders();
     odometry_.ResetPosition(pose, frc::Rotation2d(GetHeading()));
 }
+
+void Drivetrain::ResetGyro()
+{
+    gyro_.Reset();
+}
+
 void Drivetrain::NeutralMode(bool isEnabled)
 {
     left_front_master_.SetIdleMode(isEnabled ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast);

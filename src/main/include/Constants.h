@@ -40,14 +40,15 @@ namespace constants
         const int kLeftFrontMotorPort = 3;
         const int kLeftMiddleMotorPort = 4;
 
+        constexpr units::volt_t kNominalVoltage { 12.0 };
         const bool kGyroReversed = false; // Inaccurate!
         const units::current::ampere_t kMaxCurrentDraw { 30.0 };
-        const units::inch_t kWheelDiameter { 6.0 };
-        const units::inch_t kTrackWidth { 28.0 }; // Maybe 
+        const units::meter_t kWheelDiameter { 0.1524 };
+        const units::inch_t kTrackWidth { 0.6969 }; // Maybe 
         const units::volt_t kS { 0.0 }; // Inaccurate!
         const units::unit_t<kv> kV { 0.0 }; // Inaccurate!
         const units::unit_t<ka> kA { 0.0 }; // Inaccurate!
-        const double kPDriveVel = 0.0;
+        const double kPDriveVel = 0.001;
         extern const frc::DifferentialDriveKinematics kDriveKinematics;
         extern const frc::TrajectoryConfig kAutoConfig;
 
@@ -66,8 +67,8 @@ namespace constants
 
         namespace auto_mode
         {
-            constexpr units::feet_per_second_t kMaxVelocity { 10.0 };
-            constexpr units::feet_per_second_squared_t kMaxAcceleration { 6.0 };
+            constexpr units::meters_per_second_t kMaxVelocity { 1.0 };
+            constexpr units::meters_per_second_squared_t kMaxAcceleration { 2.0 };
             constexpr double kRamseteB = 2.0;
             constexpr double kRamseteZeta = 0.7;
         }
@@ -84,8 +85,8 @@ namespace constants
         constexpr double kKickerSpeed = 0.8;
         constexpr double kFeederSpeed = 0.5;
 
-        constexpr units::current::ampere_t kMaxCurrentDraw { 35.0 };
-        constexpr units::current::ampere_t kMaxPeakCurrentDraw { 40.0 };
+        constexpr units::current::ampere_t kMaxCurrentDraw { 45.0 };
+        constexpr units::current::ampere_t kMaxPeakCurrentDraw { 45.0 };
         constexpr units::time::second_t kCurrentLimitingTriggerTime { 0.01 }; // 10ms
         constexpr double kP = 0.08;
         constexpr double kD = 0.0;
@@ -112,6 +113,15 @@ namespace constants
         constexpr int kMasterPort = 8;
         constexpr int kSlavePort = 6;
         constexpr units::inch_t kHeightTolerance { 0.5 };
+        constexpr units::inch_t kTurnToInches { 0.0 };
+        constexpr units::current::ampere_t kMaxCurrentDraw { 40.0 };
+        constexpr units::feet_per_second_t kMaxVelocity { 0.6 };
+        constexpr units::feet_per_second_squared_t kMaxAcceleration { 1.2 };
+        constexpr double kP = 0.001;
+        constexpr double kI = 0.0;
+        constexpr double kD = 0.0;
+        constexpr double kF = 0.0;
+        constexpr units::foot_t kSoftLimitHeight { 0.0 };
     } // namespace lift
      
     namespace serializer

@@ -35,9 +35,11 @@ private:
   Lift();
 
   frc::DoubleSolenoid solenoid_ { constants::lift::kSolenoidPorts[0], constants::lift::kSolenoidPorts[1] };
-  bool is_extended = true;
+  bool is_extended_ = true;
   rev::CANSparkMax lift_master_ { constants::lift::kMasterPort, rev::CANSparkMax::MotorType::kBrushless };
   rev::CANSparkMax lift_slave_ { constants::lift::kSlavePort, rev::CANSparkMax::MotorType::kBrushless };
   rev::CANEncoder master_encoder_ { lift_master_.GetEncoder() };
   rev::CANEncoder slave_encoder_ { lift_slave_.GetEncoder() };
+  rev::CANPIDController master_pid_ { lift_master_.GetPIDController() };
+  rev::CANPIDController slave_pid_ { lift_slave_.GetPIDController() };
 };

@@ -29,13 +29,13 @@ void Intake::Idle()
 void Intake::Retract()
 {
     is_deployed_ = false;
-    solenoid_.Set(frc::DoubleSolenoid::kForward);
+    solenoid_.Set(frc::DoubleSolenoid::kReverse);
 }
 
 void Intake::Extend()
 {
     is_deployed_ = true;
-    solenoid_.Set(frc::DoubleSolenoid::kReverse);
+    solenoid_.Set(frc::DoubleSolenoid::kForward);
 }
 
 bool Intake::IsActive() const

@@ -9,30 +9,27 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-
-#include <units/units.h>
-#include <frc2/Timer.h>
-
-#include "subsystems/Shooter.h"
-#include "subsystems/Serializer.h"
+#include <subsystems/Drivetrain.h>
 
 /**
- * Shoots until timer runs out; timer only begins once shooter is spun up.
+ * An example command.
+ *
+ * <p>Note that this extends CommandHelper, rather extending CommandBase
+ * directly; this is crucially important, or else the decorator functions in
+ * Command will *not* work!
  */
-class TimedShoot
-    : public frc2::CommandHelper<frc2::CommandBase, TimedShoot> {
+class AutoDriveForward
+    : public frc2::CommandHelper<frc2::CommandBase, AutoDriveForward> {
  public:
-  TimedShoot(units::revolutions_per_minute_t rpm, units::second_t time);
+  AutoDriveForward(Drivetrain&, double distance);
 
   void Initialize() override;
+
   void Execute() override;
+
   void End(bool interrupted) override;
+
   bool IsFinished() override;
 
-  units::revolutions_per_minute_t rpm_;
-  units::second_t time_;
-  units::second_t start_time_;
-  bool hysteresis_flag_;
-  frc2::Timer timer_;
-  bool timer_started_;
+  double distance;
 };

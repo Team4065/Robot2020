@@ -27,6 +27,9 @@
 #include "commands/lift/IdleLift.h"
 #include "commands/lift/MoveDown.h"
 #include "commands/lift/MoveUp.h"
+#include "commands/lift/ToggleLiftPiston.h"
+
+#include "commands/drivetrain/VisionAlign.h"
 
 #include "frc2/command/button/JoystickButton.h"
 

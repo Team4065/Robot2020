@@ -21,6 +21,7 @@
 
 #include "rev/CANSparkMax.h"
 
+#include "util/Limelight.h"
 
 
 
@@ -44,11 +45,14 @@ public:
   
   void ResetEncoders();
   void ResetOdometry(frc::Pose2d pose);
+  void ResetGyro();
   void NeutralMode(bool isEnabled);
 
   static Drivetrain& GetInstance();
   DISALLOW_COPY_AND_ASSIGN(Drivetrain);
   void Periodic();
+
+  frc4065::Limelight limelight {"limelight"};
 
 private:
 
