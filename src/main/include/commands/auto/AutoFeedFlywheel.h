@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <subsystems/Shooter.h>
 
 /**
  * An example command.
@@ -20,7 +21,7 @@
 class AutoFeedFlywheel
     : public frc2::CommandHelper<frc2::CommandBase, AutoFeedFlywheel> {
  public:
-  AutoFeedFlywheel();
+  AutoFeedFlywheel(Shooter&);
 
   void Initialize() override;
 

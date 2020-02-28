@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <subsystems/Drivetrain.h>
 
 /**
  * An example command.
@@ -20,7 +21,7 @@
 class AutoLimelightOn
     : public frc2::CommandHelper<frc2::CommandBase, AutoLimelightOn> {
  public:
-  AutoLimelightOn();
+  AutoLimelightOn(Drivetrain&);
 
   void Initialize() override;
 
@@ -29,4 +30,9 @@ class AutoLimelightOn
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+  double kp = 0;
+  double kd = 0;
+  double pastError = 0;
+  double error = 1000;
 };

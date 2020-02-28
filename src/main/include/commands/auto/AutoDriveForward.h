@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <subsystems/Drivetrain.h>
 
 /**
  * An example command.
@@ -20,7 +21,7 @@
 class AutoDriveForward
     : public frc2::CommandHelper<frc2::CommandBase, AutoDriveForward> {
  public:
-  AutoDriveForward();
+  AutoDriveForward(Drivetrain&, double distance);
 
   void Initialize() override;
 
@@ -29,4 +30,6 @@ class AutoDriveForward
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+  double distance;
 };

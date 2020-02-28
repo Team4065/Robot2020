@@ -21,6 +21,7 @@
 
 #include "rev/CANSparkMax.h"
 
+#include "util/Limelight.h"
 
 
 
@@ -49,6 +50,8 @@ public:
   static Drivetrain& GetInstance();
   DISALLOW_COPY_AND_ASSIGN(Drivetrain);
   void Periodic();
+
+  frc4065::Limelight limelight {"limelight"};
 
 private:
 

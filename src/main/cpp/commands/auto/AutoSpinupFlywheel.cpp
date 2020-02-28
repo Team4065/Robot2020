@@ -7,18 +7,21 @@
 
 #include "commands/auto/AutoSpinupFlywheel.h"
 
-AutoSpinupFlywheel::AutoSpinupFlywheel() {
+AutoSpinupFlywheel::AutoSpinupFlywheel(Shooter& _shooter) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({&_shooter});
 }
 
 // Called when the command is initially scheduled.
 void AutoSpinupFlywheel::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void AutoSpinupFlywheel::Execute() {}
+void AutoSpinupFlywheel::Execute() {
+  Shooter::GetInstance().SetShooterPercent(0.1);
+}
 
 // Called once the command ends or is interrupted.
 void AutoSpinupFlywheel::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool AutoSpinupFlywheel::IsFinished() { return false; }
+bool AutoSpinupFlywheel::IsFinished() { return Shooter::GetInstance().AtDesiredVelocity(); }

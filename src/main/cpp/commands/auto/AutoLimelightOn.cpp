@@ -7,18 +7,34 @@
 
 #include "commands/auto/AutoLimelightOn.h"
 
-AutoLimelightOn::AutoLimelightOn() {
+AutoLimelightOn::AutoLimelightOn(Drivetrain& _drivetrain) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({&_drivetrain});
 }
 
 // Called when the command is initially scheduled.
-void AutoLimelightOn::Initialize() {}
+void AutoLimelightOn::Initialize() {
+  pastError = Drivetrain::GetInstance().limelight.GetHorizontalOffset();
+}
 
 // Called repeatedly when this Command is scheduled to run
-void AutoLimelightOn::Execute() {}
+void AutoLimelightOn::Execute() {
+  double xOff = Drivetrain::GetInstance().limelight.GetHorizontalOffset();
+
+  error = xOff;
+  double deltaError = pastError - error;
+  pastError = error;
+
+  double leftOutput = xOff * kp + deltaError * kd;
+
+  Drivetrain::GetInstance().TankDrivePercent(leftOutput, -leftOutput);
+
+}
 
 // Called once the command ends or is interrupted.
-void AutoLimelightOn::End(bool interrupted) {}
+void AutoLimelightOn::End(bool interrupted) {
+  Drivetrain::GetInstance().TankDrivePercent(0, 0);
+}
 
 // Returns true when the command should end.
-bool AutoLimelightOn::IsFinished() { return false; }
+bool AutoLimelightOn::IsFinished() { return error < 1; }

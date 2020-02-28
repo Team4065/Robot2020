@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <subsystems/Shooter.h>
 
 /**
  * An example command.
@@ -20,7 +21,7 @@
 class AutoSpinupFlywheel
     : public frc2::CommandHelper<frc2::CommandBase, AutoSpinupFlywheel> {
  public:
-  AutoSpinupFlywheel();
+  AutoSpinupFlywheel(Shooter&);
 
   void Initialize() override;
 

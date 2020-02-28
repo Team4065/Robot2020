@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <subsystems/Intake.h>
 
 /**
  * An example command.
@@ -20,7 +21,7 @@
 class AutoRunIntake
     : public frc2::CommandHelper<frc2::CommandBase, AutoRunIntake> {
  public:
-  AutoRunIntake();
+  AutoRunIntake(Intake&);
 
   void Initialize() override;
 

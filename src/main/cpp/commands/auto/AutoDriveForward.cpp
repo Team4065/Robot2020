@@ -7,18 +7,26 @@
 
 #include "commands/auto/AutoDriveForward.h"
 
-AutoDriveForward::AutoDriveForward() {
+AutoDriveForward::AutoDriveForward(Drivetrain& _drivetrain, double distance) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({&_drivetrain});
+  distance = _distance;
 }
 
 // Called when the command is initially scheduled.
-void AutoDriveForward::Initialize() {}
+void AutoDriveForward::Initialize() {
+  Drivetrain::GetInstance().ResetEncoders();
+}
 
 // Called repeatedly when this Command is scheduled to run
-void AutoDriveForward::Execute() {}
+void AutoDriveForward::Execute() {
+  Drivetrain::GetInstance().TankDrivePercent(0.1, 0.1);
+}
 
 // Called once the command ends or is interrupted.
-void AutoDriveForward::End(bool interrupted) {}
+void AutoDriveForward::End(bool interrupted) {
+  Drivetrain::GetInstance().TankDrivePercent(0, 0);
+}
 
 // Returns true when the command should end.
-bool AutoDriveForward::IsFinished() { return false; }
+bool AutoDriveForward::IsFinished() { return abs(Drivetrain::GetInstance().GetLeftEncoderDistance().m_value - distance) < 0.1 || abs(Drivetrain::GetInstance().GetRightEncoderDistance().m_value - distance) < 0.1; }

@@ -9,6 +9,7 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include <subsystems/Lift.h>
 
 /**
  * An example command.
@@ -20,7 +21,7 @@
 class AutoDropLift
     : public frc2::CommandHelper<frc2::CommandBase, AutoDropLift> {
  public:
-  AutoDropLift();
+  AutoDropLift(Lift&);
 
   void Initialize() override;
 

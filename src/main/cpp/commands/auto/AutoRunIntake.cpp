@@ -7,15 +7,18 @@
 
 #include "commands/auto/AutoRunIntake.h"
 
-AutoRunIntake::AutoRunIntake() {
+AutoRunIntake::AutoRunIntake(Intake& _intake) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({&_intake});
 }
 
 // Called when the command is initially scheduled.
 void AutoRunIntake::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void AutoRunIntake::Execute() {}
+void AutoRunIntake::Execute() {
+  Intake::GetInstance().Suck();
+}
 
 // Called once the command ends or is interrupted.
 void AutoRunIntake::End(bool interrupted) {}
