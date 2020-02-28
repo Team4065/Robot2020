@@ -15,7 +15,8 @@ RobotContainer::RobotContainer() {
   //Commands
   // m_deployCPMCommand = DeployCPM(m_controlPanelManipulator);
 
-  m_drivetrain.SetDefaultCommand(TankDrive(m_drivetrain));
+  //m_drivetrain.SetDefaultCommand(TankDrive(m_drivetrain));
+  Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller_));
 
   // Configure the button bindings
   ConfigureButtonBindings();
@@ -55,6 +56,21 @@ void RobotContainer::ConfigureButtonBindings() {
   // m_toggleLiftDeploymentButton.WhenPressed([this] {(m_lift.IsDeployed()) ? m_stoyLiftCommand.Schedule() : m_deployLiftCommand.Schedule();});
   // m_toggleLiftDeploymentButton.WhenPressed([this] {(m_lift.IsExtended()) ? m_retractLiftCommand.Schedule() : m_extendLiftCommand.Schedule();});
   m_toggleLiftDeploymentButton.WhenPressed([this] {(m_lift.IsExtended()) ? m_retractLiftCommand.Schedule() : m_extendLiftCommand.Schedule(); m_balanceOnLift.Schedule();});
+
+  y_btn_.WhenPressed(new MoveUp()).WhenReleased(new IdleLift());
+  a_btn_.WhenPressed(new MoveDown()).WhenReleased(new IdleLift());
+  //x_btn_.WhenPressed(new TimedShoot(60_rpm, 3_s)).WhenReleased(new PreSpinup(0_rpm));
+  x_btn_.WhenPressed(new VBeltForward()).WhenReleased(new VBeltOff());
+  b_btn_.WhenPressed(new TimedShoot(4000_rpm, 5_s));
+  rb_btn_.WhenPressed(new ToggleIntake());
+  // lb_btn_.WhenPressed();
+  // sl_btn_.WhenPressed();
+  // sr_btn_.WhenPressed();
+  // start_btn_.WhenPressed();
+  // back_btn_.WhenPressed();
+  // lt_btn_.WhenPressed();
+  // rt_btn_.WhenPressed();
+
 }
 
 // frc2::Command* RobotContainer::GetAutonomousCommand() {

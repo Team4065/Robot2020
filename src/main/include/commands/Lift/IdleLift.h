@@ -7,28 +7,15 @@
 
 #pragma once
 
-#include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/XboxController.h>
-#include <Constants.h>
+#include <frc2/command/InstantCommand.h>
+#include "subsystems/Lift.h"
 
-#include "subsystems/Drivetrain.h"
-
-/**
- * NOTE: This class is NOT finished.
- */
-class TankDrive
-    : public frc2::CommandHelper<frc2::CommandBase, TankDrive> {
+class IdleLift
+    : public frc2::CommandHelper<frc2::InstantCommand,
+                                 IdleLift> {
  public:
-  TankDrive(Drivetrain&);
+  IdleLift();
 
   void Initialize() override;
-
-  void Execute() override;
-
-  void End(bool interrupted) override;
-
-  bool IsFinished() override;
-
-  frc::XboxController controller {constants::oi::kDriverXboxControllerPort0};
 };

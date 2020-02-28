@@ -20,7 +20,7 @@ public:
   std::pair<frc::Color, double> GetColorAndConfidence() const;
 
   static ControlPanelManipulator& GetInstance();
-  //DISALLOW_COPY_AND_ASSIGN(ControlPanelManipulator);
+  DISALLOW_COPY_AND_ASSIGN(ControlPanelManipulator);
 
   void Periodic();
 

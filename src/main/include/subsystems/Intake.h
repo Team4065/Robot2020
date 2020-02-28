@@ -1,6 +1,12 @@
 #pragma once
 
 #include <frc2/command/SubsystemBase.h>
+
+#include <frc/DoubleSolenoid.h>
+#include <ctre/phoenix/motorcontrol/can/TalonSRX.h>
+#include <ctre/Phoenix.h>
+
+#include "Constants.h"
 #include "util/Macros.h"
 
 #include <ctre/Phoenix.h>
@@ -18,25 +24,23 @@ public:
   void Periodic();
 
   void Suck();
-  void DontSuck();
   void Idle();
   void Retract();
   void Extend();
 
-  bool IsActive(){return m_isActive;}
-  bool IsDeployed(){return m_isDeployed;}
+  bool IsActive(){return is_active_;}
+  bool IsDeployed(){return is_deployed_;}
  
 private:
-  bool m_isDeployed = false;
-  bool m_isActive = false;
+  bool is_active_ = false;
+  bool is_deployed_ = false;
 
   Intake() = default;
 
-  WPI_TalonSRX m_motor { kIntakeMotorID };
-  double m_motorSpeed = 0;
+  WPI_TalonSRX motor_ { kIntakeMotorID };
+  double motorSpeed_ = 0;
 
-  frc::DoubleSolenoid m_solenoid { constants::intake::kSolenoidPorts[0], constants::intake::kSolenoidPorts[1] };
+  frc::DoubleSolenoid solenoid_ { constants::intake::kSolenoidPorts[0], constants::intake::kSolenoidPorts[1] };
   //frc::DoubleSolenoid rightSolenoid { kRightSolenoidPorts[0], kRightSolenoidPorts[1] };
-
 
 };

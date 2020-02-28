@@ -18,6 +18,8 @@
 #include <iostream>
 #include "util/ReferencedTunable.h"
 
+#include "commands/drivetrain/ArcadeDrive.h"
+
 #include "rev/CANSparkMax.h"
 
 
@@ -52,17 +54,20 @@ public:
 
   void ArcadeDrive(double fwd, double rot);
   void TankDriveVolts(units::volt_t left, units::volt_t right);
+  void TankDrivePercent(double left, double right);
+
+  units::volt_t GetLeftVolts() const;
+  units::volt_t GetRightVolts() const;
 
   frc::DifferentialDriveWheelSpeeds GetWheelSpeeds();
   frc::Pose2d GetPose() const;
   units::degree_t GetHeading();
-  units::foot_t GetLeftEncoderDistance() const;
-  units::foot_t GetRightEncoderDistance() const;
-
+  units::meter_t GetLeftEncoderDistance();
+  units::meter_t GetRightEncoderDistance();
+  
   void ResetEncoders();
   void ResetOdometry(frc::Pose2d pose);
-
-  void NeutralMode(bool isEnable);
+  void NeutralMode(bool isEnabled);
 
   static Drivetrain& GetInstance();
   DISALLOW_COPY_AND_ASSIGN(Drivetrain);
@@ -94,7 +99,7 @@ private:
 
   AHRS gyro_ { frc::SPI::Port::kMXP };
 
-  frc::DifferentialDriveOdometry m_odometer;
+  frc::DifferentialDriveOdometry odometry_;
 
   std::shared_ptr<NetworkTable> limelight = nt::NetworkTableInstance::GetDefault().GetTable("limelight");
 

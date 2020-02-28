@@ -9,26 +9,30 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/XboxController.h>
-#include <Constants.h>
 
-#include "subsystems/Drivetrain.h"
+#include <units/units.h>
+#include <frc/Timer.h>
+
+#include "subsystems/Shooter.h"
+#include "subsystems/Serializer.h"
 
 /**
- * NOTE: This class is NOT finished.
+ * Shoots until timer runs out; timer only begins once shooter is spun up.
  */
-class TankDrive
-    : public frc2::CommandHelper<frc2::CommandBase, TankDrive> {
+class TimedShoot
+    : public frc2::CommandHelper<frc2::CommandBase, TimedShoot> {
  public:
-  TankDrive(Drivetrain&);
+  TimedShoot(units::revolutions_per_minute_t rpm, units::second_t time);
 
   void Initialize() override;
-
   void Execute() override;
-
   void End(bool interrupted) override;
-
   bool IsFinished() override;
 
-  frc::XboxController controller {constants::oi::kDriverXboxControllerPort0};
+  units::revolutions_per_minute_t rpm_;
+  units::second_t time_;
+  units::second_t start_time_;
+  bool hysteresis_flag_ = false;
+  frc::Timer timer_;
+  bool timer_started_ = false;
 };

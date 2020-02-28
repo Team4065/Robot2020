@@ -7,6 +7,21 @@
 
 #include "subsystems/Lift.h"
 
+Lift::Lift()
+{
+    lift_master_.RestoreFactoryDefaults();
+    lift_master_.ClearFaults();
+    lift_slave_.RestoreFactoryDefaults();
+    lift_slave_.ClearFaults();
+    // master_encoder_.SetPositionConversionFactor();
+    // slave_encoder_.SetPositionConversionFactor();
+    lift_master_.SetInverted(false);
+    lift_slave_.SetInverted(false);
+    solenoid_.Set(frc::DoubleSolenoid::Value::kReverse);
+    // master_encoder_.SetInverted(false);
+    // slave_encoder_.SetInverted(false);
+}
+
 Lift& Lift::GetInstance(){
     static Lift instance;  // Guaranteed to be destroyed.
                                     // Instantiated on first use.
@@ -14,39 +29,31 @@ Lift& Lift::GetInstance(){
 }
 
 // This method will be called once per scheduler run
-void Lift::Periodic() {
-    winchMotor.Set(winchMotorSpeed);
-    adjustorMotor.Set(adjustorMotorSpeed);
+void Lift::Periodic()
+{
+    // Add safety check that motors are the same, lead screws can bind and break if they are not within a certain
+    // tolerance.
 }
 
 void Lift::Extend(){
-    m_solenoid.Set(frc::DoubleSolenoid::kForward);
+    solenoid_.Set(frc::DoubleSolenoid::kForward);
 }
 
 void Lift::Retract(){
-    m_solenoid.Set(frc::DoubleSolenoid::kReverse);
+    solenoid_.Set(frc::DoubleSolenoid::kReverse);
 }
 
-void Lift::ShortenWinch(){
-    winchMotorSpeed = -1;
+void Lift::SetHeight(units::foot_t height)
+{
+    
 }
 
-void Lift::LengthenWinch(){
-    winchMotorSpeed = 1;
+units::foot_t Lift::GetHeight()
+{
+    return units::foot_t(master_encoder_.GetPosition());
 }
 
-void Lift::StopWinch(){
-    winchMotorSpeed = 0;
-}
-
-void Lift::MoveLeft(){
-    adjustorMotorSpeed = 1;
-}
-
-void Lift::MoveRight(){
-    adjustorMotorSpeed = -1;
-}
-
-void Lift::DontMove(){
-    adjustorMotorSpeed = 0;
+void Lift::MovePercent(double percent){
+    lift_master_.Set(percent);//idk y it failed, maybe check movelifttoheight
+    lift_slave_.Set(percent);  
 }

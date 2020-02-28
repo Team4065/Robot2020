@@ -20,7 +20,7 @@ void DontSuck::Execute() {
 #ifdef DISPLAY_COMMAND_MESSAGES
   std::cout << "DontSuck Command Executing" << std::endl;
 #endif 
-  Intake::GetInstance().DontSuck();
+  // Intake::GetInstance().DontSuck();
 }
 
 // Called once the command ends or is interrupted.

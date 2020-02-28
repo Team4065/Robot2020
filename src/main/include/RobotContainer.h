@@ -10,13 +10,14 @@
 #include <frc2/command/Command.h>
 #include <frc/XboxController.h>
 #include <frc2/command/button/JoystickButton.h>
+#include <frc/smartdashboard/SendableChooser.h>
+#include <frc/buttons/Trigger.h>
 
-//Subsystems
-#include "subsystems/Drivetrain.h"
 #include "subsystems/Shooter.h"
 #include "subsystems/Serializer.h"
 #include "subsystems/Intake.h"
 #include "subsystems/Lift.h"
+#include "subsystems/Drivetrain.h"
 #include "subsystems/ControlPanelManipulator.h"
 
 //Commands
@@ -29,6 +30,10 @@
 #include "commands/Intake/Deploy_And_Suck.h"
 #include "commands/Intake/Retract_and_DontSuck.h"
 #include "commands/CollectBalls.h"
+#include "commands/shooter/PreSpinup.h"
+#include "commands/shooter/TimedShoot.h"
+
+#include "commands/Intake/ToggleIntake.h"
 
 #include "commands/Serializer/VBeltOff.h"
 
@@ -36,6 +41,10 @@
 #include "commands/Shooter/Shoot.h"
 #include "commands/Shooter/SpinUp_and_Shoot.h"
 #include "commands/Shooter/IdleShooter.h"
+
+#include "commands/lift/IdleLift.h"
+#include "commands/lift/MoveDown.h"
+#include "commands/lift/MoveUp.h"
 
 #include "commands/ControlPanel/DeployCPM.h"
 #include "commands/ControlPanel/StowCPM.h"
@@ -48,6 +57,23 @@
 #include "commands/Lift/ShortenWinch.h"
 #include "commands/Lift/BalanceOnLift.h"
 
+#define GEN_BUTTON(name, controller, btn) frc2::JoystickButton name { &controller, btn }
+#define GEN_BUTTON_MAIN_CONTROLLER(name, btn) GEN_BUTTON(name, controller, btn)
+
+class AxisButton : public frc::Trigger
+{
+public:
+  AxisButton(frc::XboxController* controller, int id, double threshold)
+  : controller_(controller), id_(id), threshold_(threshold) {}
+  bool Get() override
+  {
+    return controller_->GetRawAxis(id_) >= threshold_;
+  }
+private:
+  frc::XboxController* controller_;
+  int id_;
+  double threshold_;
+};
 
 using namespace frc;
 using namespace constants;
@@ -98,6 +124,7 @@ class RobotContainer {
   SpinUp_and_Shoot m_spinUpAndShootCommands {m_spinUp, m_shoot};    //Sequential Command Group
   RetractIntake m_retractIntake {m_intake};
 
+  //Control Panel Manipulator
   DeployCPM m_deployCPMCommand {m_controlPanelManipulator};
   StowCPM m_stowCPMCommand {m_controlPanelManipulator};
   AutomaticallySpinControlPanel m_automaticallySpinControlPanelCommand {m_controlPanelManipulator};
@@ -139,5 +166,22 @@ class RobotContainer {
   frc2::JoystickButton m_moveLiftUpDownButton { &m_controller_1, (int)XboxController::Button::kY };     //POV Up extends Lift, POV down retracts
   frc2::JoystickButton m_moveLiftSide2SideButton { &m_controller_1, (int)XboxController::Button::kY };  //POV right & left to move robot balancer wheel
 
+
+  GEN_BUTTON(y_btn_, m_controller_0, 4);
+  GEN_BUTTON(a_btn_, m_controller_0, 1);
+  GEN_BUTTON(x_btn_, m_controller_0, 3);
+  GEN_BUTTON(b_btn_, m_controller_0, 2);
+  GEN_BUTTON(rb_btn_, m_controller_0, 6);
+  GEN_BUTTON(lb_btn_, m_controller_0, 5);
+  GEN_BUTTON(sl_btn_, m_controller_0, 9);
+  GEN_BUTTON(sr_btn_, m_controller_0, 10);
+  GEN_BUTTON(start_btn_, m_controller_0, 8);
+  GEN_BUTTON(back_btn_, m_controller_0, 7);
+  AxisButton lt_btn_ {&m_controller_0, 2, 0.5};
+  AxisButton rt_btn_ {&m_controller_0, 3, 0.5};
+  
+  private:
+  frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions
+  
   void ConfigureButtonBindings();
 };

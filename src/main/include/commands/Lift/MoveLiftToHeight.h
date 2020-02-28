@@ -9,18 +9,18 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc/XboxController.h>
-#include <Constants.h>
 
-#include "subsystems/Drivetrain.h"
+#include "subsystems/Lift.h"
+
+#include <units/units.h>
 
 /**
- * NOTE: This class is NOT finished.
+ * Set lift to height and ends when lift reaches height
  */
-class TankDrive
-    : public frc2::CommandHelper<frc2::CommandBase, TankDrive> {
- public:
-  TankDrive(Drivetrain&);
+class MoveLiftToHeight
+    : public frc2::CommandHelper<frc2::CommandBase, MoveLiftToHeight> {
+public:
+  MoveLiftToHeight(units::foot_t height);
 
   void Initialize() override;
 
@@ -29,6 +29,6 @@ class TankDrive
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
-  frc::XboxController controller {constants::oi::kDriverXboxControllerPort0};
+private:
+  units::foot_t height_;
 };

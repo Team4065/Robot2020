@@ -15,6 +15,7 @@
 
 #include "util/Macros.h"
 #include <Constants.h>
+#include <units/units.h>
 
 using namespace constants::lift;
 
@@ -34,6 +35,10 @@ class Lift : public frc2::SubsystemBase {
   void MoveLeft();
   void MoveRight();
   void DontMove();
+  
+  void MovePercent(double percent);
+  void SetHeight(units::foot_t height);
+  units::foot_t GetHeight();
 
   bool IsDeployed(){return m_isDeployed;}
   bool IsExtended(){return m_isExtended;}
@@ -47,12 +52,11 @@ class Lift : public frc2::SubsystemBase {
   // Components (e.g. motor controllers and sensors) should generally be
   // declared private and exposed only through public methods.
 
-  frc::DoubleSolenoid m_solenoid { constants::lift::kSolenoidPorts[0], constants::lift::kSolenoidPorts[1] };
+  frc::DoubleSolenoid solenoid_ { constants::lift::kSolenoidPorts[0], constants::lift::kSolenoidPorts[1] };
   //frc::DoubleSolenoid rightPiston { constants::lift::kRightSolenoidPorts[0], constants::lift::kRightSolenoidPorts[1] };
   
-  rev::CANSparkMax winchMotor { kMotorPorts[0], rev::CANSparkMax::MotorType::kBrushless };
-  double winchMotorSpeed = 0;
-
-  rev::CANSparkMax adjustorMotor { kMotorPorts[1] , rev::CANSparkMax::MotorType::kBrushless };
-  double adjustorMotorSpeed = 0;
+  rev::CANSparkMax lift_master_ { constants::lift::kMasterPort, rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANSparkMax lift_slave_ { constants::lift::kSlavePort, rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANEncoder master_encoder_ { lift_master_.GetEncoder() };
+  rev::CANEncoder slave_encoder_ { lift_slave_.GetEncoder() };
 };

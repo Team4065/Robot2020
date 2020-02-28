@@ -5,33 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "subsystems/Serializer.h"
+#include "subsystems/Vision.h"
 
-Serializer::Serializer() {
-    motor_.SetInverted(true);
-}
-
-Serializer& Serializer::GetInstance()
-{
-    static Serializer instance;
-    return instance;
-}
+Vision::Vision() : limelight_("limelight") {}
 
 // This method will be called once per scheduler run
-void Serializer::Periodic() {
-    motor_.Set(conveyorSpeed_);       //Run in peeriodic loop so that the watchdog timer doesn't reset
-}
+void Vision::Periodic() {}
 
-void Serializer::Forward(){
-    motor_.Set(constants::serializer::kIndexingSpeed);
-}
-
-void Serializer::Idle()
+Vision& Vision::GetInstance()
 {
-    motor_.Set(0.0);
+    static Vision instance_;
+    return instance_;
 }
 
-void Serializer::Reverse()
+frc4065::Limelight& Vision::GetLimelight()
 {
-    motor_.Set(constants::serializer::kAntiJamSpeed);
+    return limelight_;
 }
