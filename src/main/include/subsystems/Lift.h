@@ -39,4 +39,6 @@ private:
   rev::CANSparkMax lift_slave_ { constants::lift::kSlavePort, rev::CANSparkMax::MotorType::kBrushless };
   rev::CANEncoder master_encoder_ { lift_master_.GetEncoder() };
   rev::CANEncoder slave_encoder_ { lift_slave_.GetEncoder() };
+  rev::CANPIDController master_pid_ { lift_master_.GetPIDController() };
+  rev::CANPIDController slave_pid_ { lift_slave_.GetPIDController() };
 };

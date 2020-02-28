@@ -11,7 +11,7 @@
 #include <frc2/command/CommandHelper.h>
 
 #include <units/units.h>
-#include <frc/Timer.h>
+#include <frc2/Timer.h>
 
 #include "subsystems/Shooter.h"
 #include "subsystems/Serializer.h"
@@ -33,6 +33,6 @@ class TimedShoot
   units::second_t time_;
   units::second_t start_time_;
   bool hysteresis_flag_ = false;
-  frc::Timer timer_;
+  frc2::Timer timer_;
   bool timer_started_ = false;
 };

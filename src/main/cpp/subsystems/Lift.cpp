@@ -13,13 +13,22 @@ Lift::Lift()
     lift_master_.ClearFaults();
     lift_slave_.RestoreFactoryDefaults();
     lift_slave_.ClearFaults();
-    // master_encoder_.SetPositionConversionFactor();
-    // slave_encoder_.SetPositionConversionFactor();
+
+    master_encoder_.SetPositionConversionFactor(constants::lift::kTurnToInches.to<double>() / 12);
+    slave_encoder_.SetPositionConversionFactor(constants::lift::kTurnToInches.to<double>() / 12);
+    lift_master_.SetSmartCurrentLimit(constants::lift::kMaxCurrentDraw.to<double>());
+    lift_slave_.SetSmartCurrentLimit(constants::lift::kMaxCurrentDraw.to<double>());
     lift_master_.SetInverted(false);
     lift_slave_.SetInverted(false);
-    solenoid_.Set(frc::DoubleSolenoid::Value::kReverse);
+
     // master_encoder_.SetInverted(false);
     // slave_encoder_.SetInverted(false);
+
+    master_pid_.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kSCurve);
+    slave_pid_.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kSCurve);
+    //master_pid_.SetSmartMotionMaxAccel(constants::lift::kMaxAcceleration * 60)
+
+    solenoid_.Set(frc::DoubleSolenoid::Value::kReverse);
 }
 
 Lift& Lift::GetInstance(){
@@ -54,6 +63,6 @@ units::foot_t Lift::GetHeight()
 }
 
 void Lift::MovePercent(double percent){
-    lift_master_.Set(percent);//idk y it failed, maybe check movelifttoheight
+    lift_master_.Set(percent);
     lift_slave_.Set(percent);  
 }
