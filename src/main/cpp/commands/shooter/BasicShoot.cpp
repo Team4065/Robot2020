@@ -5,28 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/auto/AutoDriveForward.h"
+#include "commands/shooter/BasicShoot.h"
 
-AutoDriveForward::AutoDriveForward(Drivetrain& _drivetrain, double _distance) {
+BasicShoot::BasicShoot() {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({&_drivetrain});
-  distance = _distance;
 }
 
 // Called when the command is initially scheduled.
-void AutoDriveForward::Initialize() {
-  Drivetrain::GetInstance().ResetEncoders();
-}
+void BasicShoot::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void AutoDriveForward::Execute() {
-  Drivetrain::GetInstance().TankDrivePercent(0.1, 0.1);
-}
+void BasicShoot::Execute() {}
 
 // Called once the command ends or is interrupted.
-void AutoDriveForward::End(bool interrupted) {
-  Drivetrain::GetInstance().TankDrivePercent(0, 0);
-}
+void BasicShoot::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool AutoDriveForward::IsFinished() { return abs((double)Drivetrain::GetInstance().GetLeftEncoderDistance() - distance) < 0.1 || abs((double)Drivetrain::GetInstance().GetRightEncoderDistance() - distance) < 0.1; }
+bool BasicShoot::IsFinished() { return false; }

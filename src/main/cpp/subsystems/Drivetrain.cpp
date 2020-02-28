@@ -143,6 +143,12 @@ void Drivetrain::ResetOdometry(frc::Pose2d pose)
     ResetEncoders();
     odometry_.ResetPosition(pose, frc::Rotation2d(GetHeading()));
 }
+
+void Drivetrain::ResetGyro()
+{
+    gyro_.Reset();
+}
+
 void Drivetrain::NeutralMode(bool isEnabled)
 {
     left_front_master_.SetIdleMode(isEnabled ? rev::CANSparkMax::IdleMode::kBrake : rev::CANSparkMax::IdleMode::kCoast);

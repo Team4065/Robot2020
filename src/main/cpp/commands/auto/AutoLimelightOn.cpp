@@ -37,4 +37,4 @@ void AutoLimelightOn::End(bool interrupted) {
 }
 
 // Returns true when the command should end.
-bool AutoLimelightOn::IsFinished() { return error < 1; }
+bool AutoLimelightOn::IsFinished() { return error <= 1; }

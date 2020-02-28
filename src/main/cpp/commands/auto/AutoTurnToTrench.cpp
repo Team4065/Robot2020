@@ -7,18 +7,23 @@
 
 #include "commands/auto/AutoTurnToTrench.h"
 
-AutoTurnToTrench::AutoTurnToTrench() {
+AutoTurnToTrench::AutoTurnToTrench(Drivetrain& _drivetrain) {
   // Use addRequirements() here to declare subsystem dependencies.
+  AddRequirements({&_drivetrain});
 }
 
 // Called when the command is initially scheduled.
-void AutoTurnToTrench::Initialize() {}
+void AutoTurnToTrench::Initialize() {
+  Drivetrain::GetInstance().ResetGyro();
+}
 
 // Called repeatedly when this Command is scheduled to run
-void AutoTurnToTrench::Execute() {}
+void AutoTurnToTrench::Execute() {
+  Drivetrain::GetInstance().TankDrivePercent(-0.1, 0.1);
+}
 
 // Called once the command ends or is interrupted.
 void AutoTurnToTrench::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool AutoTurnToTrench::IsFinished() { return false; }
+bool AutoTurnToTrench::IsFinished() { return abs((double)Drivetrain::GetInstance().GetHeading() - targetDirection ) <= allowableError; }

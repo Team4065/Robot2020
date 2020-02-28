@@ -45,6 +45,7 @@ public:
   
   void ResetEncoders();
   void ResetOdometry(frc::Pose2d pose);
+  void ResetGyro();
   void NeutralMode(bool isEnabled);
 
   static Drivetrain& GetInstance();

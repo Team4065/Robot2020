@@ -9,7 +9,6 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <subsystems/Drivetrain.h>
 
 /**
  * An example command.
@@ -18,10 +17,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class AutoTurnToTrench
-    : public frc2::CommandHelper<frc2::CommandBase, AutoTurnToTrench> {
+class BasicShoot
+    : public frc2::CommandHelper<frc2::CommandBase, BasicShoot> {
  public:
-  AutoTurnToTrench(Drivetrain&);
+  BasicShoot();
 
   void Initialize() override;
 
@@ -30,7 +29,4 @@ class AutoTurnToTrench
   void End(bool interrupted) override;
 
   bool IsFinished() override;
-
-  double targetDirection = 0;
-  double allowableError = 10;
 };
