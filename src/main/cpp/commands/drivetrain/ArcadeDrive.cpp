@@ -15,6 +15,11 @@ void ArcadeDrive::Execute()
 {
   double throttle = -controller_->GetY(frc::XboxController::kLeftHand) * 0.7;
   double turn = controller_->GetX(frc::XboxController::kRightHand) * 0.4;
+  if(abs(throttle) < 0.05)
+    throttle = 0;
+  
+  if(abs(turn) < 0.05)
+    turn = 0;
 
   Drivetrain::GetInstance().TankDrivePercent(throttle - turn, throttle + turn);
 }

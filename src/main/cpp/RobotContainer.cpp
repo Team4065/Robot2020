@@ -2,6 +2,7 @@
 
 RobotContainer::RobotContainer() 
 {
+  Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller_));
 
   ConfigureButtonBindings();
 }
@@ -22,5 +23,5 @@ void RobotContainer::ConfigureButtonBindings() {
   // rt_btn_.WhenPressed();
 
 
-  Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller_));
+  
 }
