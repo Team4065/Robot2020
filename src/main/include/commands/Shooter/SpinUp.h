@@ -32,4 +32,7 @@ class SpinUp
   void End(bool interrupted) override;
 
   bool IsFinished() override;
+
+private:
+  int spinUpCounts_;
 };

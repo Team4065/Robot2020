@@ -12,6 +12,8 @@
 
 #include "subsystems/Shooter.h"
 
+#include "util/ReferencedTunable.h"
+
 /**
  * An example command.
  *

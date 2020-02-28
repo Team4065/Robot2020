@@ -20,16 +20,18 @@ void Shoot::Execute() {
 #ifdef DISPLAY_COMMAND_MESSAGES
   std::cout << "Shoot Command Executing" << std::endl;
 #endif
-  Shooter::GetInstance().targetVelocity = 0.1;
-  Shooter::GetInstance().isFeederOn = true;
-  Shooter::GetInstance().isKickerOn = true;
+  double shooterPercentage;
+  frc4065::ReferencedTunable::Register("Shooter Percentage", shooterPercentage);
+  Shooter::GetInstance().EngageFeeder();
+  Shooter::GetInstance().EngageKicker();
+  Shooter::GetInstance().SetShooterPercent(shooterPercentage);
 }
 
 // Called once the command ends or is interrupted.
 void Shoot::End(bool interrupted) {
-  Shooter::GetInstance().targetVelocity = 0;
-  Shooter::GetInstance().isFeederOn = true;
-  Shooter::GetInstance().isKickerOn = true;
+  Shooter::GetInstance().DisableFeeder();
+  Shooter::GetInstance().DisableKicker();
+  Shooter::GetInstance().SetShooterPercent(0.0);
 }
 
 // Returns true when the command should end.

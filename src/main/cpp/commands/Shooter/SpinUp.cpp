@@ -15,24 +15,23 @@ SpinUp::SpinUp(Shooter& shooter) {
 }
 
 // Called when the command is initially scheduled.
-void SpinUp::Initialize() {}
+void SpinUp::Initialize() {
+  spinUpCounts_ = 0;
+}
 
 // Called repeatedly when this Command is scheduled to run
 void SpinUp::Execute() {
 #ifdef DISPLAY_COMMAND_MESSAGES
   std::cout << "SpinUp Command Executing" << std::endl;
 #endif
-  Shooter::GetInstance().isFeederOn = true;
-  Shooter::GetInstance().targetVelocity = 0.1;
+  Shooter::GetInstance().EngageFeeder();
+  Shooter::GetInstance().SetShooterPercent(0.5);
+  spinUpCounts_++;
 }
 
 // Called once the command ends or is interrupted.
 void SpinUp::End(bool interrupted) {
-  Shooter::GetInstance().targetVelocity = 0.1;
-  Shooter::GetInstance().isFeederOn = true;
-  //Shooter::GetInstance().isFeeder1On = false;
-  //Shooter::GetInstance().isFeeder2On = false;
 }
 
 // Returns true when the command should end.
-bool SpinUp::IsFinished() { return constants::shooter::kAllowableVelocityError > abs(Shooter::GetInstance().GetSensorVelocity() - Shooter::GetInstance().targetVelocity); }
+bool SpinUp::IsFinished() { return  (spinUpCounts_ > 50);}
