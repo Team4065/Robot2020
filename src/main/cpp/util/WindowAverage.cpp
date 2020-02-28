@@ -22,9 +22,9 @@ size_t WindowAverage<T>::size() const
 }
 
 template <class T>
-double WindowAverage<T>::avg() const
+float WindowAverage<T>::avg() const
 {
-    double sum = 0;
+    float sum = 0;
     for (int i = 0; i < length_; ++i)
         sum += cbuffer_[i];
     return sum / length_;

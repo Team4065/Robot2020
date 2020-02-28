@@ -3,10 +3,10 @@
 namespace frc4065
 {
 
-std::map<const char*, double*> ReferencedTunable::registered_tunables_;
+std::map<const char*, float*> ReferencedTunable::registered_tunables_;
 unsigned char ReferencedTunable::ref_count_ = 0;
 
-void ReferencedTunable::Register(const char* name, double& data)
+void ReferencedTunable::Register(const char* name, float& data)
 {
     registered_tunables_.insert(rt_pair(name, &data));
     ref_count_++;

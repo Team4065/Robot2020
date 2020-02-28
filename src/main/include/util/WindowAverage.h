@@ -13,7 +13,7 @@ class WindowAverage
 public:
     explicit WindowAverage(size_t window_size);
     size_t size() const;
-    double avg() const;
+    float avg() const;
     void add(T value);
 private:
     const size_t length_;

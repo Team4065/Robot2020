@@ -19,9 +19,9 @@ public:
     void SetCamMode(CamMode mode);
     bool IsProcessing() const;
     LEDMode GetLEDMode() const;
-    double GetHorizontalOffset();
-    double GetVerticalOffset();
-    double GetTargetArea();
+    float GetHorizontalOffset();
+    float GetVerticalOffset();
+    float GetTargetArea();
     bool HasActiveTarget();
     static units::meter_t EstimateTargetDistance(units::degree_t camera_mounting_angle, units::degree_t y_offset_to_target,
                                                 units::meter_t camera_height, units::meter_t target_height);

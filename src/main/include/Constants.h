@@ -48,11 +48,11 @@ namespace constants
         const units::volt_t kS { 0.0 }; // Inaccurate!
         const units::unit_t<kv> kV { 0.0 }; // Inaccurate!
         const units::unit_t<ka> kA { 0.0 }; // Inaccurate!
-        const double kPDriveVel = 0.001;
+        const float kPDriveVel = 0.001;
         extern const frc::DifferentialDriveKinematics kDriveKinematics;
         extern const frc::TrajectoryConfig kAutoConfig;
 
-        constexpr double kGearRatio = 9.47;
+        constexpr float kGearRatio = 9.47;
 
         const int kVelocityPIDPort = 0;
         const float kVelocityRange = 1000;
@@ -69,8 +69,8 @@ namespace constants
         {
             constexpr units::meters_per_second_t kMaxVelocity { 1.0 };
             constexpr units::meters_per_second_squared_t kMaxAcceleration { 2.0 };
-            constexpr double kRamseteB = 2.0;
-            constexpr double kRamseteZeta = 0.7;
+            constexpr float kRamseteB = 2.0;
+            constexpr float kRamseteZeta = 0.7;
         }
     }
 
@@ -82,15 +82,15 @@ namespace constants
         constexpr int kFeederMotor2Port = 9;
 
         constexpr int kAllowableVelocityError = 10;
-        constexpr double kKickerSpeed = 0.8;
-        constexpr double kFeederSpeed = 0.5;
+        constexpr float kKickerSpeed = 0.8;
+        constexpr float kFeederSpeed = 0.5;
 
         constexpr units::current::ampere_t kMaxCurrentDraw { 45.0 };
         constexpr units::current::ampere_t kMaxPeakCurrentDraw { 45.0 };
         constexpr units::time::second_t kCurrentLimitingTriggerTime { 0.01 }; // 10ms
-        constexpr double kP = 0.08;
-        constexpr double kD = 0.0;
-        constexpr double kFF = 0.1;
+        constexpr float kP = 0.08;
+        constexpr float kD = 0.0;
+        constexpr float kFF = 0.1;
         constexpr units::meter_t kWheelDiameter { 0.1524 };
         constexpr units::revolutions_per_minute_t kAllowableShootingVelocityError = 45_rpm; // within 30 rpm of target rate
         constexpr units::revolutions_per_minute_t kAllowableSpinupVelocityError = 30_rpm; // within 30 rpm of target rate
@@ -117,18 +117,18 @@ namespace constants
         constexpr units::current::ampere_t kMaxCurrentDraw { 40.0 };
         constexpr units::feet_per_second_t kMaxVelocity { 0.6 };
         constexpr units::feet_per_second_squared_t kMaxAcceleration { 1.2 };
-        constexpr double kP = 0.001;
-        constexpr double kI = 0.0;
-        constexpr double kD = 0.0;
-        constexpr double kF = 0.0;
+        constexpr float kP = 0.001;
+        constexpr float kI = 0.0;
+        constexpr float kD = 0.0;
+        constexpr float kF = 0.0;
         constexpr units::foot_t kSoftLimitHeight { 0.0 };
     } // namespace lift
      
     namespace serializer
     {
         constexpr int kSerializerID = 7;
-        constexpr double kIndexingSpeed = 0.5;
-        constexpr double kAntiJamSpeed = 0.1;
+        constexpr float kIndexingSpeed = 0.5;
+        constexpr float kAntiJamSpeed = 0.1;
     }
 
     namespace control_panel_manipulator
@@ -139,9 +139,9 @@ namespace constants
     namespace limelight
     {
         constexpr units::degree_t kCameraPitch { 30.0 };
-        constexpr double kAlignKp = 0.001;
-        constexpr double kAlignKi = 0.0;
-        constexpr double kAlignKd = 0.0;
+        constexpr float kAlignKp = 0.001;
+        constexpr float kAlignKi = 0.0;
+        constexpr float kAlignKd = 0.0;
         constexpr units::degree_t kOffsetTolerance { 1.5 };
     }
 }

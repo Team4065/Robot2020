@@ -5,29 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/auto/AutoFeedFlywheel.h"
+#include "commands/Filler.h"
 
-AutoFeedFlywheel::AutoFeedFlywheel(Shooter& _shooter) {
+Filler::Filler() {
   // Use addRequirements() here to declare subsystem dependencies.
-  AddRequirements({&_shooter});
 }
 
 // Called when the command is initially scheduled.
-void AutoFeedFlywheel::Initialize() {}
+void Filler::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void AutoFeedFlywheel::Execute() {
-  Shooter::GetInstance().EngageFeeder();
-  Shooter::GetInstance().EngageKicker();
-  Shooter::GetInstance().SetShooterPercent(0.1);
-}
+void Filler::Execute() {}
 
 // Called once the command ends or is interrupted.
-void AutoFeedFlywheel::End(bool interrupted) {
-    Shooter::GetInstance().DisableFeeder();
-  Shooter::GetInstance().DisableKicker();
-  Shooter::GetInstance().SetShooterPercent(0);
-}
+void Filler::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool AutoFeedFlywheel::IsFinished() { return false; }
+bool Filler::IsFinished() { return false; }

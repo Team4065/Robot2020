@@ -9,7 +9,6 @@
 
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <subsystems/Intake.h>
 
 /**
  * An example command.
@@ -18,10 +17,10 @@
  * directly; this is crucially important, or else the decorator functions in
  * Command will *not* work!
  */
-class AutoDeployIntake
-    : public frc2::CommandHelper<frc2::CommandBase, AutoDeployIntake> {
+class Filler
+    : public frc2::CommandHelper<frc2::CommandBase, Filler> {
  public:
-  AutoDeployIntake(Intake &);
+  Filler();
 
   void Initialize() override;
 

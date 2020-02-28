@@ -1,74 +1,61 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
 #pragma once
 
-#include <memory>
-#include <cmath>
-
 #include <frc2/command/SubsystemBase.h>
-#include <frc/geometry/Pose2d.h>
-#include <frc/kinematics/DifferentialDriveOdometry.h>
-#include <units/units.h>
-#include "networktables/NetworkTable.h"
-#include "networktables/NetworkTableEntry.h"
-#include "networktables/NetworkTableInstance.h"
-#include <AHRS.h>
+#include <rev/CANSparkMax.h>
+#include <rev/CANPIDController.h>
+#include <rev/CANEncoder.h>
+#include <rev/ControlType.h>
+#include <Constants.h>
 
-#include "Constants.h"
-#include "util/Macros.h"
-#include <iostream>
-#include "util/ReferencedTunable.h"
+using namespace constants::drivetrain;
+using namespace frc4065;
+using namespace rev;
 
-#include "commands/drivetrain/ArcadeDrive.h"
+enum EncoderDataType {
+  Position,
+  Velocity
+};
 
-#include "rev/CANSparkMax.h"
-
-#include "util/Limelight.h"
-
-
-
-class Drivetrain : public frc2::SubsystemBase
-{
-public:
-
-
-  void ArcadeDrive(double fwd, double rot);
-  void TankDriveVolts(units::volt_t left, units::volt_t right);
-  void TankDrivePercent(double left, double right);
-
-  units::volt_t GetLeftVolts() const;
-  units::volt_t GetRightVolts() const;
-
-  frc::DifferentialDriveWheelSpeeds GetWheelSpeeds();
-  frc::Pose2d GetPose() const;
-  units::degree_t GetHeading();
-  units::meter_t GetLeftEncoderDistance();
-  units::meter_t GetRightEncoderDistance();
-  
-  void ResetEncoders();
-  void ResetOdometry(frc::Pose2d pose);
-  void ResetGyro();
-  void NeutralMode(bool isEnabled);
-
-  static Drivetrain& GetInstance();
-  DISALLOW_COPY_AND_ASSIGN(Drivetrain);
-  void Periodic();
-
-  frc4065::Limelight limelight {"limelight"};
-
-private:
-
-  rev::CANSparkMax left_front_master_ { constants::drivetrain::kLeftFrontMotorPort, rev::CANSparkMax::MotorType::kBrushless };
-  rev::CANSparkMax left_middle_slave_ { constants::drivetrain::kLeftMiddleMotorPort, rev::CANSparkMax::MotorType::kBrushless };
-  rev::CANEncoder  left_encoder_      { left_front_master_.GetEncoder() };
-  rev::CANPIDController left_pid_     { left_front_master_.GetPIDController() };
-
-  rev::CANSparkMax right_front_master_ { constants::drivetrain::kRightFrontMotorPort, rev::CANSparkMax::MotorType::kBrushless };
-  rev::CANSparkMax right_middle_slave_ { constants::drivetrain::kRightMiddleMotorPort, rev::CANSparkMax::MotorType::kBrushless };
-  rev::CANEncoder  right_encoder_      { right_front_master_.GetEncoder() };
-  rev::CANPIDController right_pid_     { right_front_master_.GetPIDController() };
-
-  AHRS gyro_ { frc::SPI::Port::kMXP };
-
-  frc::DifferentialDriveOdometry odometry_;
-
+class Drivetrain : public frc2::SubsystemBase {
+ public:
   Drivetrain();
+
+  /**
+   * Will be called periodically whenever the CommandScheduler runs.
+   */
+  void Periodic();
+  bool isPercentControlled = true;
+  bool isInverted = false;
+
+  float leftPercent = 0;
+  float rightPercent = 0;
+  float leftTarget = 0;
+  float rightTarget = 0;
+
+  ControlType controlType = ControlType::kVelocity;
+
+  float getLeftEncoder(EncoderDataType);
+  float getRightEncoder(EncoderDataType);
+
+ private:
+  // Components (e.g. motor controllers and sensors) should generally be
+  // declared private and exposed only through public methods.
+  CANSparkMax leftMaster {kLeftFrontMotorPort};
+  CANSparkMax leftSlave {kLeftMiddleMotorPort};
+
+  CANSparkMax rightMaster {kRightFrontMotorPort};
+  CANSparkMax rightSlave {kRightMiddleMotorPort};
+
+  CANPIDController leftPID {leftMaster.GetPIDController()}; 
+  CANPIDController rightPID {rightMaster.GetPIDController()}; 
+
+  CANEncoder leftEncoder {leftMaster.GetEncoder()};
+  CANEncoder rightEncoder {rightMaster.GetEncoder()};
 };

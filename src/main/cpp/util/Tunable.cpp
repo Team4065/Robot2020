@@ -3,7 +3,7 @@
 namespace frc4065
 {
 
-Tunable::Tunable(const char* name, const double& value)
+Tunable::Tunable(const char* name, const float& value)
 {
 
     name_ = name;
@@ -12,13 +12,13 @@ Tunable::Tunable(const char* name, const double& value)
     frc::SmartDashboard::PutNumber(name_, value_);
 }
 
-double Tunable::Get()
+float Tunable::Get()
 {
     value_ = frc::SmartDashboard::GetNumber(name_, 0.0);
     return value_;
 }
 
-void Tunable::Set(const double& newState)
+void Tunable::Set(const float& newState)
 {
     value_ = newState;
 }

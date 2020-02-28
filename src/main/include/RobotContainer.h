@@ -39,7 +39,7 @@
 class AxisButton : public frc::Trigger
 {
 public:
-  AxisButton(frc::XboxController* controller, int id, double threshold)
+  AxisButton(frc::XboxController* controller, int id, float threshold)
   : controller_(controller), id_(id), threshold_(threshold) {}
   bool Get() override
   {
@@ -48,20 +48,13 @@ public:
 private:
   frc::XboxController* controller_;
   int id_;
-  double threshold_;
+  float threshold_;
 };
 
 class RobotContainer
 {
 public:
   RobotContainer();
- 
-  Intake& intake_ = Intake::GetInstance();
-  Shooter& shooter_ = Shooter::GetInstance();
-  Serializer& serializer_ = Serializer::GetInstance();//V-Belt
-  Lift& lift_ = Lift::GetInstance();
-  Drivetrain& drivetrain_ = Drivetrain::GetInstance();
-  ControlPanelManipulator& control_panel_manipulator_ = ControlPanelManipulator::GetInstance();
 
   frc::XboxController controller_ { constants::oi::kDriverXboxControllerPort };
 

@@ -25,7 +25,6 @@ void Robot::DisabledInit() {}
 void Robot::DisabledPeriodic() {}
 void Robot::AutonomousInit()
 {
-    RunnableTrajectory(kStraightLinePath).Schedule();
 }
 void Robot::AutonomousPeriodic() {}
 void Robot::TeleopInit() {
