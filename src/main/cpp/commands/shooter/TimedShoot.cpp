@@ -9,8 +9,8 @@ TimedShoot::TimedShoot(units::revolutions_per_minute_t rpm, units::second_t time
 
 void TimedShoot::Initialize()
 {
+  timer_.Reset();
   Shooter::GetInstance().SetShooterVelocity(rpm_);
-  timer_.Start();
   std::cout << "Starting!\n";
   timer_started_ = false;
 }

@@ -7,5 +7,5 @@ MoveUp::MoveUp() {
 
 // Called when the command is initially scheduled.
 void MoveUp::Initialize() {
-  Lift::GetInstance().MovePercent(1);
+  Lift::GetInstance().MovePercent(.5);
 }

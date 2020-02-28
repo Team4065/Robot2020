@@ -17,6 +17,8 @@ Lift::Lift()
     // slave_encoder_.SetPositionConversionFactor();
     lift_master_.SetInverted(false);
     lift_slave_.SetInverted(false);
+    lift_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    lift_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     solenoid_.Set(frc::DoubleSolenoid::Value::kReverse);
     // master_encoder_.SetInverted(false);
     // slave_encoder_.SetInverted(false);
@@ -33,6 +35,11 @@ void Lift::Periodic()
 {
     // Add safety check that motors are the same, lead screws can bind and break if they are not within a certain
     // tolerance.
+}
+
+bool Lift::IsExtended() const
+{
+    return is_extended_;
 }
 
 void Lift::Extend(){

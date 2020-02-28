@@ -7,5 +7,5 @@ MoveDown::MoveDown() {
 // Called when the command is initially scheduled.
 void MoveDown::Initialize() 
 {
-  Lift::GetInstance().MovePercent(-1);
+  Lift::GetInstance().MovePercent(-.5);
 }

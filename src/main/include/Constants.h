@@ -100,14 +100,14 @@ namespace constants
     namespace intake
     {
         constexpr int kIntakeMotorID = 10;
-        constexpr int kSolenoidPorts[2] = { 2, 6 }; // Inaccurate!
+        constexpr int kSolenoidPorts[2] = { 7, 3 }; // Inaccurate!
         constexpr units::current::ampere_t kMaxCurrentDraw { 25.0 };
         constexpr float kMotorOperatingPercentage = 0.65f; // 
     }
 
     namespace lift
     {
-        const int kSolenoidPorts[2] = { 3, 7 };
+        const int kSolenoidPorts[2] = { 6, 2 };
 
         constexpr int kMasterPort = 8;
         constexpr int kSlavePort = 6;

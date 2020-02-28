@@ -29,12 +29,13 @@ public:
   void MovePercent(double percent);
   void SetHeight(units::foot_t height);
   units::foot_t GetHeight();
+  bool IsExtended() const;
 
 private:
   Lift();
 
   frc::DoubleSolenoid solenoid_ { constants::lift::kSolenoidPorts[0], constants::lift::kSolenoidPorts[1] };
-  
+  bool is_extended = true;
   rev::CANSparkMax lift_master_ { constants::lift::kMasterPort, rev::CANSparkMax::MotorType::kBrushless };
   rev::CANSparkMax lift_slave_ { constants::lift::kSlavePort, rev::CANSparkMax::MotorType::kBrushless };
   rev::CANEncoder master_encoder_ { lift_master_.GetEncoder() };
