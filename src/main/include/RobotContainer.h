@@ -57,7 +57,7 @@ public:
   RobotContainer();
  
   Intake& intake_ = Intake::GetInstance();
-  Shooter& shooter_ = Shooter::GetInstance();
+  Shooter& shooter_ = Shooter::GetInstance(); 
   Serializer& serializer_ = Serializer::GetInstance();//V-Belt
   Lift& lift_ = Lift::GetInstance();
   Drivetrain& drivetrain_ = Drivetrain::GetInstance();

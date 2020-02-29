@@ -33,8 +33,9 @@ public:
   double GetEncAPos(void) {return(lift_master_.GetEncoder().GetPosition());}
   double GetEncBPos(void) {return(lift_slave_.GetEncoder().GetPosition());}
 
-  void SetAPosition(double position, double feedForward);// {master_pid_.SetReference(position, rev::ControlType::kPosition);}
-  void SetBPosition(double position, double feedForward);// {slave_pid_.SetReference(position, rev::ControlType::kPosition);}
+  void MoveLift(double percentCommand);
+  void SetAPosition(double position, double feedForward);
+  void SetBPosition(double position, double feedForward);
   void SetA(double percent);
 
   double GetInitialDeltaPosition();

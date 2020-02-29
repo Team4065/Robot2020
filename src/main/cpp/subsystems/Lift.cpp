@@ -23,8 +23,8 @@ Lift::Lift()
     lift_master_.SetInverted(false);
     lift_slave_.SetInverted(false);
 
-    master_pid_.SetP(1);
-    slave_pid_.SetP(1);
+    master_pid_.SetP(0.5);
+    slave_pid_.SetP(0.5);
 
     // master_encoder_.SetInverted(false);
     // slave_encoder_.SetInverted(false);
@@ -74,6 +74,11 @@ units::foot_t Lift::GetHeight()
 void Lift::MovePercent(double percent){
     lift_master_.Set(percent);
     lift_slave_.Set(percent);  
+}
+
+void Lift::MoveLift(double percentCommand) {
+    SetA(percentCommand);
+    SetBPosition(GetEncAPos() - GetInitialDeltaPosition(), percentCommand);
 }
 
 void Lift::SetAPosition(double position, double feedForward) {

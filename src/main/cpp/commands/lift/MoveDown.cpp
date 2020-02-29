@@ -2,42 +2,27 @@
 #include "subsystems/Lift.h"
 #include <iostream>
 
+using namespace std;
+using namespace frc4065;
+
 MoveDown::MoveDown() {
   AddRequirements({&Lift::GetInstance()});
+  // ReferencedTunable::Register("Lift Down Percent Command", percentDwnCmd_);
 }
 
 // Called when the command is initially scheduled.
-void MoveDown::Initialize() 
-{
-  //double encAPos = Lift::GetInstance().GetEncAPos();
-  //double encBPos = Lift::GetInstance().GetEncBPos();
-
-  // initialDeltaPos_ = encAPos - encBPos;
+void MoveDown::Initialize() {
+  percentDwnCmd_ = -0.2;
 }
 void MoveDown::Execute()
 {
-  //double MAX_DELTA_POS = -3.0;   //In Revolutions
-  // double DELTA_POS = 0.25;
-  double encAPos = Lift::GetInstance().GetEncAPos();
-  double encBPos = Lift::GetInstance().GetEncBPos();
-
-  double deltaPos = (encAPos - encBPos);
-  // if(std::abs(deltaPos) < MAX_DELTA_POS){
-  //   Lift::GetInstance().SetAPosition(encAPos + DELTA_POS);
-  //   Lift::GetInstance().SetBPosition(encBPos + DELTA_POS);
-  // }
-
-  //double commandedAPos = encAPos + MAX_DELTA_POS;
-  //double commandedBPos = encBPos + MAX_DELTA_POS;
-  //double commandedBPos = encBPos + MAX_DELTA_POS + deltaPos;
-  //Lift::GetInstance().SetAPosition(commandedAPos);
-
-  Lift::GetInstance().SetA(-0.2);  
-  Lift::GetInstance().SetBPosition(encAPos - Lift::GetInstance().GetInitialDeltaPosition(), -0.2);
-
-  std::cout << "DeltaPosition = " << deltaPos - Lift::GetInstance().GetInitialDeltaPosition() << std::endl;
+  Lift::GetInstance().MoveLift(percentDwnCmd_);
+  DEBUG_LOG("Lift Percent Command = " + to_string(percentDwnCmd_)); 
+  DEBUG_LOG("Lift Delta Position = " + to_string(Lift::GetInstance().GetEncAPos() - Lift::GetInstance().GetEncBPos() - Lift::GetInstance().GetInitialDeltaPosition())); 
 }
 
-void MoveDown::End(bool interrupted){}
+void MoveDown::End(bool interrupted){
+  // Lift::GetInstance().MoveLift(0);
+}
 
 bool MoveDown::IsFinished(){return false;}

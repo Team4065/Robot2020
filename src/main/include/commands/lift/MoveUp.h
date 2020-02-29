@@ -7,8 +7,10 @@
 
 #pragma once
 
+#include <stdio.h>
 #include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
+#include "util/ReferencedTunable.h"
 #include "subsystems/Lift.h"
 
 /**
@@ -31,5 +33,5 @@ class MoveUp
 
   bool IsFinished() override;
 
-  double initialDeltaPos_;
+  double percentUpCmd_;
 };
