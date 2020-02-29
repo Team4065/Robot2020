@@ -9,14 +9,14 @@ MoveDown::MoveDown() {
 // Called when the command is initially scheduled.
 void MoveDown::Initialize() 
 {
-  double encAPos = Lift::GetInstance().GetEncAPos();
-  double encBPos = Lift::GetInstance().GetEncBPos();
+  //double encAPos = Lift::GetInstance().GetEncAPos();
+  //double encBPos = Lift::GetInstance().GetEncBPos();
 
   // initialDeltaPos_ = encAPos - encBPos;
 }
 void MoveDown::Execute()
 {
-  double MAX_DELTA_POS = -3.0;   //In Revolutions
+  //double MAX_DELTA_POS = -3.0;   //In Revolutions
   // double DELTA_POS = 0.25;
   double encAPos = Lift::GetInstance().GetEncAPos();
   double encBPos = Lift::GetInstance().GetEncBPos();
@@ -27,13 +27,15 @@ void MoveDown::Execute()
   //   Lift::GetInstance().SetBPosition(encBPos + DELTA_POS);
   // }
 
-  double commandedAPos = encAPos + MAX_DELTA_POS;
+  //double commandedAPos = encAPos + MAX_DELTA_POS;
   //double commandedBPos = encBPos + MAX_DELTA_POS;
-  double commandedBPos = encBPos + MAX_DELTA_POS + deltaPos;
-  Lift::GetInstance().SetAPosition(commandedAPos);
-  Lift::GetInstance().SetBPosition(commandedBPos);
+  //double commandedBPos = encBPos + MAX_DELTA_POS + deltaPos;
+  //Lift::GetInstance().SetAPosition(commandedAPos);
 
-  std::cout << "DeltaPosition = " << deltaPos << std::endl;
+  Lift::GetInstance().SetA(-0.2);  
+  Lift::GetInstance().SetBPosition(encAPos - Lift::GetInstance().GetInitialDeltaPosition(), -0.2);
+
+  std::cout << "DeltaPosition = " << deltaPos - Lift::GetInstance().GetInitialDeltaPosition() << std::endl;
 }
 
 void MoveDown::End(bool interrupted){}

@@ -76,10 +76,20 @@ void Lift::MovePercent(double percent){
     lift_slave_.Set(percent);  
 }
 
-void Lift::SetAPosition(double position) {
-    master_pid_.SetReference(position, rev::ControlType::kPosition);
+void Lift::SetAPosition(double position, double feedForward) {
+    master_pid_.SetReference(position, rev::ControlType::kPosition, 0, feedForward * 12/*to percent*/);
 }
 
-void Lift::SetBPosition(double position) {
-    slave_pid_.SetReference(position - initial_delta_position_, rev::ControlType::kPosition);
+void Lift::SetBPosition(double position, double feedForward) {
+    slave_pid_.SetReference(position, rev::ControlType::kPosition, 0, feedForward * 12);
+}
+
+void Lift::SetA(double percent)
+{
+    lift_master_.Set(percent);
+}
+
+double Lift::GetInitialDeltaPosition()
+{
+    return initial_delta_position_;
 }

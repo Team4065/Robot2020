@@ -18,7 +18,7 @@ void MoveUp::Initialize() {
 
 // Called repeatedly when this Command is scheduled to run
 void MoveUp::Execute() {
-  double MAX_DELTA_POS = 3.0;   //In Revolutions
+  //double MAX_DELTA_POS = 3.0;   //In Revolutions
   // double DELTA_POS = 0.25;
   double encAPos = Lift::GetInstance().GetEncAPos();
   double encBPos = Lift::GetInstance().GetEncBPos();
@@ -28,13 +28,14 @@ void MoveUp::Execute() {
   //   Lift::GetInstance().SetAPosition(encAPos + DELTA_POS);
   //   Lift::GetInstance().SetBPosition(encBPos + DELTA_POS);
   // }
-  double commandedAPos = encAPos + MAX_DELTA_POS;
-  //double commandedBPos = encBPos + MAX_DELTA_POS;
-  double commandedBPos = encBPos + MAX_DELTA_POS + deltaPos;
-  Lift::GetInstance().SetAPosition(commandedAPos);
-  Lift::GetInstance().SetBPosition(commandedBPos);
+  //double commandedAPos = encAPos + MAX_DELTA_POS;
+  //double commandedBPos = encBPos + MAX_DELTA_POS + deltaPos;
+  //Lift::GetInstance().SetAPosition(encAPos, 0.2);
 
-  std::cout << "DeltaPosition = " << deltaPos << std::endl;
+  Lift::GetInstance().SetA(0.2);
+  Lift::GetInstance().SetBPosition(encAPos - Lift::GetInstance().GetInitialDeltaPosition(), 0.2);
+
+  std::cout << "DeltaPosition = " << deltaPos - Lift::GetInstance().GetInitialDeltaPosition() << std::endl;
   // std::cout << "Motor A Position = " << encAPos << std::endl;
   // std::cout << "Motor B Position = " << encBPos << std::endl;
   // DEBUG_LOG("Motor A Position Command = " + STRINGIFY(commandedAPos));
