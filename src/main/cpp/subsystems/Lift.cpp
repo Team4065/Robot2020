@@ -14,8 +14,8 @@ Lift::Lift()
     lift_slave_.RestoreFactoryDefaults();
     lift_slave_.ClearFaults();
 
-    master_encoder_.SetPositionConversionFactor(constants::lift::kTurnToInches.to<double>() / 12);
-    slave_encoder_.SetPositionConversionFactor(constants::lift::kTurnToInches.to<double>() / 12);
+    // master_encoder_.SetPositionConversionFactor(constants::lift::kTurnToInches.to<double>() / 12);
+    // slave_encoder_.SetPositionConversionFactor(constants::lift::kTurnToInches.to<double>() / 12);
     lift_master_.SetSmartCurrentLimit(constants::lift::kMaxCurrentDraw.to<double>());
     lift_slave_.SetSmartCurrentLimit(constants::lift::kMaxCurrentDraw.to<double>());
     lift_master_.SetInverted(false);
@@ -26,9 +26,9 @@ Lift::Lift()
     // master_encoder_.SetInverted(false);
     // slave_encoder_.SetInverted(false);
 
-    master_pid_.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kSCurve);
-    slave_pid_.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kSCurve);
-    //master_pid_.SetSmartMotionMaxAccel(constants::lift::kMaxAcceleration * 60)
+    // master_pid_.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kSCurve);
+    // slave_pid_.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kSCurve);
+    // master_pid_.SetSmartMotionMaxAccel(constants::lift::kMaxAcceleration * 60);
 
     solenoid_.Set(frc::DoubleSolenoid::Value::kReverse);
 }
