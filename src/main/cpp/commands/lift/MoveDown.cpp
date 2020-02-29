@@ -5,15 +5,14 @@
 using namespace std;
 using namespace frc4065;
 
-MoveDown::MoveDown() {
+MoveDown::MoveDown(double power) {
   AddRequirements({&Lift::GetInstance()});
   // ReferencedTunable::Register("Lift Down Percent Command", percentDwnCmd_);
+  percentDwnCmd_ = -power;
 }
 
 // Called when the command is initially scheduled.
-void MoveDown::Initialize() {
-  percentDwnCmd_ = -0.2;
-}
+void MoveDown::Initialize() {}
 void MoveDown::Execute()
 {
   Lift::GetInstance().MoveLift(percentDwnCmd_);
