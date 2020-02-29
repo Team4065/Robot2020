@@ -18,8 +18,13 @@ Lift::Lift()
     slave_encoder_.SetPositionConversionFactor(constants::lift::kTurnToInches.to<double>() / 12);
     lift_master_.SetSmartCurrentLimit(constants::lift::kMaxCurrentDraw.to<double>());
     lift_slave_.SetSmartCurrentLimit(constants::lift::kMaxCurrentDraw.to<double>());
+    lift_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    lift_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     lift_master_.SetInverted(false);
     lift_slave_.SetInverted(false);
+
+    master_pid_.SetP(1);
+    slave_pid_.SetP(1);
 
     // master_encoder_.SetInverted(false);
     // slave_encoder_.SetInverted(false);
@@ -29,6 +34,10 @@ Lift::Lift()
     //master_pid_.SetSmartMotionMaxAccel(constants::lift::kMaxAcceleration * 60)
 
     solenoid_.Set(frc::DoubleSolenoid::Value::kReverse);
+
+    initial_delta_position_ = GetEncAPos() - GetEncBPos();
+    std::cout << "initial_delta_position_ = " << initial_delta_position_ << std::endl;
+
 }
 
 Lift& Lift::GetInstance(){
@@ -65,4 +74,12 @@ units::foot_t Lift::GetHeight()
 void Lift::MovePercent(double percent){
     lift_master_.Set(percent);
     lift_slave_.Set(percent);  
+}
+
+void Lift::SetAPosition(double position) {
+    master_pid_.SetReference(position, rev::ControlType::kPosition);
+}
+
+void Lift::SetBPosition(double position) {
+    slave_pid_.SetReference(position - initial_delta_position_, rev::ControlType::kPosition);
 }

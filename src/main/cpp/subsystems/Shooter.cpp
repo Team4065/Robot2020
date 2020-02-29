@@ -138,7 +138,7 @@ bool Shooter::AtDesiredVelocityWithHysteresis()
 
 void Shooter::Periodic()
 {
-    std::cout << "Desired: " << GetDesiredVelocity() << " Actual: " << GetVelocity() << std::endl;
+    // std::cout << "Desired: " << GetDesiredVelocity() << " Actual: " << GetVelocity() << std::endl;
 }
 
 Shooter& Shooter::GetInstance()

@@ -7,14 +7,29 @@
 
 #pragma once
 
+#include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include <frc2/command/InstantCommand.h>
 #include "subsystems/Lift.h"
+
+/**
+ * An example command.
+ *
+ * <p>Note that this extends CommandHelper, rather extending CommandBase
+ * directly; this is crucially important, or else the decorator functions in
+ * Command will *not* work!
+ */
 class MoveDown
-    : public frc2::CommandHelper<frc2::InstantCommand,
-                                 MoveDown> {
+    : public frc2::CommandHelper<frc2::CommandBase, MoveDown> {
  public:
   MoveDown();
 
   void Initialize() override;
+
+  void Execute() override;
+
+  void End(bool interrupted) override;
+
+  bool IsFinished() override;
+
+  double initialDeltaPos_;
 };

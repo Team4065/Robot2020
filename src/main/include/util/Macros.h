@@ -1,3 +1,5 @@
+#include <string.h>
+
 // LOG_LEVEL should be changed based on what logs are desired in the console. For 
 // example, if you didn't want to see debug logs, you would need to set LOG_LEVEL to 1.
 #define LOG_LEVEL 0
@@ -27,3 +29,5 @@
 #define DISALLOW_COPY_AND_ASSIGN(TypeName) \
 TypeName(const TypeName&) = delete;        \
 void operator=(const TypeName&) = delete
+
+#define STRINGIFY(x) #x
