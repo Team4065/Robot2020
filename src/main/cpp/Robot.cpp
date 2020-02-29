@@ -6,10 +6,6 @@
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc2/command/CommandScheduler.h>
 
-#include <frc/controller/SimpleMotorFeedforward.h>
-
-#include "commands/auto/paths/RunnableTrajectory.h"
-#include "commands/auto/paths/Paths.h"
 
 void Robot::RobotInit() {
     compressor.Start();
