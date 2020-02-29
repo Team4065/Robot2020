@@ -31,6 +31,16 @@ public:
   units::foot_t GetHeight();
   bool IsExtended() const;
 
+  double GetEncAPos(void) {return(lift_master_.GetEncoder().GetPosition());}
+  double GetEncBPos(void) {return(lift_slave_.GetEncoder().GetPosition());}
+
+  void MoveLift(double percentCommand);
+  void SetAPosition(double position, double feedForward);
+  void SetBPosition(double position, double feedForward);
+  void SetA(double percent);
+
+  double GetInitialDeltaPosition();
+
 private:
   Lift();
 
@@ -42,4 +52,7 @@ private:
   rev::CANEncoder slave_encoder_ { lift_slave_.GetEncoder() };
   rev::CANPIDController master_pid_ { lift_master_.GetPIDController() };
   rev::CANPIDController slave_pid_ { lift_slave_.GetPIDController() };
+
+  double initial_delta_position_;
+
 };
