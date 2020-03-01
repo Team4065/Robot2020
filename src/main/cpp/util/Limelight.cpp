@@ -9,6 +9,11 @@ Limelight::Limelight(const char* name)
 
 }
 
+void Limelight::SetPipeline(int pipe_id)
+{
+    table_->PutNumber("pipeline", pipe_id);
+}
+
 void Limelight::SetLEDMode(LEDMode mode)
 {
     switch(mode)

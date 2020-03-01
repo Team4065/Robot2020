@@ -19,16 +19,21 @@ void Robot::RobotPeriodic()
     frc4065::ReferencedTunable::UpdateAll();
     frc2::CommandScheduler::GetInstance().Run(); 
 }
-void Robot::DisabledInit() {}
+void Robot::DisabledInit() {m_container.drivetrain_.NeutralMode(false);}
 void Robot::DisabledPeriodic() {}
 void Robot::AutonomousInit()
 {
-    RunnableTrajectory(kStraightLinePath).Schedule();
+    m_container.drivetrain_.NeutralMode(true);
+    m_autonomousCommand = m_container.GetAutonomousCommand();
+
+    if (m_autonomousCommand != nullptr)
+        m_autonomousCommand->Schedule();
 }
 void Robot::AutonomousPeriodic() {}
 void Robot::TeleopInit() {
     // m_container.shooter_.EngageKicker();
     // m_container.shooter_.EngageFeeder();
+    m_container.drivetrain_.NeutralMode(true);
 }
 void Robot::TeleopPeriodic()
 {}

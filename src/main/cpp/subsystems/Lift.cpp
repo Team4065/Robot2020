@@ -59,10 +59,12 @@ bool Lift::IsExtended() const
 }
 
 void Lift::Extend(){
+    is_extended_ = true;
     solenoid_.Set(frc::DoubleSolenoid::kForward);
 }
 
 void Lift::Retract(){
+    is_extended_ = false;
     solenoid_.Set(frc::DoubleSolenoid::kReverse);
 }
 

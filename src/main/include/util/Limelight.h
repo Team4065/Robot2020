@@ -17,6 +17,7 @@ public:
     Limelight(const char* name);
     void SetLEDMode(LEDMode mode);
     void SetCamMode(CamMode mode);
+    void SetPipeline(int pipe_id);
     bool IsProcessing() const;
     LEDMode GetLEDMode() const;
     double GetHorizontalOffset();

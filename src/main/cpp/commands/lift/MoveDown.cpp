@@ -16,13 +16,9 @@ void MoveDown::Initialize() {
 }
 void MoveDown::Execute()
 {
-<<<<<<< HEAD
-  Lift::GetInstance().MovePercent(-.5);
-=======
   Lift::GetInstance().MoveLift(percentDwnCmd_);
   DEBUG_LOG("Lift Percent Command = " + to_string(percentDwnCmd_)); 
   DEBUG_LOG("Lift Delta Position = " + to_string(Lift::GetInstance().GetEncAPos() - Lift::GetInstance().GetEncBPos() - Lift::GetInstance().GetInitialDeltaPosition())); 
->>>>>>> 49869f14be37d2fe54b84081c4bc1db16edbb6e1
 }
 
 void MoveDown::End(bool interrupted){

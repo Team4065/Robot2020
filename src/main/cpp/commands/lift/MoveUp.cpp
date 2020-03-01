@@ -12,9 +12,6 @@ MoveUp::MoveUp() {
 
 // Called when the command is initially scheduled.
 void MoveUp::Initialize() {
-<<<<<<< HEAD
-  Lift::GetInstance().MovePercent(.5);
-=======
   percentUpCmd_ = 0.2;
 }
 
@@ -23,7 +20,6 @@ void MoveUp::Execute() {
   Lift::GetInstance().MoveLift(percentUpCmd_);
   DEBUG_LOG("Lift Percent Command = " + to_string(percentUpCmd_)); 
   DEBUG_LOG("Lift Delta Position = " + to_string(Lift::GetInstance().GetEncAPos() - Lift::GetInstance().GetEncBPos() - Lift::GetInstance().GetInitialDeltaPosition())); 
->>>>>>> 49869f14be37d2fe54b84081c4bc1db16edbb6e1
 }
 
 void MoveUp::End(bool interrupted){
