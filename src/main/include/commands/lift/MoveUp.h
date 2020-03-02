@@ -33,5 +33,5 @@ class MoveUp
 
   bool IsFinished() override;
 
-  double percentUpCmd_;
+  double kP_;
 };

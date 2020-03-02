@@ -33,10 +33,14 @@ public:
   double GetEncAPos(void) {return(lift_master_.GetEncoder().GetPosition());}
   double GetEncBPos(void) {return(lift_slave_.GetEncoder().GetPosition());}
 
-  void MoveLift(double percentCommand);
+  // void MoveLift(double percentCommand);
+  void MoveLift(double kP, bool moveUp);
+  void SetAPosition(double position);
+  void SetBPosition(double position);
   void SetAPosition(double position, double feedForward);
   void SetBPosition(double position, double feedForward);
   void SetA(double percent);
+  void SetB(double percent);
 
   double GetInitialDeltaPosition();
 
@@ -53,5 +57,7 @@ private:
   rev::CANPIDController slave_pid_ { lift_slave_.GetPIDController() };
 
   double initial_delta_position_;
+  double kP_;
+  double kI_;
 
 };

@@ -5,19 +5,26 @@
 using namespace std;
 using namespace frc4065;
 
-MoveDown::MoveDown(double power) {
+MoveDown::MoveDown(bool fullPower) {
   AddRequirements({&Lift::GetInstance()});
-  // ReferencedTunable::Register("Lift Down Percent Command", percentDwnCmd_);
-  percentDwnCmd_ = -power;
+  fullPower_ = fullPower;
+  kP_ = 0.3;
+  // ReferencedTunable::Register("Lift Move Down kP", kP_);
 }
 
 // Called when the command is initially scheduled.
 void MoveDown::Initialize() {}
 void MoveDown::Execute()
 {
-  Lift::GetInstance().MoveLift(percentDwnCmd_);
-  DEBUG_LOG("Lift Percent Command = " + to_string(percentDwnCmd_)); 
-  DEBUG_LOG("Lift Delta Position = " + to_string(Lift::GetInstance().GetEncAPos() - Lift::GetInstance().GetEncBPos() - Lift::GetInstance().GetInitialDeltaPosition())); 
+  if(fullPower_ == 1.0) {
+    Lift::GetInstance().SetA(-1.0);
+    Lift::GetInstance().SetB(-1.0);
+  } else {
+    Lift::GetInstance().MoveLift(kP_, false);
+  }
+  
+  // DEBUG_LOG("Lift Percent Command = " + to_string(percentDwnCmd_)); 
+  // DEBUG_LOG("Lift Delta Position = " + to_string(Lift::GetInstance().GetEncAPos() - Lift::GetInstance().GetEncBPos() - Lift::GetInstance().GetInitialDeltaPosition())); 
 }
 
 void MoveDown::End(bool interrupted){

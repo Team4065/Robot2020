@@ -7,19 +7,19 @@ using namespace frc4065;
 
 MoveUp::MoveUp() {
   AddRequirements({&Lift::GetInstance()});
-  // ReferencedTunable::Register("Lift Up Percent Command", percentUpCmd_);
+  // ReferencedTunable::Register("Lift Move Up kP", kP_);
 }
 
 // Called when the command is initially scheduled.
 void MoveUp::Initialize() {
-  percentUpCmd_ = 0.3;
+  kP_ = 0.3;
 }
 
 // Called repeatedly when this Command is scheduled to run
 void MoveUp::Execute() {
-  Lift::GetInstance().MoveLift(percentUpCmd_);
-  DEBUG_LOG("Lift Percent Command = " + to_string(percentUpCmd_)); 
-  DEBUG_LOG("Lift Delta Position = " + to_string(Lift::GetInstance().GetEncAPos() - Lift::GetInstance().GetEncBPos() - Lift::GetInstance().GetInitialDeltaPosition())); 
+  Lift::GetInstance().MoveLift(kP_, true);
+  // DEBUG_LOG("Lift Percent Command = " + to_string(percentUpCmd_)); 
+  // DEBUG_LOG("Lift Delta Position = " + to_string(Lift::GetInstance().GetEncAPos() - Lift::GetInstance().GetEncBPos() - Lift::GetInstance().GetInitialDeltaPosition())); 
 }
 
 void MoveUp::End(bool interrupted){
