@@ -17,9 +17,15 @@
 //subsystem
 #include "subsystems/DriveSubsystem.h"
 
-//commands
-#include "commands/auto/RamseteFollower.h"
-#include "commands/auto/routines/SixBallsRoutine.h"
+#include <frc/XboxController.h>
+#include <frc/controller/PIDController.h>
+#include <frc/smartdashboard/SendableChooser.h>
+#include <frc2/command/Command.h>
+#include <frc2/command/InstantCommand.h>
+#include <frc2/command/PIDCommand.h>
+#include <frc2/command/ParallelRaceGroup.h>
+#include <frc2/command/RunCommand.h>
+
 
 class RobotContainer {
  public:
@@ -38,16 +44,6 @@ class RobotContainer {
 
   // The chooser for the autonomous routines
   frc::SendableChooser<frc2::Command*> m_chooser;
-
-  //commands auto
-  SixBallsRoutine m_sixBallsRoutine{&m_drive};
-
-  RamseteFollower m_noAuto{
-    frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
-    {}, 
-    frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)), 
-    &m_drive
-  };
 
   void ConfigureButtonBindings();
 };

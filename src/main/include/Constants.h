@@ -25,39 +25,34 @@
 namespace DriveConstants {
 constexpr int kLeftMotor1Port = 1;
 constexpr int kLeftMotor2Port = 2;
-constexpr int kRightMotor1Port = 3;
-constexpr int kRightMotor2Port = 4;
+constexpr int kRightMotor1Port = 4;
+constexpr int kRightMotor2Port = 3;
 
-constexpr auto kTrackwidth = 0.6096_m;
+constexpr auto kTrackwidth = 0.6356_m;
 
 extern const frc::DifferentialDriveKinematics kDriveKinematics;
 
-constexpr int kEncoderCPR = 4096;//ticks_per_rev
-constexpr double kWheelDiameterMeters = 0.1524;//wheel size in meters
-constexpr double kEncoderDistancePerPulse =
-    // Assumes the encoders are directly mounted on the wheel shafts
-    (kWheelDiameterMeters * wpi::math::pi) / static_cast<double>(kEncoderCPR);
+constexpr double kGearRatio = 9.47;
+constexpr double kWheelDiameterMeters = 0.1524;
+constexpr double kPI = wpi::math::pi;
 
 constexpr bool kGyroReversed = true;
 
-// These are example values only - DO NOT USE THESE FOR YOUR OWN ROBOT!
-// These characterization values MUST be determined either experimentally or
-// theoretically for *your* robot's drive. The Robot Characterization
-// Toolsuite provides a convenient tool for obtaining these values for your
-// robot.
-constexpr auto ks = 0.86_V;
-constexpr auto kv = 3.26 * 1_V * 1_s / 1_m;
-constexpr auto ka = 0.687 * 1_V * 1_s * 1_s / 1_m;
+constexpr auto ks = 0.1235_V;
+constexpr auto kv = 2.46 * 1_V * 1_s / 1_m;
+constexpr auto ka = 0.161 * 1_V * 1_s * 1_s / 1_m;
 
-// Example value only - as above, this must be tuned for your drive!
-constexpr double kPDriveVel = 0.000666;
+constexpr double kPDriveVel = 6.44;
 constexpr double kIDriveVel = 0.0;
-constexpr double kDDriveVel = 0.000316;
-}  // namespace DriveConstants
+constexpr double kDDriveVel = 0;
+
+constexpr double kencoderConstant =  kWheelDiameterMeters * wpi::math::pi / kGearRatio;
+
+} 
 
 namespace AutoConstants {
-constexpr auto kMaxSpeed = 3_mps;
-constexpr auto kMaxAcceleration = 3_mps_sq;
+constexpr auto kMaxSpeed = 1_mps;
+constexpr auto kMaxAcceleration = 1_mps_sq;
 
 // Reasonable baseline values for a RAMSETE follower in units of meters and
 // seconds

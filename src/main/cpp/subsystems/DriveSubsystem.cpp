@@ -6,27 +6,33 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/DriveSubsystem.h"
-
+#include <iostream>
 DriveSubsystem::DriveSubsystem() : m_odometry{frc::Rotation2d(units::degree_t(GetHeading()))}
 {
+  left_master.RestoreFactoryDefaults();
+  left_slave.RestoreFactoryDefaults();
+  right_master.RestoreFactoryDefaults();
+  right_slave.RestoreFactoryDefaults();
+
   // Set up all left side motors that work together
   // Set both motors to spin opposite for forward
-  // left_master.SetInverted(false);
-  // left_slave.SetInverted(false);
-  // left_master.SetSensorPhase(true);
-  // left_master.SetNeutralMode(NeutralMode::Brake); // Don't coast after movements
-  // left_slave.SetNeutralMode(NeutralMode::Brake);
-  // left_master.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0);
-  
+  left_master.SetInverted(false);
+  //left_slave.SetInverted(true);
+
   // Set up all right side motors that work together
   // Set both motors to spin opposite for forward
-  // right_master.SetInverted(false);
-  // right_slave.SetInverted(false);
-  // right_master.SetSensorPhase(false);              // Only if encoders reading backwards
-  // right_master.SetNeutralMode(NeutralMode::Brake); // Don't coast after movements
-  // right_slave.SetNeutralMode(NeutralMode::Brake);
-  // right_master.ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative, 0);
-  
+  right_master.SetInverted(false);
+  //right_slave.SetInverted(false);
+  left_master.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  left_slave.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  right_master.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+  right_slave.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
+  // left_encoder.SetPositionConversionFactor(DriveConstants::kencoderConstant);
+  // right_encoder.SetPositionConversionFactor(DriveConstants::kencoderConstant);
+  // left_encoder.SetVelocityConversionFactor(DriveConstants::kencoderConstant / 60);
+  // right_encoder.SetVelocityConversionFactor(DriveConstants::kencoderConstant / 60);
+
   ResetGyro();
   ResetEncoders();
 }
@@ -34,12 +40,12 @@ DriveSubsystem::DriveSubsystem() : m_odometry{frc::Rotation2d(units::degree_t(Ge
 void DriveSubsystem::Periodic()
 {
   // Implementation of subsystem periodic method goes here.
-  //double gyroAngle = GetHeading();
-
   // This Periodic function is called every 20 ms
-  //m_odometry.Update(frc::Rotation2d(units::degree_t(gyroAngle)),
-    //                units::meter_t(GetMeterDistance(&left_master)),
-      //              units::meter_t(GetMeterDistance(&right_master)));
+  m_odometry.Update(frc::Rotation2d(units::degree_t(GetHeading())), units::meter_t(left_master.GetEncoder().GetPosition() / 9.47 * 0.1524 * DriveConstants::kPI),
+                    -units::meter_t(right_master.GetEncoder().GetPosition() / 9.47 * 0.1524 * DriveConstants::kPI));
+                    
+std::cout << "left: " << left_master.GetEncoder().GetPosition() / 9.47 * 0.1524  * DriveConstants::kPI << " right: " << right_master.GetEncoder().GetPosition() / 9.47 * 0.1524 * DriveConstants::kPI << std::endl;
+m_drive.Feed();
 }
 
 void DriveSubsystem::ArcadeDrive(double fwd, double rot)
@@ -58,8 +64,8 @@ void DriveSubsystem::ResetGyro()
 }
 void DriveSubsystem::ResetEncoders()
 {
-  //left_master.SetSelectedSensorPosition(0);
-  //right_master.SetSelectedSensorPosition(0);
+  left_encoder.SetPosition(0);
+  right_encoder.SetPosition(0);
 }
 
 void DriveSubsystem::SetMaxOutput(double maxOutput)
@@ -79,19 +85,15 @@ frc::Pose2d DriveSubsystem::GetPose()
 
 frc::DifferentialDriveWheelSpeeds DriveSubsystem::GetWheelSpeeds()
 {
-  //double leftVel =(DriveConstants::kEncoderDistancePerPulse * 10 * (double)left_master.GetSelectedSensorVelocity());
-  //double rightVel = (DriveConstants::kEncoderDistancePerPulse * 10 * (double)right_master.GetSelectedSensorVelocity());
-  //return {units::meters_per_second_t(leftVel), units::meters_per_second_t(rightVel)};
-}
 
-void DriveSubsystem::ResetOdometry(const frc::Pose2d& pose, const frc::Rotation2d& newYaw)
+  return {
+      units::meters_per_second_t(left_master.GetEncoder().GetVelocity() / 9.47 * DriveConstants::kPI * 0.1524 / 60),
+      -units::meters_per_second_t(right_master.GetEncoder().GetVelocity() / 9.47 * DriveConstants::kPI * 0.1524 / 60)
+      };
+}
+void DriveSubsystem::ResetOdometry(const frc::Pose2d pose)
 {
   ResetEncoders();
 
-  m_odometry.ResetPosition(pose, newYaw);//frc::Rotation2d(units::degree_t(GetHeading())));
-}
-
-double DriveSubsystem::GetMeterDistance(rev::CANSparkMax *cansparkmax)
-{
- // return DriveConstants::kEncoderDistancePerPulse * (double)talon->GetSelectedSensorPosition();
+  m_odometry.ResetPosition(pose, frc::Rotation2d(units::degree_t(GetHeading())));
 }

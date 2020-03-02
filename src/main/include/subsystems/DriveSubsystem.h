@@ -20,6 +20,7 @@
 #include <frc/SpeedControllerGroup.h>
 #include <units/units.h>
 
+#include "ctre/Phoenix.h"
 #include "rev/CANSparkMax.h"
 #include "AHRS.h"
 
@@ -93,10 +94,7 @@ class DriveSubsystem : public frc2::SubsystemBase {
    *
    * @param pose The pose to which to set the odometry.
    */
-  void ResetOdometry(const frc::Pose2d& pose, const frc::Rotation2d& newYaw);
-
-  double GetMeterDistance(rev::CANSparkMax *cansparkmax);
-
+ void ResetOdometry(const frc::Pose2d pose);
 
  private:
   // Components (e.g. motor controllers and sensors) should generally be
@@ -106,6 +104,8 @@ class DriveSubsystem : public frc2::SubsystemBase {
   rev::CANSparkMax right_master {DriveConstants::kRightMotor1Port, rev::CANSparkMax::MotorType::kBrushless};
   rev::CANSparkMax right_slave {DriveConstants::kRightMotor2Port, rev::CANSparkMax::MotorType::kBrushless};
 
+  rev::CANEncoder left_encoder = left_master.GetEncoder();
+  rev::CANEncoder right_encoder = right_master.GetEncoder();
   // The motors on the left side of the drive
   frc::SpeedControllerGroup m_leftMotors{left_master, left_slave};
 
