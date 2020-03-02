@@ -5,20 +5,20 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/shooter/BasicShoot.h"
+#include "commands/lift/ToggleLiftPiston.h"
 
-BasicShoot::BasicShoot() {
-  // Use addRequirements() here to declare subsystem dependencies.
+// NOTE:  Consider using this command inline, rather than writing a subclass.
+// For more information, see:
+// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
+ToggleLiftPiston::ToggleLiftPiston() {
+  AddRequirements({ &Lift::GetInstance() });
 }
 
 // Called when the command is initially scheduled.
-void BasicShoot::Initialize() {}
-
-// Called repeatedly when this Command is scheduled to run
-void BasicShoot::Execute() {}
-
-// Called once the command ends or is interrupted.
-void BasicShoot::End(bool interrupted) {}
-
-// Returns true when the command should end.
-bool BasicShoot::IsFinished() { return false; }
+void ToggleLiftPiston::Initialize()
+{
+  if (Lift::GetInstance().IsExtended())
+    Lift::GetInstance().Retract();
+  else
+    Lift::GetInstance().Extend();
+}

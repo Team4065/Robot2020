@@ -6,6 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "commands/drivetrain/VisionAlign.h"
+#include <iostream>
 
 VisionAlign::VisionAlign() : pid_controller_(constants::limelight::kAlignKp, constants::limelight::kAlignKi, constants::limelight::kAlignKd)
 {
@@ -17,6 +18,7 @@ VisionAlign::VisionAlign() : pid_controller_(constants::limelight::kAlignKp, con
 void VisionAlign::Initialize()
 {
   frc4065::Limelight* limelight_ = &Vision::GetInstance().GetLimelight();
+  limelight_->SetPipeline(constants::limelight::pipes::TRACKING);
   limelight_->SetLEDMode(frc4065::Limelight::LEDMode::ON);
   limelight_->SetCamMode(frc4065::Limelight::CamMode::PROCESSING);
   Drivetrain::GetInstance().TankDrivePercent(0.0, 0.0);
@@ -25,14 +27,18 @@ void VisionAlign::Initialize()
     frc2::CommandScheduler::GetInstance().Schedule(new BlinkVisionTimed(3_s));
     exit_flag_ = true;
   }
-  pid_controller_.SetSetpoint(Drivetrain::GetInstance().GetHeading().to<double>() + limelight_->GetHorizontalOffset());
+  else
+  {
+    pid_controller_.SetSetpoint(Drivetrain::GetInstance().GetHeading().to<double>() + limelight_->GetHorizontalOffset());
+  }
 }
 
 // Called repeatedly when this Command is scheduled to run
 void VisionAlign::Execute()
 {
   double turn = pid_controller_.Calculate(Drivetrain::GetInstance().GetHeading().to<double>());
-  Drivetrain::GetInstance().TankDrivePercent(turn, -turn);
+  std::cout << "Turn: " << turn << " Error: " << pid_controller_.GetPositionError() << std::endl;
+  Drivetrain::GetInstance().TankDrivePercent(-turn, turn);
 }
 
 // Called once the command ends or is interrupted.

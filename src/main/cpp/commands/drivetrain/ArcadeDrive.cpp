@@ -21,7 +21,7 @@ void ArcadeDrive::Execute()
   if(abs(turn) < 0.05)
     turn = 0;
 
-  Drivetrain::GetInstance().TankDrivePercent(throttle - turn, throttle + turn);
+  Drivetrain::GetInstance().TankDrivePercent(throttle + turn, throttle - turn);
 }
 
 // Called once the command ends or is interrupted.

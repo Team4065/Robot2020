@@ -32,7 +32,7 @@ class TimedShoot
   units::revolutions_per_minute_t rpm_;
   units::second_t time_;
   units::second_t start_time_;
-  bool hysteresis_flag_ = false;
+  bool hysteresis_flag_;
   frc2::Timer timer_;
-  bool timer_started_ = false;
+  bool timer_started_;
 };

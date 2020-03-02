@@ -19,12 +19,6 @@ class RunnableTrajectory : public frc2::CommandHelper<frc2::SequentialCommandGro
 {
 public:
     RunnableTrajectory(TrajectoryPoints& traj_pts);
-    void Run();
-    bool Done() const;
-    void Initialize() override;
-    void Execute() override {};
-    void End(bool interrupted) override {};
-    bool IsFinished() override;
 protected:
     TrajectoryPoints traj_pts_;
     frc2::RamseteCommand* ramsete_command_;

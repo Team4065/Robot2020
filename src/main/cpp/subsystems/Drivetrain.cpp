@@ -13,7 +13,7 @@ double maxVelocity = 100;
 */
 
 Drivetrain::Drivetrain()
-    : odometry_(frc::Rotation2d(GetHeading()))
+    : odometry_(frc::Rotation2d(GetHeading(true)))
 {
     left_front_master_.RestoreFactoryDefaults();
     left_middle_slave_.RestoreFactoryDefaults();
@@ -36,8 +36,12 @@ Drivetrain::Drivetrain()
     right_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
     right_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
 
+<<<<<<< HEAD
 
     left_front_master_.SetInverted(true);
+=======
+    left_front_master_.SetInverted(false);
+>>>>>>> 8c4149bb93023ef328c0e3bf9230fd18f487bb93
     right_front_master_.SetInverted(false);
 
     left_middle_slave_.Follow(left_front_master_, false);
@@ -73,6 +77,9 @@ Drivetrain::Drivetrain()
     frc4065::ReferencedTunable::Register("maxAccel", maxAccel);
     frc4065::ReferencedTunable::Register("maxVelocity", maxVelocity);
     */
+   ResetOdometry(frc::Pose2d());
+   NeutralMode(true);
+   ResetGyro();
 }
 
 // This method will be called once per scheduler run
@@ -90,7 +97,10 @@ void Drivetrain::Periodic()
     left_pid_.SetSmartMotionMaxAccel(maxAccel, constants::drivetrain::kVelocityPIDPort);
     right_pid_.SetSmartMotionMaxAccel(maxAccel, constants::drivetrain::kVelocityPIDPort);
     */
-
+    static int loop_ = 0;
+    if (loop_ % 20 == 0)
+        std::cout << "Left (m.): " << GetLeftEncoderDistance().to<double>() << " Right (m.): " << GetRightEncoderDistance().to<double>() << " Heading (deg.): " << GetHeading().to<double>() << std::endl;
+    loop_++;
     odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
 
 }
@@ -99,25 +109,26 @@ void Drivetrain::ArcadeDrive(double fwd, double rot) {}
 
 void Drivetrain::TankDriveVolts(units::volt_t left, units::volt_t right)
 {
-    DEBUG_LOG(((std::abs(left.to<double>()) > 1.0 || std::abs(left.to<double>()) < 0.0)
+    DEBUG_LOG(((std::abs(left.to<double>()) > 12.0 || std::abs(left.to<double>()) < 0.0)
                 ? "Attempting to apply voltage to left side out of bounds!" : ""));
-    DEBUG_LOG(((std::abs(right.to<double>()) > 1.0 || std::abs(right.to<double>()) < 0.0) 
+    DEBUG_LOG(((std::abs(right.to<double>()) > 12.0 || std::abs(right.to<double>()) < 0.0) 
                 ? "Attempting to apply voltage to right side out of bounds!" : ""));
+    std::cout << "Left (V): " << left.to<double>() << " Right (V): " << -right.to<double>() << std::endl;
     left_front_master_.SetVoltage(left);
-    right_front_master_.SetVoltage(right);
+    right_front_master_.SetVoltage(-right);
 }
 
 void Drivetrain::TankDrivePercent(double left, double right)
 {
     left_front_master_.Set(left);
-    right_front_master_.Set(right);
+    right_front_master_.Set(-right);
 }
 
 frc::DifferentialDriveWheelSpeeds Drivetrain::GetWheelSpeeds()
 {
     return {
         units::meters_per_second_t(left_encoder_.GetVelocity()),
-        units::meters_per_second_t(right_encoder_.GetVelocity())
+        -units::meters_per_second_t(right_encoder_.GetVelocity())
     };
 }
 
@@ -125,8 +136,10 @@ frc::Pose2d Drivetrain::GetPose() const
 {
     return odometry_.GetPose();
 }
-units::degree_t Drivetrain::GetHeading()
+units::degree_t Drivetrain::GetHeading(bool reset)
 {
+    if (reset)
+        gyro_.Reset();
     return units::degree_t(std::remainder(gyro_.GetAngle(), 360) * (constants::drivetrain::kGyroReversed ? -1.0 : 1.0));
 }
 units::meter_t Drivetrain::GetLeftEncoderDistance()
@@ -135,7 +148,7 @@ units::meter_t Drivetrain::GetLeftEncoderDistance()
 }
 units::meter_t Drivetrain::GetRightEncoderDistance()
 {
-    return units::meter_t(right_encoder_.GetPosition());
+    return -units::meter_t(right_encoder_.GetPosition());
 }
 
 void Drivetrain::ResetEncoders()

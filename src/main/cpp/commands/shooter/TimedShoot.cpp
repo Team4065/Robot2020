@@ -2,16 +2,17 @@
 #include <iostream>
 
 TimedShoot::TimedShoot(units::revolutions_per_minute_t rpm, units::second_t time)
-  : rpm_(rpm), time_(time), start_time_(units::second_t(frc::Timer::GetFPGATimestamp()))
+  : rpm_(rpm), time_(time), start_time_(units::second_t(frc::Timer::GetFPGATimestamp())),
+  timer_started_(false), hysteresis_flag_(false)
 {
   AddRequirements({&Shooter::GetInstance(), &Serializer::GetInstance()});
 }
 
 void TimedShoot::Initialize()
 {
+  timer_.Reset();
   Shooter::GetInstance().SetShooterVelocity(rpm_);
   std::cout << "Starting!\n";
-  timer_started_ = false;
 }
 
 void TimedShoot::Execute()
@@ -27,12 +28,13 @@ void TimedShoot::Execute()
     Shooter::GetInstance().EngageKicker();
     Serializer::GetInstance().Forward();
   }
-  if (!Shooter::GetInstance().AtDesiredVelocityWithHysteresis() && hysteresis_flag_)
+  if(!Shooter::GetInstance().AtDesiredVelocityWithHysteresis() && hysteresis_flag_)
   {
-    Serializer::GetInstance().Idle();
     Shooter::GetInstance().DisableFeeder();
     Shooter::GetInstance().DisableKicker();
+    Serializer::GetInstance().Idle();
   }
+
 }
 
 // Called once the command ends or is interrupted.
@@ -48,7 +50,5 @@ void TimedShoot::End(bool interrupted)
 // Returns true when the command should end.
 bool TimedShoot::IsFinished()
 {
-  std::cout << (units::second_t(frc::Timer::GetFPGATimestamp()) - start_time_).to<double>() << std::endl;
-  // return units::second_t(frc::Timer::GetFPGATimestamp()) - start_time_ >= time_;
   return timer_.HasPeriodPassed(time_);
 }

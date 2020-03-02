@@ -35,20 +35,20 @@ namespace constants
     
     namespace drivetrain
     {
-        const int kRightFrontMotorPort = 1; 
-        const int kRightMiddleMotorPort = 2;
-        const int kLeftFrontMotorPort = 3;
-        const int kLeftMiddleMotorPort = 4;
+        const int kRightFrontMotorPort = 4; 
+        const int kRightMiddleMotorPort = 3;
+        const int kLeftFrontMotorPort = 1;
+        const int kLeftMiddleMotorPort = 2;
 
         constexpr units::volt_t kNominalVoltage { 12.0 };
-        const bool kGyroReversed = false; // Inaccurate!
+        const bool kGyroReversed = true; // Inaccurate!
         const units::current::ampere_t kMaxCurrentDraw { 30.0 };
         const units::meter_t kWheelDiameter { 0.1524 };
-        const units::inch_t kTrackWidth { 0.6969 }; // Maybe 
-        const units::volt_t kS { 0.0 }; // Inaccurate!
-        const units::unit_t<kv> kV { 0.0 }; // Inaccurate!
-        const units::unit_t<ka> kA { 0.0 }; // Inaccurate!
-        const double kPDriveVel = 0.001;
+        const units::inch_t kTrackWidth { 0.6356 }; // Maybe 
+        const units::volt_t kS { 0.1235 }; // Inaccurate!
+        const units::unit_t<kv> kV { 2.46 }; // Inaccurate!
+        const units::unit_t<ka> kA { 0.161 }; // Inaccurate!
+        const double kPDriveVel = 6.44;
         extern const frc::DifferentialDriveKinematics kDriveKinematics;
         extern const frc::TrajectoryConfig kAutoConfig;
 
@@ -68,7 +68,7 @@ namespace constants
         namespace auto_mode
         {
             constexpr units::meters_per_second_t kMaxVelocity { 1.0 };
-            constexpr units::meters_per_second_squared_t kMaxAcceleration { 2.0 };
+            constexpr units::meters_per_second_squared_t kMaxAcceleration { 1.0 };
             constexpr double kRamseteB = 2.0;
             constexpr double kRamseteZeta = 0.7;
         }
@@ -101,14 +101,14 @@ namespace constants
     namespace intake
     {
         constexpr int kIntakeMotorID = 10;
-        constexpr int kSolenoidPorts[2] = { 3, 7 }; 
+        constexpr int kSolenoidPorts[2] = { 7, 3 }; 
         constexpr units::current::ampere_t kMaxCurrentDraw { 25.0 };
         constexpr float kMotorOperatingPercentage = 0.65f; // 
     }
 
     namespace lift
     {
-        const int kSolenoidPorts[2] = { 2, 6 };
+        const int kSolenoidPorts[2] = { 6, 2 };
 
         constexpr int kMasterPort = 8;
         constexpr int kSlavePort = 6;
@@ -139,9 +139,13 @@ namespace constants
     namespace limelight
     {
         constexpr units::degree_t kCameraPitch { 30.0 };
-        constexpr double kAlignKp = 0.001;
+        constexpr double kAlignKp = 0.013;
         constexpr double kAlignKi = 0.0;
-        constexpr double kAlignKd = 0.0;
+        constexpr double kAlignKd = 0.00;
         constexpr units::degree_t kOffsetTolerance { 1.5 };
+        enum pipes
+        {
+            NO_TRACKING, TRACKING
+        };
     }
 }

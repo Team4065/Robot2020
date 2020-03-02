@@ -5,6 +5,10 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/buttons/Trigger.h>
+#include <frc2/command/RamseteCommand.h>
+#include <frc2/command/SequentialCommandGroup.h>
+#include <frc/trajectory/TrajectoryGenerator.h>
+#include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
 
 #include "subsystems/Shooter.h"
 #include "subsystems/Serializer.h"
@@ -24,9 +28,15 @@
 
 #include "commands/Serializer/VBeltOff.h"
 
+#include "commands/TrackThenAlign.h"
+
 #include "commands/lift/IdleLift.h"
 #include "commands/lift/MoveDown.h"
 #include "commands/lift/MoveUp.h"
+#include "commands/lift/ToggleLiftPiston.h"
+
+#include "commands/drivetrain/VisionAlign.h"
+#include "commands/TrackThenAlign.h"
 
 #include "frc2/command/button/JoystickButton.h"
 
@@ -77,6 +87,8 @@ public:
   GEN_BUTTON_MAIN_CONTROLLER(back_btn_, 7);
   AxisButton lt_btn_ {&controller_, 2, 0.5};
   AxisButton rt_btn_ {&controller_, 3, 0.5};
+
+  frc2::Command* GetAutonomousCommand();
 
 private:
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions
