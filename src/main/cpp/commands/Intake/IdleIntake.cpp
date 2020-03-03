@@ -5,20 +5,17 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
+#include "commands/Intake/IdleIntake.h"
 
-#include <frc2/command/CommandHelper.h>
-#include <frc2/command/InstantCommand.h>
+// NOTE:  Consider using this command inline, rather than writing a subclass.
+// For more information, see:
+// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
+IdleIntake::IdleIntake() {
+  AddRequirements({ &Intake::GetInstance() });
+}
 
-#include "subsystems/Vision.h"
-#include "subsystems/Drivetrain.h"
-#include "Constants.h"
-
-class EngageVisionTracking
-    : public frc2::CommandHelper<frc2::InstantCommand,
-                                 EngageVisionTracking> {
- public:
-  EngageVisionTracking();
-
-  void Initialize() override;
-};
+// Called when the command is initially scheduled.
+void IdleIntake::Initialize()
+{
+  Intake::GetInstance().Idle();
+}

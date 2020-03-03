@@ -7,31 +7,16 @@
 
 #pragma once
 
-#include <frc2/command/CommandBase.h>
 #include <frc2/command/CommandHelper.h>
-#include "util/ReferencedTunable.h"
-#include "subsystems/Lift.h"
+#include <frc2/command/InstantCommand.h>
 
-/**
- * An example command.
- *
- * <p>Note that this extends CommandHelper, rather extending CommandBase
- * directly; this is crucially important, or else the decorator functions in
- * Command will *not* work!
- */
-class MoveDown
-    : public frc2::CommandHelper<frc2::CommandBase, MoveDown> {
+#include "subsystems/Intake.h"
+
+class IdleIntake
+    : public frc2::CommandHelper<frc2::InstantCommand,
+                                 IdleIntake> {
  public:
-  MoveDown(bool fullPower_);
+  IdleIntake();
 
   void Initialize() override;
-
-  void Execute() override;
-
-  void End(bool interrupted) override;
-
-  bool IsFinished() override;
-
-  double kP_;
-  double fullPower_;
 };

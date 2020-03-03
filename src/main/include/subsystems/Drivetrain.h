@@ -6,6 +6,8 @@
 #include <frc2/command/SubsystemBase.h>
 #include <frc/geometry/Pose2d.h>
 #include <frc/kinematics/DifferentialDriveOdometry.h>
+#include <frc/drive/DifferentialDrive.h>
+#include <frc/SpeedControllerGroup.h>
 #include <units/units.h>
 #include "networktables/NetworkTable.h"
 #include "networktables/NetworkTableEntry.h"
@@ -65,6 +67,11 @@ private:
   rev::CANSparkMax right_middle_slave_ { constants::drivetrain::kRightMiddleMotorPort, rev::CANSparkMax::MotorType::kBrushless };
   rev::CANEncoder  right_encoder_      { right_front_master_.GetEncoder() };
   rev::CANPIDController right_pid_     { right_front_master_.GetPIDController() };
+
+  frc::SpeedControllerGroup left_motors_ { left_front_master_, left_middle_slave_ };
+  frc::SpeedControllerGroup right_motors_ { right_front_master_, right_middle_slave_ };
+
+  frc::DifferentialDrive drive_ { left_motors_, right_motors_ };
 
   AHRS gyro_ { frc::SPI::Port::kMXP };
 

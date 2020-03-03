@@ -33,6 +33,8 @@
 #include "commands/shooter/TimedShoot.h"
 
 #include "commands/Intake/ToggleIntake.h"
+#include "commands/Intake/IdleIntake.h"
+#include "commands/Intake/ReverseIntake.h"
 
 #include "commands/Serializer/VBeltForward.h"
 

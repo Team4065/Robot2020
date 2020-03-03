@@ -108,6 +108,8 @@ namespace constants
 
         constexpr int kPositionPIDPort = 1;
 
+        constexpr units::volt_t kMinTurnVoltage { 0.5 };
+
         namespace auto_mode
         {
             constexpr units::meters_per_second_t kMaxVelocity { 3.5 };
@@ -181,8 +183,10 @@ namespace constants
 
     namespace limelight
     {
-        constexpr units::degree_t kCameraPitch { 30.0 };
-        constexpr double kAlignKp = 0.013;
+        constexpr units::degree_t kCameraAngle { 30.0 };
+        constexpr units::meter_t kCameraHeight { 0.0 };
+        constexpr units::meter_t kGoalHeight { 0.0 };
+        constexpr double kAlignKp = 0.007;
         constexpr double kAlignKi = 0.0;
         constexpr double kAlignKd = 0.00;
         constexpr units::degree_t kOffsetTolerance { 1.5 };

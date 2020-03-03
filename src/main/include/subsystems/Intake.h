@@ -25,6 +25,7 @@ public:
 
   void Suck();
   void Idle();
+  void Reverse();
   void Retract();
   void Extend();
 
