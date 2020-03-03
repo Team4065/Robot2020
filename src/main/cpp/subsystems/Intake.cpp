@@ -26,6 +26,12 @@ void Intake::Idle()
     motor_.Set(ControlMode::PercentOutput, 0.0);
 }
 
+void Intake::Reverse()
+{
+    is_active_ = true;
+    motor_.Set(ControlMode::PercentOutput, -0.15);
+}
+
 void Intake::Retract()
 {
     is_deployed_ = false;
