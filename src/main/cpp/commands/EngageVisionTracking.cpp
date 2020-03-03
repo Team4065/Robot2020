@@ -11,7 +11,7 @@
 // For more information, see:
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 EngageVisionTracking::EngageVisionTracking() {
-  AddRequirements({ &Vision::GetInstance() });
+  AddRequirements({ &Vision::GetInstance(), &Drivetrain::GetInstance() });
 }
 
 // Called when the command is initially scheduled.
@@ -20,4 +20,5 @@ void EngageVisionTracking::Initialize()
   Vision::GetInstance().GetLimelight().SetPipeline(constants::limelight::pipes::TRACKING);
   Vision::GetInstance().GetLimelight().SetLEDMode(frc4065::Limelight::LEDMode::ON);
   Vision::GetInstance().GetLimelight().SetCamMode(frc4065::Limelight::CamMode::PROCESSING);
+  Drivetrain::GetInstance().TankDriveVolts(0_V, 0_V);
 }

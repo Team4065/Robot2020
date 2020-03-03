@@ -16,7 +16,7 @@ void BlinkVisionTimed::Execute() {}
 
 void BlinkVisionTimed::End(bool interrupted)
 {
-  Vision::GetInstance().GetLimelight().SetLEDMode(frc4065::Limelight::LEDMode::OFF);
+  Vision::GetInstance().GetLimelight().SetLEDMode(frc4065::Limelight::LEDMode::ON);
 }
 
 // Returns true when the command should end.

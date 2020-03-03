@@ -22,7 +22,6 @@ void VisionAlign::Initialize()
   limelight_->SetPipeline(constants::limelight::pipes::TRACKING);
   limelight_->SetLEDMode(frc4065::Limelight::LEDMode::ON);
   limelight_->SetCamMode(frc4065::Limelight::CamMode::PROCESSING);
-  Drivetrain::GetInstance().TankDrivePercent(0.0, 0.0);
   if (!limelight_->HasActiveTarget())
   {
     frc2::CommandScheduler::GetInstance().Schedule(new BlinkVisionTimed(3_s));
@@ -38,8 +37,9 @@ void VisionAlign::Initialize()
 void VisionAlign::Execute()
 {
   double turn = pid_controller_.Calculate(Drivetrain::GetInstance().GetHeading().to<double>());
-  std::cout << "Turn: " << turn << " Error: " << pid_controller_.GetPositionError() << std::endl;
-  Drivetrain::GetInstance().TankDriveVolts(units::volt_t(turn), -units::volt_t(turn));
+  std::cout << "Turn: " << turn << " Error: " << pid_controller_.GetPositionError() << " Offset: " << Drivetrain::GetInstance().GetHeading().to<double>() << std::endl;
+  units::volt_t min_command_volts_ = constants::drivetrain::kMinTurnVoltage * ((turn > 0) ? 1 : -1);
+  Drivetrain::GetInstance().TankDriveVolts(units::volt_t(turn) + min_command_volts_, -units::volt_t(turn) - min_command_volts_);
 }
 
 // Called once the command ends or is interrupted.

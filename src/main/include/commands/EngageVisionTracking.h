@@ -11,6 +11,7 @@
 #include <frc2/command/InstantCommand.h>
 
 #include "subsystems/Vision.h"
+#include "subsystems/Drivetrain.h"
 #include "Constants.h"
 
 class EngageVisionTracking
