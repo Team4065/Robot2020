@@ -53,11 +53,11 @@ Drivetrain::Drivetrain()
     right_pid_.SetSmartMotionMaxVelocity(constants::drivetrain::kMaxVelocity, constants::drivetrain::kVelocityPIDPort);
 
 
-    left_encoder_.SetPositionConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * M_PI / constants::drivetrain::kGearRatio);
-    right_encoder_.SetPositionConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * M_PI / constants::drivetrain::kGearRatio);
+    left_encoder_.SetPositionConversionFactor(1);
+    right_encoder_.SetPositionConversionFactor(1);
 
-    left_encoder_.SetVelocityConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * M_PI / constants::drivetrain::kGearRatio / 60);
-    right_encoder_.SetVelocityConversionFactor(constants::drivetrain::kWheelDiameter.to<double>() * M_PI / constants::drivetrain::kGearRatio / 60);
+    left_encoder_.SetVelocityConversionFactor(1);
+    right_encoder_.SetVelocityConversionFactor(1);
 
    /*
     frc4065::ReferencedTunable::Register("kP", kP_Velocity);
@@ -88,11 +88,11 @@ void Drivetrain::Periodic()
     right_pid_.SetSmartMotionMaxAccel(maxAccel, constants::drivetrain::kVelocityPIDPort);
     */
     static int loop_ = 0;
-    if (loop_ % 20 == 0)
-        std::cout << "Left (m.): " << GetLeftEncoderDistance().to<double>() << " Right (m.): " << GetRightEncoderDistance().to<double>() << " Heading (deg.): " << GetHeading().to<double>() << std::endl;
+    // if (loop_ % 20 == 0)
+    //     std::cout << "Left (m.): " << GetLeftEncoderDistance().to<double>() << " Right (m.): " << GetRightEncoderDistance().to<double>() << " Heading (deg.): " << GetHeading().to<double>() << std::endl;
     loop_++;
     odometry_.Update(frc::Rotation2d(GetHeading()), GetLeftEncoderDistance(), GetRightEncoderDistance());
-
+    drive_.Feed();
 }
 
 void Drivetrain::ArcadeDrive(double fwd, double rot) {}
@@ -104,12 +104,13 @@ void Drivetrain::TankDriveVolts(units::volt_t left, units::volt_t right)
     DEBUG_LOG(((std::abs(right.to<double>()) > 12.0 || std::abs(right.to<double>()) < 0.0) 
                 ? "Attempting to apply voltage to right side out of bounds!" : ""));
     std::cout << "Left (V): " << left.to<double>() << " Right (V): " << -right.to<double>() << std::endl;
-    left_front_master_.SetVoltage(left);
-    right_front_master_.SetVoltage(-right);
+    left_motors_.SetVoltage(left);
+    right_motors_.SetVoltage(-right);
 }
 
 void Drivetrain::TankDrivePercent(double left, double right)
 {
+    std::cout << left << " " << -right << std::endl;
     left_front_master_.Set(left);
     right_front_master_.Set(-right);
 }
@@ -117,8 +118,8 @@ void Drivetrain::TankDrivePercent(double left, double right)
 frc::DifferentialDriveWheelSpeeds Drivetrain::GetWheelSpeeds()
 {
     return {
-        units::meters_per_second_t(left_encoder_.GetVelocity()),
-        -units::meters_per_second_t(right_encoder_.GetVelocity())
+        units::meters_per_second_t(left_encoder_.GetVelocity() / constants::drivetrain::kGearRatio * 0.1524 * M_PI / 60),
+        -units::meters_per_second_t(right_encoder_.GetVelocity() / constants::drivetrain::kGearRatio * 0.1524 * M_PI / 60)
     };
 }
 
@@ -134,11 +135,11 @@ units::degree_t Drivetrain::GetHeading(bool reset)
 }
 units::meter_t Drivetrain::GetLeftEncoderDistance()
 {
-    return units::meter_t(left_encoder_.GetPosition());
+    return units::meter_t(left_encoder_.GetPosition() / constants::drivetrain::kGearRatio * 0.1524 * M_PI);
 }
 units::meter_t Drivetrain::GetRightEncoderDistance()
 {
-    return -units::meter_t(right_encoder_.GetPosition());
+    return -units::meter_t(right_encoder_.GetPosition() / constants::drivetrain::kGearRatio * 0.1524 * M_PI);
 }
 
 void Drivetrain::ResetEncoders()

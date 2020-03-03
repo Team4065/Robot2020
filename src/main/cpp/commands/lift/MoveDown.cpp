@@ -12,7 +12,7 @@ MoveDown::MoveDown() {
 
 // Called when the command is initially scheduled.
 void MoveDown::Initialize() {
-  percentDwnCmd_ = -0.2;
+  percentDwnCmd_ = -0.75;
 }
 void MoveDown::Execute()
 {

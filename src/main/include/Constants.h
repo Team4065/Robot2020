@@ -139,7 +139,7 @@ namespace constants
     namespace limelight
     {
         constexpr units::degree_t kCameraPitch { 30.0 };
-        constexpr double kAlignKp = 0.013;
+        constexpr double kAlignKp = 0.007;
         constexpr double kAlignKi = 0.0;
         constexpr double kAlignKd = 0.00;
         constexpr units::degree_t kOffsetTolerance { 1.5 };

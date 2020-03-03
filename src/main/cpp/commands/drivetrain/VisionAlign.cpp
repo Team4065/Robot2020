@@ -17,6 +17,7 @@ VisionAlign::VisionAlign() : pid_controller_(constants::limelight::kAlignKp, con
 // Called when the command is initially scheduled.
 void VisionAlign::Initialize()
 {
+  exit_flag_ = false;
   frc4065::Limelight* limelight_ = &Vision::GetInstance().GetLimelight();
   limelight_->SetPipeline(constants::limelight::pipes::TRACKING);
   limelight_->SetLEDMode(frc4065::Limelight::LEDMode::ON);
@@ -38,11 +39,11 @@ void VisionAlign::Execute()
 {
   double turn = pid_controller_.Calculate(Drivetrain::GetInstance().GetHeading().to<double>());
   std::cout << "Turn: " << turn << " Error: " << pid_controller_.GetPositionError() << std::endl;
-  Drivetrain::GetInstance().TankDrivePercent(-turn, turn);
+  Drivetrain::GetInstance().TankDriveVolts(units::volt_t(turn), -units::volt_t(turn));
 }
 
 // Called once the command ends or is interrupted.
-void VisionAlign::End(bool interrupted) {}
+void VisionAlign::End(bool interrupted) {std::cout << "ending\n";}
 
 // Returns true when the command should end.
-bool VisionAlign::IsFinished() { return exit_flag_ || pid_controller_.AtSetpoint(); }
+bool VisionAlign::IsFinished() { return exit_flag_ /*|| pid_controller_.AtSetpoint()*/; }

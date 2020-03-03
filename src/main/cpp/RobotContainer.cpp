@@ -18,7 +18,7 @@ void RobotContainer::ConfigureButtonBindings() {
   b_btn_.WhenPressed(new ToggleLiftPiston());
   rb_btn_.WhenPressed(new ToggleIntake());
   //lb_btn_.WhenPressed(new TimedShoot(4000_rpm, 6_s));
-  lb_btn_.WhileHeld(new TimedShoot(4000_rpm, 10_s));
+  lb_btn_.WhileHeld(new TimedShoot(3500_rpm, 10_s));
   // sl_btn_.WhenPressed();
   // sr_btn_.WhenPressed();
   start_btn_.WhenPressed(new TrackThenAlign());
@@ -46,12 +46,13 @@ frc2::Command* RobotContainer::GetAutonomousCommand()
   config.SetKinematics(constants::drivetrain::kDriveKinematics);
   // Apply the voltage constraint
   config.AddConstraint(autoVoltageConstraint);
+  config.SetReversed(false);
   frc::Trajectory traj_ = frc::TrajectoryGenerator::GenerateTrajectory(
       frc::Pose2d(0_m, 0_m, frc::Rotation2d(0_deg)),
       {
-        frc::Translation2d(1_m, 1_m)
+        //frc::Translation2d(1_m, 1_m)
       },
-      frc::Pose2d(2_m, 0_m, frc::Rotation2d(0_deg)),
+      frc::Pose2d(1_m, 0_m, frc::Rotation2d(0_deg)),
       config
   );
 
@@ -65,12 +66,12 @@ frc2::Command* RobotContainer::GetAutonomousCommand()
     [this] { return drivetrain_.GetWheelSpeeds(); },
     frc2::PIDController(constants::drivetrain::kPDriveVel, 0, 0),
     frc2::PIDController(constants::drivetrain::kPDriveVel, 0, 0),
-    [this](units::volt_t left, units::volt_t right) { drivetrain_.TankDrivePercent(left.to<double>() / 12.0, right.to<double>() / 12.0); },
+    [this](units::volt_t left, units::volt_t right) { drivetrain_.TankDriveVolts(left, right); },
   {&drivetrain_});
 
   return new frc2::SequentialCommandGroup(
     std::move(ramsete_command_),
-    frc2::InstantCommand([this] { drivetrain_.TankDriveVolts(0_V, 0_V); }),
-    TrackThenAlign()
+    frc2::InstantCommand([this] { drivetrain_.TankDriveVolts(0_V, 0_V); })//,
+    //TrackThenAlign()
   );
 }

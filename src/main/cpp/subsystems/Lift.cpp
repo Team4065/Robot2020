@@ -34,6 +34,7 @@ Lift::Lift()
     // master_pid_.SetSmartMotionMaxAccel(constants::lift::kMaxAcceleration * 60);
 
     solenoid_.Set(frc::DoubleSolenoid::Value::kReverse);
+    is_extended_ = false;
 
     initial_delta_position_ = GetEncAPos() - GetEncBPos();
     std::cout << "initial_delta_position_ = " << initial_delta_position_ << std::endl;

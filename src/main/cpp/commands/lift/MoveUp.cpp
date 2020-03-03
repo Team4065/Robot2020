@@ -12,7 +12,7 @@ MoveUp::MoveUp() {
 
 // Called when the command is initially scheduled.
 void MoveUp::Initialize() {
-  percentUpCmd_ = 0.2;
+  percentUpCmd_ = 0.75;
 }
 
 // Called repeatedly when this Command is scheduled to run
