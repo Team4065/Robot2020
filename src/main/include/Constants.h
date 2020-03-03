@@ -79,7 +79,7 @@ namespace constants
         constexpr int kLeftMotorPort = 1;
         constexpr int kRightMotorPort = 2;
         constexpr int kFeederMotor1Port = 5;
-        constexpr int kFeederMotor2Port = 9;
+        constexpr int kFeederMotor2Port = 8;//9;
 
         constexpr int kAllowableVelocityError = 10;
         constexpr float kKickerSpeed = 0.8;
