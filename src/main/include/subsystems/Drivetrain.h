@@ -39,7 +39,7 @@ public:
 
   frc::DifferentialDriveWheelSpeeds GetWheelSpeeds();
   frc::Pose2d GetPose() const;
-  units::degree_t GetHeading(bool reset = false);
+  units::degree_t GetHeading();
   units::meter_t GetLeftEncoderDistance();
   units::meter_t GetRightEncoderDistance();
   

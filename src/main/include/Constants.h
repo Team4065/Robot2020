@@ -4,6 +4,11 @@
 #include <frc/kinematics/DifferentialDriveKinematics.h>
 #include <frc/trajectory/TrajectoryConfig.h>
 #include <cmath>
+#include <frc/kinematics/DifferentialDriveKinematics.h>
+#include <frc/trajectory/constraint/DifferentialDriveKinematicsConstraint.h>
+#include <frc/trajectory/TrajectoryConfig.h>
+#include <units/units.h>
+#include <wpi/math>
 
 /*
 CAN IDs:
@@ -21,6 +26,44 @@ Pneumatic IDs:
 x,x intake
 x,x lift
 */
+
+namespace DriveConstants {
+constexpr int kLeftMotor1Port = 1;
+constexpr int kLeftMotor2Port = 2;
+constexpr int kRightMotor1Port = 4;
+constexpr int kRightMotor2Port = 3;
+
+constexpr auto kTrackwidth = 0.6356_m;
+
+extern const frc::DifferentialDriveKinematics kDriveKinematics;
+
+constexpr double kGearRatio = 9.47;
+constexpr double kWheelDiameterMeters = 0.1524;
+constexpr double kPI = wpi::math::pi;
+
+constexpr bool kGyroReversed = true;
+
+constexpr auto ks = 0.1235_V;
+constexpr auto kv = 2.46 * 1_V * 1_s / 1_m;
+constexpr auto ka = 0.161 * 1_V * 1_s * 1_s / 1_m;
+
+constexpr double kPDriveVel = 6.44;
+constexpr double kIDriveVel = 0.0;
+constexpr double kDDriveVel = 0;
+
+constexpr double kencoderConstant =  kWheelDiameterMeters * wpi::math::pi / kGearRatio;
+
+} 
+
+namespace AutoConstants {
+constexpr auto kMaxSpeed = 0.5_mps;
+constexpr auto kMaxAcceleration = 0.5_mps_sq;
+
+// Reasonable baseline values for a RAMSETE follower in units of meters and
+// seconds
+constexpr double kRamseteB = 2.0;
+constexpr double kRamseteZeta = 0.7;
+}  // namespace AutoConstants
 
 namespace constants
 {
@@ -67,8 +110,8 @@ namespace constants
 
         namespace auto_mode
         {
-            constexpr units::meters_per_second_t kMaxVelocity { 1.0 };
-            constexpr units::meters_per_second_squared_t kMaxAcceleration { 1.0 };
+            constexpr units::meters_per_second_t kMaxVelocity { 3.5 };
+            constexpr units::meters_per_second_squared_t kMaxAcceleration { 5.0 };
             constexpr double kRamseteB = 2.0;
             constexpr double kRamseteZeta = 0.7;
         }
@@ -88,9 +131,9 @@ namespace constants
         constexpr units::current::ampere_t kMaxCurrentDraw { 45.0 };
         constexpr units::current::ampere_t kMaxPeakCurrentDraw { 45.0 };
         constexpr units::time::second_t kCurrentLimitingTriggerTime { 0.01 }; // 10ms
-        constexpr double kP = 0.08;
+        constexpr double kP = 0.1;
         constexpr double kD = 0.0;
-        constexpr double kFF = 0.1;
+        constexpr double kFF = 0.12;
         constexpr units::meter_t kWheelDiameter { 0.1524 };
         constexpr units::revolutions_per_minute_t kAllowableShootingVelocityError = 45_rpm; // within 30 rpm of target rate
         constexpr units::revolutions_per_minute_t kAllowableSpinupVelocityError = 30_rpm; // within 30 rpm of target rate
