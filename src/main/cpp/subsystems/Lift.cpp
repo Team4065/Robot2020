@@ -6,6 +6,13 @@
 /*----------------------------------------------------------------------------*/
 
 #include "subsystems/Lift.h"
+#include "util/Macros.h"
+#include <iostream>
+#include "util/ReferencedTunable.h"
+
+using namespace frc4065;
+using namespace constants;
+using namespace std;
 
 Lift::Lift()
 {
@@ -23,8 +30,14 @@ Lift::Lift()
     lift_master_.SetInverted(false);
     lift_slave_.SetInverted(false);
 
-    master_pid_.SetP(0.5);
-    slave_pid_.SetP(0.5);
+    kP_ = 0.3;
+    kI_ = 0.00;
+    ReferencedTunable::Register("Lift Move Down kI", kI_);
+
+    master_pid_.SetP(kP_);
+    slave_pid_.SetP(kP_);
+    master_pid_.SetI(kI_);
+    slave_pid_.SetI(kI_);
 
     // master_encoder_.SetInverted(false);
     // slave_encoder_.SetInverted(false);
@@ -37,8 +50,8 @@ Lift::Lift()
     is_extended_ = false;
 
     initial_delta_position_ = GetEncAPos() - GetEncBPos();
-    std::cout << "initial_delta_position_ = " << initial_delta_position_ << std::endl;
 
+    DEBUG_LOG("Lift Initial Delta Position = " + to_string(initial_delta_position_));
 }
 
 Lift& Lift::GetInstance(){
@@ -84,9 +97,31 @@ void Lift::MovePercent(double percent){
     lift_slave_.Set(percent);  
 }
 
-void Lift::MoveLift(double percentCommand) {
-    SetA(percentCommand);
-    SetBPosition(GetEncAPos() - GetInitialDeltaPosition(), percentCommand);
+void Lift::MoveLift(double kP, bool moveUp) {
+    // SetA(percentCommand);
+    double MAX_ERROR = 1.0;     //Revolutions
+    if(kP != kP_) {
+        kP_ = kP;
+        master_pid_.SetP(kP_);
+        slave_pid_.SetP(kP_);
+    }
+
+    double deltaPos = (GetEncAPos() - GetEncBPos()) - initial_delta_position_;
+
+    SetAPosition(GetEncAPos() - deltaPos/2 + ((moveUp == true) ? 1 : - 1) * MAX_ERROR);
+    SetBPosition(GetEncBPos() + deltaPos/2 + ((moveUp == true) ? 1 : - 1) * MAX_ERROR);
+
+    DEBUG_LOG("Lift Enc A Pos = " + to_string(GetEncAPos()));
+    // DEBUG_LOG("Lift Enc B Pos = " + to_string(GetEncBPos()));
+    // DEBUG_LOG("Lift Delta Position = " + to_string(deltaPos));
+}
+
+void Lift::SetAPosition(double position) {
+    master_pid_.SetReference(position, rev::ControlType::kPosition, 0, 0);
+}
+
+void Lift::SetBPosition(double position) {
+    slave_pid_.SetReference(position, rev::ControlType::kPosition, 0, 0);
 }
 
 void Lift::SetAPosition(double position, double feedForward) {
@@ -100,6 +135,11 @@ void Lift::SetBPosition(double position, double feedForward) {
 void Lift::SetA(double percent)
 {
     lift_master_.Set(percent);
+}
+
+void Lift::SetB(double percent)
+{
+    lift_slave_.Set(percent);
 }
 
 double Lift::GetInitialDeltaPosition()

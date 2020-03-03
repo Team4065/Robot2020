@@ -22,7 +22,7 @@
 class MoveDown
     : public frc2::CommandHelper<frc2::CommandBase, MoveDown> {
  public:
-  MoveDown();
+  MoveDown(bool fullPower_);
 
   void Initialize() override;
 
@@ -32,5 +32,6 @@ class MoveDown
 
   bool IsFinished() override;
 
-  double percentDwnCmd_;
+  double kP_;
+  double fullPower_;
 };

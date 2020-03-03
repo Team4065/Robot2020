@@ -20,6 +20,11 @@ Drivetrain::Drivetrain()
     right_front_master_.RestoreFactoryDefaults();
     right_middle_slave_.RestoreFactoryDefaults();
 
+    left_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    left_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    right_front_master_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+    right_middle_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
+
     left_front_master_.EnableVoltageCompensation(constants::drivetrain::kNominalVoltage.to<double>());
     left_middle_slave_.EnableVoltageCompensation(constants::drivetrain::kNominalVoltage.to<double>());
     right_front_master_.EnableVoltageCompensation(constants::drivetrain::kNominalVoltage.to<double>());
