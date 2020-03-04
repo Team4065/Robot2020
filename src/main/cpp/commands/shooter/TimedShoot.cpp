@@ -3,7 +3,7 @@
 
 TimedShoot::TimedShoot(units::revolutions_per_minute_t rpm, units::second_t time)
   : rpm_(rpm), time_(time), start_time_(units::second_t(frc::Timer::GetFPGATimestamp())),
-  timer_started_(false), hysteresis_flag_(false)
+   hysteresis_flag_(false), timer_started_(false)
 {
   AddRequirements({&Shooter::GetInstance(), &Serializer::GetInstance()});
 }
