@@ -1,6 +1,7 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc2/command/ParallelCommandGroup.h>
 #include <frc/XboxController.h>
 #include <frc2/command/button/JoystickButton.h>
 #include <frc/smartdashboard/SendableChooser.h>

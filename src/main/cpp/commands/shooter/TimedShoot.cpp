@@ -27,12 +27,15 @@ void TimedShoot::Execute()
     Shooter::GetInstance().EngageFeeder();
     Shooter::GetInstance().EngageKicker();
     Serializer::GetInstance().Forward();
+    Intake::GetInstance().Suck();
+    Intake::GetInstance().Extend();
   }
   if(!Shooter::GetInstance().AtDesiredVelocityWithHysteresis() && hysteresis_flag_)
   {
     Shooter::GetInstance().DisableFeeder();
     Shooter::GetInstance().DisableKicker();
     Serializer::GetInstance().Idle();
+    Intake::GetInstance().Idle();
   }
 
 }
@@ -44,6 +47,8 @@ void TimedShoot::End(bool interrupted)
   Shooter::GetInstance().DisableKicker();
   Serializer::GetInstance().Idle();
   Shooter::GetInstance().SetShooterVelocity(0.0_rpm);
+  Intake::GetInstance().Idle();
+  Intake::GetInstance().Retract();
   std::cout << "Ending!\n";
 }
 

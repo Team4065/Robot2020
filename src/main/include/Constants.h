@@ -148,7 +148,8 @@ namespace constants
         constexpr int kIntakeMotorID = 10;
         constexpr int kSolenoidPorts[2] = { 7, 3 }; 
         constexpr units::current::ampere_t kMaxCurrentDraw { 25.0 };
-        constexpr float kMotorOperatingPercentage = 0.65f; // 
+        constexpr float kMotorOperatingPercentage = 0.65f; //
+        constexpr double kSpinupTime = 0.25; // .25s
     }
 
     namespace lift

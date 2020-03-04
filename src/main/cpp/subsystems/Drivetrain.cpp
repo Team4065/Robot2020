@@ -25,11 +25,11 @@ Drivetrain::Drivetrain()
     // right_front_master_.EnableVoltageCompensation(constants::drivetrain::kNominalVoltage.to<double>());
     // right_middle_slave_.EnableVoltageCompensation(constants::drivetrain::kNominalVoltage.to<double>());
 
-    // left_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    // left_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    left_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    left_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
 
-    // right_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
-    // right_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    right_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
+    right_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
 
     left_front_master_.SetInverted(false);
     right_front_master_.SetInverted(false);
