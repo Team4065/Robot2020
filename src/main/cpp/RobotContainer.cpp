@@ -23,8 +23,8 @@ RobotContainer::RobotContainer()
 void RobotContainer::ConfigureButtonBindings() {
   // y_btn_.WhenPressed(new MoveUp()).WhenReleased(new IdleLift());
   y_btn_.WhileHeld(new MoveUp()).WhenReleased(new IdleLift());
-  a_btn_.WhileHeld(new MoveDown(false)).WhenReleased(new IdleLift()); //Controlled
-  b_btn_.WhileHeld(new MoveDown(true)).WhenReleased(new IdleLift());  //Full Power
+//   a_btn_.WhileHeld(new MoveDown(false)).WhenReleased(new IdleLift()); //Controlled
+  a_btn_.WhileHeld(new MoveDown(true)).WhenReleased(new IdleLift());  //Full Power
   // y_btn_.WhileHeld(new MoveUp());
   // a_btn_.WhileHeld(new MoveDown());
   //x_btn_.WhenPressed(new TimedShoot(60_rpm, 3_s)).WhenReleased(new PreSpinup(0_rpm));
@@ -142,7 +142,6 @@ frc2::Command* RobotContainer::GetAutonomousCommand()
 
   // no auto
   return new frc2::SequentialCommandGroup(
-<<<<<<< HEAD
     std::move(ramseteCommand),
     frc2::InstantCommand([this] { drivetrain_.TankDriveVolts(0_V, 0_V); }, {}),
     TimedShoot(3500_rpm, 2.5_s),
@@ -152,10 +151,5 @@ frc2::Command* RobotContainer::GetAutonomousCommand()
     std::move(ramseteCommand3),
     frc2::InstantCommand([this] { drivetrain_.TankDriveVolts(0_V, 0_V); }, {}),
     TimedShoot(3500_rpm, 2.5_s)
-=======
-    std::move(ramsete_command_),
-    frc2::InstantCommand([this] { drivetrain_.TankDriveVolts(0_V, 0_V); })//,
-    //TrackThenAlign()
->>>>>>> ec9cefede0329b1f53cb83ce24f9af4ed31a2479
   );
 }

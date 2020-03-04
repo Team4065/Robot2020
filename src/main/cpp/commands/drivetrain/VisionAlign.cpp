@@ -29,15 +29,15 @@ void VisionAlign::Initialize()
   }
   else
   {
-    pid_controller_.SetSetpoint(Drivetrain::GetInstance().GetHeading().to<double>() + limelight_->GetHorizontalOffset());
+    pid_controller_.SetSetpoint(-Drivetrain::GetInstance().GetHeading().to<double>() + limelight_->GetHorizontalOffset());
   }
 }
 
 // Called repeatedly when this Command is scheduled to run
 void VisionAlign::Execute()
 {
-  double turn = pid_controller_.Calculate(Drivetrain::GetInstance().GetHeading().to<double>());
-  std::cout << "Turn: " << turn << " Error: " << pid_controller_.GetPositionError() << " Offset: " << Drivetrain::GetInstance().GetHeading().to<double>() << std::endl;
+  double turn = pid_controller_.Calculate(-Drivetrain::GetInstance().GetHeading().to<double>());
+  std::cout << "Turn: " << turn << " Error: " << pid_controller_.GetPositionError() << " Offset: " << Drivetrain::GetInstance().GetHeading().to<double>() << " Setpoint: " << pid_controller_.GetSetpoint() << std::endl;
   units::volt_t min_command_volts_ = constants::drivetrain::kMinTurnVoltage * ((turn > 0) ? 1 : -1);
   Drivetrain::GetInstance().TankDriveVolts(units::volt_t(turn) + min_command_volts_, -units::volt_t(turn) - min_command_volts_);
 }
@@ -46,4 +46,4 @@ void VisionAlign::Execute()
 void VisionAlign::End(bool interrupted) {std::cout << "ending\n";}
 
 // Returns true when the command should end.
-bool VisionAlign::IsFinished() { return exit_flag_ /*|| pid_controller_.AtSetpoint()*/; }
+bool VisionAlign::IsFinished() { return exit_flag_ || pid_controller_.AtSetpoint(); }

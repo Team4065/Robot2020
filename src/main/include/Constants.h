@@ -186,7 +186,7 @@ namespace constants
         constexpr units::degree_t kCameraAngle { 30.0 };
         constexpr units::meter_t kCameraHeight { 0.0 };
         constexpr units::meter_t kGoalHeight { 0.0 };
-        constexpr double kAlignKp = 0.007;
+        constexpr double kAlignKp = 0.023;
         constexpr double kAlignKi = 0.0;
         constexpr double kAlignKd = 0.00;
         constexpr units::degree_t kOffsetTolerance { 1.5 };
