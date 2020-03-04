@@ -129,7 +129,7 @@ namespace constants
         constexpr int kFeederMotorPort = 9;    //Spark Max 
         // constexpr int kKickerMotorPort = 9;    //Spark Max
         // constexpr int kKickerMotorPort = 7;    //Spark Max
-        constexpr int kKickerMotorPort = 3;    //Spark Max
+        constexpr int kKickerMotorPort = 11;    //Spark Max
 
         constexpr int kAllowableVelocityError = 10;
         constexpr double kKickerSpeed = 0.8;
@@ -161,8 +161,9 @@ namespace constants
     {
         const int kSolenoidPorts[2] = { 6, 2 };
 
-        constexpr int kMasterPort = 8;
-        constexpr int kSlavePort = 6;
+        constexpr int kMasterPort = 8;//left
+        constexpr int kSlavePort = 6;//right
+
         constexpr units::inch_t kHeightTolerance { 0.5 };
         constexpr units::inch_t kTurnToInches { 0.0 };
         constexpr units::current::ampere_t kMaxCurrentDraw { 40.0 };
@@ -178,8 +179,8 @@ namespace constants
      
     namespace serializer
     {
-        // constexpr int kSerializerID = 7;
-        constexpr int kSerializerID = 6;        //temp change
+        constexpr int kSerializerID = 7;
+        //constexpr int kSerializerID = 6;        //temp change
         constexpr double kIndexingSpeed = 0.5;
         constexpr double kAntiJamSpeed = 0.1;
     }

@@ -9,13 +9,14 @@
 
 #include <frc2/command/CommandHelper.h>
 #include <frc2/command/InstantCommand.h>
+#include <frc2/command/WaitCommand.h>
+#include <frc2/command/SequentialCommandGroup.h>
 
 #include "subsystems/Intake.h"
 
 class ToggleIntake
-    : public frc2::CommandHelper<frc2::InstantCommand,
+    : public frc2::CommandHelper<frc2::SequentialCommandGroup,
                                  ToggleIntake> {
 public:
   ToggleIntake();
-  void Initialize() override;
 };
