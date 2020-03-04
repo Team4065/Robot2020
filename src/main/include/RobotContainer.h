@@ -1,14 +1,17 @@
 #pragma once
 
 #include <frc2/command/Command.h>
+#include <frc2/command/ParallelCommandGroup.h>
 #include <frc/XboxController.h>
 #include <frc2/command/button/JoystickButton.h>
+#include <frc2/command/button/Button.h>
 #include <frc/smartdashboard/SendableChooser.h>
 #include <frc/buttons/Trigger.h>
 #include <frc2/command/RamseteCommand.h>
 #include <frc2/command/SequentialCommandGroup.h>
 #include <frc/trajectory/TrajectoryGenerator.h>
 #include <frc/trajectory/constraint/DifferentialDriveVoltageConstraint.h>
+#include <frc2/command/PrintCommand.h>
 //
 #include <frc/XboxController.h>
 #include <frc/controller/PIDController.h>
@@ -58,15 +61,12 @@
 #define GEN_BUTTON(name, controller, btn) frc2::JoystickButton name { &controller, btn }
 #define GEN_BUTTON_MAIN_CONTROLLER(name, btn) GEN_BUTTON(name, controller_, btn)
 
-class AxisButton : public frc::Trigger
+class AxisButton : public frc2::Button
 {
 public:
   AxisButton(frc::XboxController* controller, int id, double threshold)
-  : controller_(controller), id_(id), threshold_(threshold) {}
-  bool Get() override
-  {
-    return controller_->GetRawAxis(id_) >= threshold_;
-  }
+  : Button([&]{ return controller->GetRawAxis(id) >= threshold; }),
+  controller_(controller), id_(id), threshold_(threshold) {}
 private:
   frc::XboxController* controller_;
   int id_;

@@ -13,7 +13,7 @@
 TrackThenAlign::TrackThenAlign() {
   AddCommands(
     EngageVisionTracking(),
-    frc2::WaitCommand(1_s),
+    frc2::WaitCommand(0.5_s),
     VisionAlign()
   );
 }

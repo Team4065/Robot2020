@@ -10,7 +10,16 @@
 Vision::Vision() : limelight_("limelight") {}
 
 // This method will be called once per scheduler run
-void Vision::Periodic() {}
+void Vision::Periodic()
+{
+    // std::cout << "Distance Estimation (m.): " << 
+    // frc4065::Limelight::EstimateTargetDistance(
+    //     constants::limelight::kCameraAngle,
+    //     units::degree_t(limelight_.GetVerticalOffset()),
+    //     constants::limelight::kCameraHeight,
+    //     constants::limelight::kGoalHeight
+    // ) << std::endl;
+}
 
 Vision& Vision::GetInstance()
 {

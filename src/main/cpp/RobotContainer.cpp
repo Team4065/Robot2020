@@ -71,7 +71,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand()
       // Pass through these two interior waypoints, making an 's' curve path
      //{frc::Translation2d(1_m, 1_m)},// frc::Translation2d(2_m, -1_m)},
       // End 3 meters straight ahead of where we started, facing forward
-      frc::Pose2d(1_m, 0_m, frc::Rotation2d(30_deg)),
+      frc::Pose2d(1_m, 0_m, frc::Rotation2d(15_deg)),
       // Pass the config
       config);
 
@@ -122,7 +122,7 @@ frc2::Command* RobotContainer::GetAutonomousCommand()
       // Pass through these two interior waypoints, making an 's' curve path
      //{frc::Translation2d(1_m, 1_m)},// frc::Translation2d(2_m, -1_m)},
       // End 3 meters straight ahead of where we started, facing forward
-      frc::Pose2d(2.5_m, 0_m, frc::Rotation2d(30_deg)),
+      frc::Pose2d(2.5_m, 0_m, frc::Rotation2d(20_deg)),
       // Pass the config
       config);
 
@@ -142,13 +142,26 @@ frc2::Command* RobotContainer::GetAutonomousCommand()
 
   // no auto
   return new frc2::SequentialCommandGroup(
-    std::move(ramseteCommand),
+    frc2::ParallelCommandGroup(
+      ToggleLiftPiston(),
+      PreSpinup(2500_rpm),
+      std::move(ramseteCommand)
+    ),
     frc2::InstantCommand([this] { drivetrain_.TankDriveVolts(0_V, 0_V); }, {}),
+    TrackThenAlign(),
+    frc2::InstantCommand([this] { drivetrain_.TankDriveVolts(0_V, 0_V); }, {}),
+    frc2::PrintCommand("Ending alignment."),
     TimedShoot(3500_rpm, 2.5_s),
+    frc2::PrintCommand("Ending shooting."),
     ToggleIntake(),
     std::move(ramseteCommand2),
     frc2::InstantCommand([this] { drivetrain_.TankDriveVolts(0_V, 0_V); }, {}),
-    std::move(ramseteCommand3),
+    frc2::ParallelCommandGroup(
+      PreSpinup(2500_rpm),
+      std::move(ramseteCommand3)
+    ),
+    frc2::InstantCommand([this] { drivetrain_.TankDriveVolts(0_V, 0_V); }, {}),
+    TrackThenAlign(),
     frc2::InstantCommand([this] { drivetrain_.TankDriveVolts(0_V, 0_V); }, {}),
     TimedShoot(3500_rpm, 2.5_s)
   );

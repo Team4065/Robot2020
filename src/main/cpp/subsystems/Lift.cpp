@@ -46,8 +46,8 @@ Lift::Lift()
     // slave_pid_.SetSmartMotionAccelStrategy(rev::CANPIDController::AccelStrategy::kSCurve);
     // master_pid_.SetSmartMotionMaxAccel(constants::lift::kMaxAcceleration * 60);
 
-    solenoid_.Set(frc::DoubleSolenoid::Value::kReverse);
-    is_extended_ = false;
+    solenoid_.Set(frc::DoubleSolenoid::Value::kForward);
+    is_extended_ = true;
 
     initial_delta_position_ = GetEncAPos() - GetEncBPos();
 

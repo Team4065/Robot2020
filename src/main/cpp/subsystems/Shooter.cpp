@@ -34,12 +34,14 @@ Shooter::Shooter()
     left_master_.Config_kP(0, constants::shooter::kP);
     left_master_.Config_kI(0, 0);
     left_master_.Config_kD(0, constants::shooter::kD);
-    left_master_.Config_kF(0, constants::shooter::kFF);
+    //left_master_.Config_kF(0, constants::shooter::kFF);
+    left_master_.Config_kF(0, 0.08);
 
     right_slave_.Config_kP(0, constants::shooter::kP);
     right_slave_.Config_kI(0, 0);
     right_slave_.Config_kD(0, constants::shooter::kD);
-    right_slave_.Config_kF(0, constants::shooter::kFF);
+    //right_slave_.Config_kF(0, constants::shooter::kFF);
+    right_slave_.Config_kF(0, 0.08);
 
     left_master_.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 0);
     right_slave_.ConfigSelectedFeedbackSensor(FeedbackDevice::IntegratedSensor, 0, 0);

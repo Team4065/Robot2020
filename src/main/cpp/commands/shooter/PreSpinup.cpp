@@ -22,4 +22,4 @@ void PreSpinup::Execute() {}
 void PreSpinup::End(bool interrupted) {}
 
 // Returns true when the command should end.
-bool PreSpinup::IsFinished() { return Shooter::GetInstance().AtDesiredVelocity(); }
+bool PreSpinup::IsFinished() { return true; }

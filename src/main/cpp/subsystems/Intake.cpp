@@ -3,6 +3,9 @@
 Intake::Intake()
 {
     solenoid_.Set(frc::DoubleSolenoid::Value::kReverse);
+    motor_.ConfigFactoryDefault();
+    motor_.ConfigClosedloopRamp(constants::intake::kSpinupTime);
+    motor_.ConfigContinuousCurrentLimit(constants::intake::kMaxCurrentDraw.to<double>());
 }
 
 void Intake::Periodic()

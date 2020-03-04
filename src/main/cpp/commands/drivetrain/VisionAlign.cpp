@@ -8,10 +8,10 @@
 #include "commands/drivetrain/VisionAlign.h"
 #include <iostream>
 
-VisionAlign::VisionAlign() : pid_controller_(constants::limelight::kAlignKp, constants::limelight::kAlignKi, constants::limelight::kAlignKd)
+VisionAlign::VisionAlign() : pid_controller_(0.1, 0.003, constants::limelight::kAlignKd)
 {
   AddRequirements({ &Drivetrain::GetInstance(), &Vision::GetInstance() });
-  pid_controller_.SetTolerance(constants::limelight::kOffsetTolerance.to<double>());
+  pid_controller_.SetTolerance(3.0);
 }
 
 // Called when the command is initially scheduled.

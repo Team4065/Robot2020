@@ -56,8 +56,8 @@ constexpr double kencoderConstant =  kWheelDiameterMeters * wpi::math::pi / kGea
 } 
 
 namespace AutoConstants {
-constexpr auto kMaxSpeed = 0.5_mps;
-constexpr auto kMaxAcceleration = 0.5_mps_sq;
+constexpr auto kMaxSpeed = 1.0_mps;
+constexpr auto kMaxAcceleration = 2.0_mps_sq;
 
 // Reasonable baseline values for a RAMSETE follower in units of meters and
 // seconds
@@ -148,7 +148,8 @@ namespace constants
         constexpr int kIntakeMotorID = 10;
         constexpr int kSolenoidPorts[2] = { 7, 3 }; 
         constexpr units::current::ampere_t kMaxCurrentDraw { 25.0 };
-        constexpr float kMotorOperatingPercentage = 0.65f; // 
+        constexpr float kMotorOperatingPercentage = 0.65f; //
+        constexpr double kSpinupTime = 0.25; // .25s
     }
 
     namespace lift
@@ -184,9 +185,9 @@ namespace constants
     namespace limelight
     {
         constexpr units::degree_t kCameraAngle { 30.0 };
-        constexpr units::meter_t kCameraHeight { 0.0 };
-        constexpr units::meter_t kGoalHeight { 0.0 };
-        constexpr double kAlignKp = 0.023;
+        constexpr units::meter_t kCameraHeight { 1.0 };
+        constexpr units::meter_t kGoalHeight { 2.496 };
+        constexpr double kAlignKp = 0.05;
         constexpr double kAlignKi = 0.0;
         constexpr double kAlignKd = 0.00;
         constexpr units::degree_t kOffsetTolerance { 1.5 };
