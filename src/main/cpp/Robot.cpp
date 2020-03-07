@@ -7,12 +7,18 @@
 #include <frc2/command/CommandScheduler.h>
 
 #include <frc/controller/SimpleMotorFeedforward.h>
+#include <cscore.h>
+#include <cameraserver/CameraServer.h>
 
 #include "commands/auto/paths/RunnableTrajectory.h"
 #include "commands/auto/paths/Paths.h"
 
 void Robot::RobotInit() {
     compressor.Start();
+    cs::UsbCamera camera_;
+    camera_ = frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
+    camera_.SetFPS(40);
+    camera_.SetResolution(320, 240);
 }
 void Robot::RobotPeriodic()
 { 

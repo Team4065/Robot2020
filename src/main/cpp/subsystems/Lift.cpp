@@ -29,6 +29,10 @@ Lift::Lift()
     lift_slave_.SetIdleMode(rev::CANSparkMax::IdleMode::kBrake);
     lift_master_.SetInverted(false);
     lift_slave_.SetInverted(false);
+    //lift_master_.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 100);
+    lift_master_.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, 0);
+    //lift_slave_.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kForward, 100);
+    lift_slave_.SetSoftLimit(rev::CANSparkMax::SoftLimitDirection::kReverse, 0);
 
     kP_ = 0.3;
     kI_ = 0.00;
@@ -99,7 +103,7 @@ void Lift::MovePercent(double percent){
 
 void Lift::MoveLift(double kP, bool moveUp) {
     // SetA(percentCommand);
-    double MAX_ERROR = 1.0;     //Revolutions
+    double MAX_ERROR = 10.0;     //Revolutions
     if(kP != kP_) {
         kP_ = kP;
         master_pid_.SetP(kP_);

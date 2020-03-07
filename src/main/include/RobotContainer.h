@@ -60,6 +60,7 @@
 
 #define GEN_BUTTON(name, controller, btn) frc2::JoystickButton name { &controller, btn }
 #define GEN_BUTTON_MAIN_CONTROLLER(name, btn) GEN_BUTTON(name, controller_, btn)
+//#define GEN_BUTTON_SECONDARY_CONTROLLER(name, btn) GEN_BUTTON(name, controller2_, btn)
 
 class AxisButton : public frc2::Button
 {
@@ -77,7 +78,6 @@ class RobotContainer
 {
 public:
   RobotContainer();
- 
   Intake& intake_ = Intake::GetInstance();
   Shooter& shooter_ = Shooter::GetInstance(); 
   Serializer& serializer_ = Serializer::GetInstance();//V-Belt
@@ -86,6 +86,7 @@ public:
   ControlPanelManipulator& control_panel_manipulator_ = ControlPanelManipulator::GetInstance();
 
   frc::XboxController controller_ { constants::oi::kDriverXboxControllerPort };
+  //frc::XboxController controller2_ {1};
 
   GEN_BUTTON_MAIN_CONTROLLER(y_btn_, 4);
   GEN_BUTTON_MAIN_CONTROLLER(a_btn_, 1);
@@ -100,10 +101,24 @@ public:
   AxisButton lt_btn_ {&controller_, 2, 0.5};
   AxisButton rt_btn_ {&controller_, 3, 0.5};
 
+  // GEN_BUTTON_SECONDARY_CONTROLLER(sec_y_btn_, 4);
+  // GEN_BUTTON_SECONDARY_CONTROLLER(sec_a_btn_, 1);
+  // GEN_BUTTON_SECONDARY_CONTROLLER(sec_x_btn_, 3);
+  // GEN_BUTTON_SECONDARY_CONTROLLER(sec_b_btn_, 2);
+  // GEN_BUTTON_SECONDARY_CONTROLLER(sec_rb_btn_, 6);
+  // GEN_BUTTON_SECONDARY_CONTROLLER(sec_lb_btn_, 5);
+  // GEN_BUTTON_SECONDARY_CONTROLLER(sec_sl_btn_, 9);
+  // GEN_BUTTON_SECONDARY_CONTROLLER(sec_sr_btn_, 10);
+  // GEN_BUTTON_SECONDARY_CONTROLLER(sec_start_btn_, 8);
+  // GEN_BUTTON_SECONDARY_CONTROLLER(sec_back_btn_, 7);
+
   frc2::Command* GetAutonomousCommand();
 
 private:
   frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions
+  frc2::Command* GetLeftRendevousAuto();
+  frc2::Command* GetRightRendevousAuto();
+  frc2::Command* GetTrenchAuto();
 
   void ConfigureButtonBindings();
 };

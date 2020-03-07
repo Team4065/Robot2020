@@ -56,8 +56,8 @@ constexpr double kencoderConstant =  kWheelDiameterMeters * wpi::math::pi / kGea
 } 
 
 namespace AutoConstants {
-constexpr auto kMaxSpeed = 1.0_mps;
-constexpr auto kMaxAcceleration = 2.0_mps_sq;
+constexpr auto kMaxSpeed = 1.5_mps;
+constexpr auto kMaxAcceleration = 2.5_mps_sq;
 
 // Reasonable baseline values for a RAMSETE follower in units of meters and
 // seconds
@@ -135,7 +135,7 @@ namespace constants
         constexpr units::time::second_t kCurrentLimitingTriggerTime { 0.01 }; // 10ms
         constexpr double kP = 0.1;
         constexpr double kD = 0.0;
-        constexpr double kFF = 0.12;
+        constexpr double kFF = 0.04;
         constexpr units::meter_t kWheelDiameter { 0.1524 };
         constexpr units::revolutions_per_minute_t kAllowableShootingVelocityError = 45_rpm; // within 30 rpm of target rate
         constexpr units::revolutions_per_minute_t kAllowableSpinupVelocityError = 30_rpm; // within 30 rpm of target rate
@@ -184,8 +184,8 @@ namespace constants
 
     namespace limelight
     {
-        constexpr units::degree_t kCameraAngle { 30.0 };
-        constexpr units::meter_t kCameraHeight { 1.0 };
+        constexpr units::degree_t kCameraAngle { 20.0 };
+        constexpr units::meter_t kCameraHeight { 0.286 };
         constexpr units::meter_t kGoalHeight { 2.496 };
         constexpr double kAlignKp = 0.05;
         constexpr double kAlignKi = 0.0;
