@@ -54,6 +54,13 @@ void RobotContainer::ConfigureButtonBindings() {
   // sec_x_btn_.WhileHeld(new TimedShoot(3500_rpm, 10_s));
   // sec_back_btn_.WhenPressed(new TrackThenAlign());
   // sec_lb_btn_.WhenPressed(new ReverseIntake()).WhenReleased(new IdleIntake());
+
+  //Button Box
+  moveLiftUp_.WhileHeld(new MoveUp());
+  moveLiftDown_.WhileHeld(new MoveDown(true));
+  deployLift_.WhenPressed(new DeployLift());
+  stowLift_.WhenPressed(new StowLift());
+  
 }
 
 frc2::Command* RobotContainer::GetAutonomousCommand()

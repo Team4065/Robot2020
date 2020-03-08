@@ -28,10 +28,10 @@ x,x lift
 */
 
 namespace DriveConstants {
-constexpr int kLeftMotor1Port = 1;
-constexpr int kLeftMotor2Port = 2;
-constexpr int kRightMotor1Port = 4;
-constexpr int kRightMotor2Port = 3;
+// constexpr int kLeftMotor1Port = 1;
+// constexpr int kLeftMotor2Port = 2;
+// constexpr int kRightMotor1Port = 4;
+// constexpr int kRightMotor2Port = 3;
 
 constexpr auto kTrackwidth = 0.6356_m;
 
@@ -74,10 +74,12 @@ namespace constants
     namespace oi
     {
         constexpr int kDriverXboxControllerPort = 0;
+        const int kBottonBox = 1;
     }
     
     namespace drivetrain
     {
+        //Spark Max
         const int kRightFrontMotorPort = 4; 
         const int kRightMiddleMotorPort = 3;
         const int kLeftFrontMotorPort = 1;
@@ -105,7 +107,7 @@ namespace constants
         const float kArbiFeedForw = 0;//units are in volts
         const float kMaxAccel = 500;
         const float kMaxVelocity = 100;
-
+  
         constexpr int kPositionPIDPort = 1;
 
         constexpr units::volt_t kMinTurnVoltage { 0.5 };
@@ -121,10 +123,13 @@ namespace constants
 
     namespace shooter
     {
-        constexpr int kLeftMotorPort = 1;
-        constexpr int kRightMotorPort = 2;
-        constexpr int kFeederMotor1Port = 5;
-        constexpr int kFeederMotor2Port = 9;
+        constexpr int kLeftMotorPort = 1;       //Talon FX
+        constexpr int kRightMotorPort = 2;      //Talon FX
+        // constexpr int kFeederMotorPort = 5;    //Spark Max 
+        constexpr int kFeederMotorPort = 9;    //Spark Max 
+        // constexpr int kKickerMotorPort = 9;    //Spark Max
+        // constexpr int kKickerMotorPort = 7;    //Spark Max
+        constexpr int kKickerMotorPort = 3;    //Spark Max
 
         constexpr int kAllowableVelocityError = 10;
         constexpr double kKickerSpeed = 0.8;
@@ -145,7 +150,7 @@ namespace constants
 
     namespace intake
     {
-        constexpr int kIntakeMotorID = 10;
+        constexpr int kIntakeMotorID = 10;      //Talon SRX
         constexpr int kSolenoidPorts[2] = { 7, 3 }; 
         constexpr units::current::ampere_t kMaxCurrentDraw { 25.0 };
         constexpr float kMotorOperatingPercentage = 0.65f; //
@@ -163,16 +168,18 @@ namespace constants
         constexpr units::current::ampere_t kMaxCurrentDraw { 40.0 };
         constexpr units::feet_per_second_t kMaxVelocity { 0.6 };
         constexpr units::feet_per_second_squared_t kMaxAcceleration { 1.2 };
-        constexpr double kP = 0.001;
-        constexpr double kI = 0.0;
-        constexpr double kD = 0.0;
-        constexpr double kF = 0.0;
+        const double kP = 0.3;
+        const double kFullPowerLiftPercentage = 100.0;
+        // constexpr double kI = 0.0;
+        // constexpr double kD = 0.0;
+        // constexpr double kF = 0.0;
         constexpr units::foot_t kSoftLimitHeight { 0.0 };
     } // namespace lift
      
     namespace serializer
     {
-        constexpr int kSerializerID = 7;
+        // constexpr int kSerializerID = 7;
+        constexpr int kSerializerID = 6;        //temp change
         constexpr double kIndexingSpeed = 0.5;
         constexpr double kAntiJamSpeed = 0.1;
     }
@@ -194,6 +201,22 @@ namespace constants
         enum pipes
         {
             NO_TRACKING, TRACKING
+        };
+    }
+
+    namespace button_box
+    {
+        //Right is the side where the box attaches to the operator station.
+        enum buttons
+        {
+            blueRight = 0
+        ,   blueLeft = 1
+        ,   greenRight = 2
+        ,   greenLeft = 3
+        ,   yellowRight = 4
+        ,   yellowLeft = 5
+        ,   redRight = 6
+        ,   redLeft = 7
         };
     }
 }

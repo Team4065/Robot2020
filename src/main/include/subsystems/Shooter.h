@@ -63,8 +63,8 @@ public:
   WPI_TalonFX left_master_ { constants::shooter::kLeftMotorPort };
   WPI_TalonFX right_slave_ { constants::shooter::kRightMotorPort };
 
-  rev::CANSparkMax feeder_motor_ { constants::shooter::kFeederMotor1Port, rev::CANSparkMax::MotorType::kBrushless };
-  rev::CANSparkMax kicker_motor_ { constants::shooter::kFeederMotor2Port, rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANSparkMax feeder_motor_ { constants::shooter::kFeederMotorPort, rev::CANSparkMax::MotorType::kBrushless };
+  rev::CANSparkMax kicker_motor_ { constants::shooter::kKickerMotorPort, rev::CANSparkMax::MotorType::kBrushless };
 
   units::revolutions_per_minute_t TalonNativeUnitsToRPM(double native_units);
   double RPMToTalonNativeUnits(units::revolutions_per_minute_t rpm);

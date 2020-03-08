@@ -9,10 +9,11 @@ MoveUp::MoveUp() {
   AddRequirements({&Lift::GetInstance()});
   // ReferencedTunable::Register("Lift Move Up kP", kP_);
 }
+ 
 
 // Called when the command is initially scheduled.
 void MoveUp::Initialize() {
-  kP_ = 0.3;
+  kP_ = constants::lift::kP;
 }
 
 // Called repeatedly when this Command is scheduled to run

@@ -31,7 +31,7 @@ Drivetrain::Drivetrain()
     right_front_master_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
     right_middle_slave_.SetSmartCurrentLimit(constants::drivetrain::kMaxCurrentDraw.to<double>());
 
-    left_front_master_.SetInverted(false);
+    left_front_master_.SetInverted(false);  
     right_front_master_.SetInverted(false);
 
     left_middle_slave_.Follow(left_front_master_, false);

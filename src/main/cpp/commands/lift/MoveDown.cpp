@@ -8,7 +8,7 @@ using namespace frc4065;
 MoveDown::MoveDown(bool fullPower) {
   AddRequirements({&Lift::GetInstance()});
   fullPower_ = fullPower;
-  kP_ = 0.3;
+  kP_ = constants::lift::kP;
   // ReferencedTunable::Register("Lift Move Down kP", kP_);
 }
 
@@ -16,9 +16,9 @@ MoveDown::MoveDown(bool fullPower) {
 void MoveDown::Initialize() {}
 void MoveDown::Execute()
 {
-  if(fullPower_ == 1.0) {
-    Lift::GetInstance().SetA(-1.0);
-    Lift::GetInstance().SetB(-1.0);
+  if(fullPower_ == true) {
+    Lift::GetInstance().SetA(-constants::lift::kFullPowerLiftPercentage);
+    Lift::GetInstance().SetB(-constants::lift::kFullPowerLiftPercentage);
   } else {
     Lift::GetInstance().MoveLift(kP_, false);
   }
@@ -28,7 +28,10 @@ void MoveDown::Execute()
 }
 
 void MoveDown::End(bool interrupted){
-  // Lift::GetInstance().MoveLift(0);
+  if(fullPower_ == true) {
+    Lift::GetInstance().SetA(0);
+    Lift::GetInstance().SetB(0);
+  }
 }
 
 bool MoveDown::IsFinished(){return false;}
