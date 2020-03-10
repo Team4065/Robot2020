@@ -19,6 +19,11 @@ void Robot::RobotInit() {
     camera_ = frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
     camera_.SetFPS(40);
     camera_.SetResolution(320, 240);
+    frc::SmartDashboard::PutData("Auto Modes", &m_container.chooser_);
+    // m_container.chooser_.AddOption(kRightRendevousAuto, kRightRendevousAuto);
+    // m_container.chooser_.AddOption(kLeftRendevousAuto, kLeftRendevousAuto);
+    // m_container.chooser_.AddOption(kTrenchAuto, kTrenchAuto);
+
 }
 void Robot::RobotPeriodic()
 { 

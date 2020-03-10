@@ -129,12 +129,16 @@ public:
   // GEN_BUTTON_SECONDARY_CONTROLLER(sec_back_btn_, 7);
 
   frc2::Command* GetAutonomousCommand();
+  std::string kLeftRendevousAuto = "Left Rendevous Auto (5 ball)";
+  std::string kRightRendevousAuto = "Right Rendevous Auto (5 ball)";
+  std::string kTrenchAuto = "Trench Auto (6 ball)";
+  frc::SendableChooser<std::string> chooser_; 
+  std::string autoSelected;
 
 private:
-  frc::SendableChooser<frc2::Command*> chooser_; // Give options for autonomous actions
   frc2::Command* GetLeftRendevousAuto();
   frc2::Command* GetRightRendevousAuto();
   frc2::Command* GetTrenchAuto();
-
+  frc2::Command* GetNoAuto();
   void ConfigureButtonBindings();
 };
