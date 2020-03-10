@@ -20,7 +20,7 @@ Intake& Intake::GetInstance()
 void Intake::Suck()
 {
     is_active_ = true;
-    motor_.Set(ControlMode::PercentOutput, constants::intake::kMotorOperatingPercentage);
+    motor_.Set(ControlMode::PercentOutput, 0.4/*constants::intake::kMotorOperatingPercentage*/);
 }
 
 void Intake::Idle()

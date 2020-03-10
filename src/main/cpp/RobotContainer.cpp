@@ -16,11 +16,11 @@
 RobotContainer::RobotContainer() 
 {
   Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller_));
-  //Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller2_));
-  frc::SmartDashboard::PutData("Auto Modes", &chooser_);
+  //Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller2_))
   chooser_.AddOption("Right Rendevous Auto (5 ball)", GetRightRendevousAuto());
   chooser_.AddOption("Left Rendevous Auto (5 ball)", GetLeftRendevousAuto());
   chooser_.AddOption("Trench Auto (6 ball)", GetTrenchAuto());
+  frc::SmartDashboard::PutData("Auto Modes", &chooser_);
 
   ConfigureButtonBindings();
 }
