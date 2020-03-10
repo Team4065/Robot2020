@@ -16,12 +16,11 @@
 RobotContainer::RobotContainer() 
 {
   Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller_));
-  //Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller2_))
-  chooser_.AddOption("Right Rendevous Auto (5 ball)", GetRightRendevousAuto());
-  chooser_.AddOption("Left Rendevous Auto (5 ball)", GetLeftRendevousAuto());
-  chooser_.AddOption("Trench Auto (6 ball)", GetTrenchAuto());
   frc::SmartDashboard::PutData("Auto Modes", &chooser_);
-
+  //Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller2_));
+  chooser_.AddOption(kRightRendevousAuto, kRightRendevousAuto);
+  chooser_.AddOption(kLeftRendevousAuto, kLeftRendevousAuto);
+  chooser_.AddOption(kTrenchAuto, kTrenchAuto);
   ConfigureButtonBindings();
 }
 
@@ -37,7 +36,7 @@ void RobotContainer::ConfigureButtonBindings() {
   b_btn_.WhenPressed(new ToggleLiftPiston());
   rb_btn_.WhenPressed(new ToggleIntake());
   //lb_btn_.WhenPressed(new TimedShoot(4000_rpm, 6_s));
-  lb_btn_.WhileHeld(new TimedShoot(3500_rpm, 10_s));
+  lb_btn_.WhileHeld(new TimedShoot(3700_rpm, 10_s));
   // sl_btn_.WhenPressed();
   // sr_btn_.WhenPressed();
   start_btn_.WhenPressed(new TrackThenAlign());
@@ -65,7 +64,13 @@ void RobotContainer::ConfigureButtonBindings() {
 
 frc2::Command* RobotContainer::GetAutonomousCommand()
 {
-  return chooser_.GetSelected();
+  std::string selected_ = chooser_.GetSelected();
+  if (selected_ == kLeftRendevousAuto)
+    return GetLeftRendevousAuto();
+  else if (selected_ == kRightRendevousAuto)
+    return GetRightRendevousAuto();
+  else if (selected_ == kTrenchAuto)
+    return GetTrenchAuto();
 }  
 
 frc2::Command* RobotContainer::GetTrenchAuto()
