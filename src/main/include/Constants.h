@@ -129,7 +129,7 @@ namespace constants
         constexpr int kFeederMotorPort = 9;    //Spark Max 
         // constexpr int kKickerMotorPort = 9;    //Spark Max
         // constexpr int kKickerMotorPort = 7;    //Spark Max
-        constexpr int kKickerMotorPort = 3;    //Spark Max
+        constexpr int kKickerMotorPort = 11;    //Spark Max
 
         constexpr int kAllowableVelocityError = 10;
         constexpr double kKickerSpeed = 0.8;
@@ -178,8 +178,8 @@ namespace constants
      
     namespace serializer
     {
-        // constexpr int kSerializerID = 7;
-        constexpr int kSerializerID = 6;        //temp change
+        constexpr int kSerializerID = 7;
+        // constexpr int kSerializerID = 6;        //temp change
         constexpr double kIndexingSpeed = 0.5;
         constexpr double kAntiJamSpeed = 0.1;
     }

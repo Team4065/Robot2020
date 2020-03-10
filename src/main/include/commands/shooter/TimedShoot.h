@@ -17,6 +17,8 @@
 #include "subsystems/Serializer.h"
 #include "subsystems/Intake.h"
 
+#include "commands/intake/ToggleIntake.h"
+
 /**
  * Shoots until timer runs out; timer only begins once shooter is spun up.
  */

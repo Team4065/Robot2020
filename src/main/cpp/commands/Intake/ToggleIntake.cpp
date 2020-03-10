@@ -12,21 +12,22 @@
 // https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 ToggleIntake::ToggleIntake()
 {
-  AddRequirements({&Intake::GetInstance()});
-}
-
-// Called when the command is initially scheduled.
-void ToggleIntake::Initialize()
-{
   static Intake& instance_ = Intake::GetInstance();
-  if (instance_.IsDeployed())
-  {
-    instance_.Retract();
-    instance_.Idle();
-  }
-  else
-  {
-    instance_.Extend();
-    instance_.Suck();
-  }
+  AddCommands(
+    frc2::ConditionalCommand(
+      frc2::InstantCommand([&] { instance_.Retract(); }, {&instance_}),
+      frc2::InstantCommand([&] { instance_.Extend(); }, {&instance_}),
+      [&] { return instance_.IsDeployed(); }
+    ),
+    frc2::ConditionalCommand(
+      frc2::WaitCommand(1.25_s),
+      frc2::InstantCommand([]{}),
+      [&] { return instance_.IsDeployed(); }
+    ),
+    frc2::ConditionalCommand(
+      frc2::InstantCommand([&] { instance_.Suck(); }, {&instance_}),
+      frc2::InstantCommand([&] { instance_.Idle(); }, {&instance_}),
+      [&] { return instance_.IsDeployed(); }
+    )
+  );
 }

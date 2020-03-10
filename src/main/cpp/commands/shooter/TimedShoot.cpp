@@ -5,13 +5,14 @@ TimedShoot::TimedShoot(units::revolutions_per_minute_t rpm, units::second_t time
   : rpm_(rpm), time_(time), start_time_(units::second_t(frc::Timer::GetFPGATimestamp())),
    hysteresis_flag_(false), timer_started_(false)
 {
-  AddRequirements({&Shooter::GetInstance(), &Serializer::GetInstance()});
+  AddRequirements({&Shooter::GetInstance(), &Serializer::GetInstance(), &Intake::GetInstance()});
 }
 
 void TimedShoot::Initialize()
 {
   timer_.Reset();
   Shooter::GetInstance().SetShooterVelocity(rpm_);
+  Intake::GetInstance().Extend();
   std::cout << "Starting!\n";
 }
 
@@ -29,14 +30,6 @@ void TimedShoot::Execute()
     Shooter::GetInstance().EngageKicker();
     Serializer::GetInstance().Forward();
     Intake::GetInstance().Suck();
-    Intake::GetInstance().Extend();
-  }
-  if(!Shooter::GetInstance().AtDesiredVelocityWithHysteresis() && hysteresis_flag_)
-  {
-    Shooter::GetInstance().DisableFeeder();
-    Shooter::GetInstance().DisableKicker();
-    Serializer::GetInstance().Idle();
-    Intake::GetInstance().Idle();
   }
 
 }
