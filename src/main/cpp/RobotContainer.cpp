@@ -16,11 +16,11 @@
 RobotContainer::RobotContainer() 
 {
   Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller_));
-  frc::SmartDashboard::PutData("Auto Modes", &chooser_);
+  // frc::SmartDashboard::PutData("Auto Modes", &chooser_);
   //Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller2_));
-  chooser_.AddOption(kRightRendevousAuto, kRightRendevousAuto);
-  chooser_.AddOption(kLeftRendevousAuto, kLeftRendevousAuto);
-  chooser_.AddOption(kTrenchAuto, kTrenchAuto);
+  // chooser_.AddOption(kRightRendevousAuto, kRightRendevousAuto);
+  // chooser_.AddOption(kLeftRendevousAuto, kLeftRendevousAuto);
+  // chooser_.AddOption(kTrenchAuto, kTrenchAuto);
   ConfigureButtonBindings();
 }
 
@@ -62,16 +62,16 @@ void RobotContainer::ConfigureButtonBindings() {
   
 }
 
-frc2::Command* RobotContainer::GetAutonomousCommand()
-{
-  std::string selected_ = chooser_.GetSelected();
-  if (selected_ == kLeftRendevousAuto)
-    return GetLeftRendevousAuto();
-  else if (selected_ == kRightRendevousAuto)
-    return GetRightRendevousAuto();
-  else if (selected_ == kTrenchAuto)
-    return GetTrenchAuto();
-}  
+// frc2::Command* RobotContainer::GetAutonomousCommand()
+// {
+//   std::string selected_ = chooser_.GetSelected();
+//   if (selected_ == kLeftRendevousAuto)
+//     return GetLeftRendevousAuto();
+//   else if (selected_ == kRightRendevousAuto)
+//     return GetRightRendevousAuto();
+//   else if (selected_ == kTrenchAuto)
+//     return GetTrenchAuto();
+// }  
 
 frc2::Command* RobotContainer::GetTrenchAuto()
 {
@@ -360,4 +360,9 @@ frc2::Command* RobotContainer::GetLeftRendevousAuto()
     frc2::InstantCommand([this] { drivetrain_.TankDriveVolts(0_V, 0_V); }, {}),
     TimedShoot(3500_rpm, 4_s)
   );
+}
+
+frc2::Command* RobotContainer::GetNoAuto()
+{
+  return &NoAuto;
 }

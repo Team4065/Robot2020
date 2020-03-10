@@ -19,7 +19,13 @@ void Robot::RobotInit() {
     camera_ = frc::CameraServer::GetInstance()->StartAutomaticCapture(0);
     camera_.SetFPS(40);
     camera_.SetResolution(320, 240);
-    frc::SmartDashboard::PutData("Auto Modes", &m_container.chooser_);
+
+    m_chooser.AddOption("Left", Pos::LEFT);
+    m_chooser.AddOption("Right", Pos::RIGHT);
+    m_chooser.AddOption("Center", Pos::CENTER);
+    m_chooser.SetDefaultOption("No Auto", Pos::NONE);
+
+    //frc::SmartDashboard::PutData("Auto Modes", &m_container.chooser_);
     // m_container.chooser_.AddOption(kRightRendevousAuto, kRightRendevousAuto);
     // m_container.chooser_.AddOption(kLeftRendevousAuto, kLeftRendevousAuto);
     // m_container.chooser_.AddOption(kTrenchAuto, kTrenchAuto);
@@ -35,7 +41,26 @@ void Robot::DisabledPeriodic() {}
 void Robot::AutonomousInit()
 {
     m_container.drivetrain_.NeutralMode(true);
-    m_autonomousCommand = m_container.GetAutonomousCommand();
+
+    Pos startPos = m_chooser.GetSelected();
+    switch (startPos)
+    {
+    case LEFT:
+        m_autonomousCommand = m_container.GetTrenchAuto();
+        break;
+
+    case RIGHT:
+        m_autonomousCommand = m_container.GetRightRendevousAuto();
+        break;
+
+    case CENTER:
+        m_autonomousCommand = m_container.GetLeftRendevousAuto();
+        break;
+
+    default:
+        m_autonomousCommand = m_container.GetNoAuto();
+        break;
+    }
 
     if (m_autonomousCommand != nullptr)
         m_autonomousCommand->Schedule();

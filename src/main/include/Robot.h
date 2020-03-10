@@ -7,6 +7,7 @@
 
 #include "RobotContainer.h"
 #include "util/ReferencedTunable.h"
+#include <frc/SmartDashboard/SendableChooser.h>
 
 class Robot : public frc::TimedRobot {
  public:
@@ -27,4 +28,13 @@ class Robot : public frc::TimedRobot {
   frc::Compressor compressor;
   frc::DoubleSolenoid dummy1 { 0, 1 };
   frc::DoubleSolenoid dummy2 { 4, 5 };
+  enum Pos {LEFT, CENTER, RIGHT, NONE};
+  frc::SendableChooser<Pos> m_chooser; //pick auto
+  
+  
+  // const std::string kAutoDefault = "Default";
+	// const std::string kAutoLeft = "My Auto Left";
+	// const std::string kAutoMiddle = "My Auto Middle";
+	// const std::string kAutoRight = "My Auto Right";
+	// std::string m_autoSelected;
 };
