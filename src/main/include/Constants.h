@@ -210,14 +210,14 @@ namespace constants
         //Right is the side where the box attaches to the operator station.
         enum buttons
         {
-            blueRight = 0
-        ,   blueLeft = 1
-        ,   greenRight = 2
-        ,   greenLeft = 3
-        ,   yellowRight = 4
-        ,   yellowLeft = 5
-        ,   redRight = 6
-        ,   redLeft = 7
+            blueRight = 1
+        ,   blueLeft = 2
+        ,   greenRight = 3
+        ,   greenLeft = 4
+        ,   yellowRight = 5
+        ,   yellowLeft = 6
+        ,   redRight = 7
+        ,   redLeft = 8
         };
     }
 }

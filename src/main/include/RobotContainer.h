@@ -39,6 +39,8 @@
 #include "commands/Intake/ToggleIntake.h"
 #include "commands/Intake/IdleIntake.h"
 #include "commands/Intake/ReverseIntake.h"
+#include "commands/Intake/ToggleSuckState.h"
+#include "commands/Intake/ToggleDeployState.h"
 
 #include "commands/Serializer/VBeltForward.h"
 
