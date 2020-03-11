@@ -16,24 +16,25 @@
 RobotContainer::RobotContainer() 
 {
   Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller_));
-  // frc::SmartDashboard::PutData("Auto Modes", &chooser_);
+  frc::SmartDashboard::PutData("Auto Modes", &chooser_);
   //Drivetrain::GetInstance().SetDefaultCommand(ArcadeDrive(&controller2_));
-  // chooser_.AddOption(kRightRendevousAuto, kRightRendevousAuto);
-  // chooser_.AddOption(kLeftRendevousAuto, kLeftRendevousAuto);
-  // chooser_.AddOption(kTrenchAuto, kTrenchAuto);
+  chooser_.AddOption(kLeftRendevousAuto, kLeftRendevousAuto);
+  chooser_.AddOption(kRightRendevousAuto, kRightRendevousAuto);
+  chooser_.AddOption(kTrenchAuto, kTrenchAuto);
+  chooser_.SetDefaultOption(kNoAuto, kNoAuto);
   ConfigureButtonBindings();
 }
 
 void RobotContainer::ConfigureButtonBindings() {
   // y_btn_.WhenPressed(new MoveUp()).WhenReleased(new IdleLift());
-  y_btn_.WhileHeld(new MoveUp()).WhenReleased(new IdleLift());
-//   a_btn_.WhileHeld(new MoveDown(false)).WhenReleased(new IdleLift()); //Controlled
-  a_btn_.WhileHeld(new MoveDown(true)).WhenReleased(new IdleLift());  //Full Power
-  // y_btn_.WhileHeld(new MoveUp());
-  // a_btn_.WhileHeld(new MoveDown());
-  //x_btn_.WhenPressed(new TimedShoot(60_rpm, 3_s)).WhenReleased(new PreSpinup(0_rpm));
-  x_btn_.WhenPressed(new ToggleDeployState());
-  b_btn_.WhenPressed(new ToggleLiftPiston());
+//   y_btn_.WhileHeld(new MoveUp()).WhenReleased(new IdleLift());
+// //   a_btn_.WhileHeld(new MoveDown(false)).WhenReleased(new IdleLift()); //Controlled
+//   a_btn_.WhileHeld(new MoveDown(true)).WhenReleased(new IdleLift());  //Full Power
+//   // y_btn_.WhileHeld(new MoveUp());
+//   // a_btn_.WhileHeld(new MoveDown());
+//   //x_btn_.WhenPressed(new TimedShoot(60_rpm, 3_s)).WhenReleased(new PreSpinup(0_rpm));
+//   x_btn_.WhenPressed(new ToggleDeployState());
+//   b_btn_.WhenPressed(new ToggleLiftPiston());
   rb_btn_.WhenPressed(new ToggleSuckState()).WhenReleased(new IdleIntake());
   //lb_btn_.WhenPressed(new TimedShoot(4000_rpm, 6_s));
   lb_btn_.WhileHeld(new TimedShoot(3700_rpm, 10_s));
@@ -62,16 +63,18 @@ void RobotContainer::ConfigureButtonBindings() {
   
 }
 
-// frc2::Command* RobotContainer::GetAutonomousCommand()
-// {
-//   std::string selected_ = chooser_.GetSelected();
-//   if (selected_ == kLeftRendevousAuto)
-//     return GetLeftRendevousAuto();
-//   else if (selected_ == kRightRendevousAuto)
-//     return GetRightRendevousAuto();
-//   else if (selected_ == kTrenchAuto)
-//     return GetTrenchAuto();
-// }  
+frc2::Command* RobotContainer::GetAutonomousCommand()
+{
+  std::string selected = chooser_.GetSelected();
+  if (selected == kNoAuto)
+    return GetNoAuto();
+  else if (selected == kLeftRendevousAuto)
+    return GetLeftRendevousAuto();
+  else if (selected == kRightRendevousAuto)
+    return GetRightRendevousAuto();
+  else if (selected == kTrenchAuto)
+    return GetTrenchAuto();
+}  
 
 frc2::Command* RobotContainer::GetTrenchAuto()
 {

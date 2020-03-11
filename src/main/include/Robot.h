@@ -28,8 +28,7 @@ class Robot : public frc::TimedRobot {
   frc::Compressor compressor;
   frc::DoubleSolenoid dummy1 { 0, 1 };
   frc::DoubleSolenoid dummy2 { 4, 5 };
-  enum Pos {LEFT, CENTER, RIGHT, NONE};
-  frc::SendableChooser<Pos> m_chooser; //pick auto
+  // enum Pos {LEFT, CENTER, RIGHT, NONE};  //pick auto
   
   
   // const std::string kAutoDefault = "Default";
